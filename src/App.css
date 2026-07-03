@@ -180,3 +180,39 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+/* ── Content Placeholder ─────────────────────── */
+.content-placeholder {
+  flex: 1;
+  min-width: 0;
+  height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #12131a;
+  color: #5c6270;
+}
+
+.placeholder-inner {
+  text-align: center;
+}
+
+.placeholder-inner svg {
+  width: 56px;
+  height: 56px;
+  opacity: 0.2;
+  margin-bottom: 16px;
+}
+
+.placeholder-inner h2 {
+  font-size: 22px;
+  font-weight: 600;
+  color: #e8eaf0;
+  margin: 0 0 8px;
+}
+
+.placeholder-inner p {
+  font-size: 14px;
+  color: #5c6270;
+}
+

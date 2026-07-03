@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import type { CSSProperties, JSX } from 'react'
 import './App.css'
+import InventoryPage from './components/InventoryPage'
 
 type NavItem = {
   id: string
@@ -219,63 +220,87 @@ const sections: NavSection[] = [
 ]
 
 function App() {
-  const [active, setActive] = useState('overview')
+  const [active, setActive] = useState('inventory')
+
+  const renderContent = () => {
+    if (active === 'inventory') {
+      return <InventoryPage />
+    }
+    return (
+      <main className="content-placeholder">
+        <div className="placeholder-inner">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="3" y="3" width="7" height="9" rx="1" />
+            <rect x="14" y="3" width="7" height="5" rx="1" />
+            <rect x="14" y="12" width="7" height="9" rx="1" />
+            <rect x="3" y="16" width="7" height="5" rx="1" />
+          </svg>
+          <h2>{sections.flatMap(s => s.items).find(i => i.id === active)?.label ?? 'Page'}</h2>
+          <p>This section is under development.</p>
+        </div>
+      </main>
+    )
+  }
 
   return (
-    <aside className="sidebar">
-      <header className="sidebar-header">
-        <span className="brand-avatar" aria-hidden="true">
-          G
-        </span>
-        <span className="brand-name">GroupAdmin</span>
-        <button type="button" className="collapse-btn" aria-label="Collapse sidebar">
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.8"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-          >
-            <path d="M15 18l-6-6 6-6" />
-          </svg>
-        </button>
-      </header>
+    <>
+      <aside className="sidebar">
+        <header className="sidebar-header">
+          <span className="brand-avatar" aria-hidden="true">
+            G
+          </span>
+          <span className="brand-name">GroupAdmin</span>
+          <button type="button" className="collapse-btn" aria-label="Collapse sidebar">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </button>
+        </header>
 
-      <nav className="sidebar-nav">
-        {sections.map((section) => (
-          <div key={section.title} className="nav-section">
-            <p className="nav-section-title">{section.title}</p>
-            <ul>
-              {section.items.map((item) => (
-                <li key={item.id}>
-                  <button
-                    type="button"
-                    className={`nav-link${active === item.id ? ' is-active' : ''}`}
-                    onClick={() => setActive(item.id)}
-                    style={item.color ? ({ '--icon-color': item.color } as CSSProperties) : undefined}
-                  >
-                    {item.icon}
-                    <span>{item.label}</span>
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </nav>
+        <nav className="sidebar-nav">
+          {sections.map((section) => (
+            <div key={section.title} className="nav-section">
+              <p className="nav-section-title">{section.title}</p>
+              <ul>
+                {section.items.map((item) => (
+                  <li key={item.id}>
+                    <button
+                      type="button"
+                      className={`nav-link${active === item.id ? ' is-active' : ''}`}
+                      onClick={() => setActive(item.id)}
+                      style={item.color ? ({ '--icon-color': item.color } as CSSProperties) : undefined}
+                    >
+                      {item.icon}
+                      <span>{item.label}</span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </nav>
 
-      <footer className="sidebar-footer">
-        <span className="user-avatar" aria-hidden="true">
-          A
-        </span>
-        <span className="user-meta">
-          <span className="user-name">Ashraf Hossain</span>
-          <span className="user-email">ashrafhossainsohan@gmail.com</span>
-        </span>
-      </footer>
-    </aside>
+        <footer className="sidebar-footer">
+          <span className="user-avatar" aria-hidden="true">
+            A
+          </span>
+          <span className="user-meta">
+            <span className="user-name">Ashraf Hossain</span>
+            <span className="user-email">ashrafhossainsohan@gmail.com</span>
+          </span>
+        </footer>
+      </aside>
+
+      {renderContent()}
+    </>
   )
 }
 

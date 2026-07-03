@@ -1,0 +1,569 @@
+/* ═══════════════════════════════════════════════
+   Inventory & Assets  —  Page Styles
+   ═══════════════════════════════════════════════ */
+
+.inventory-page {
+  --ip-bg: #12131a;
+  --ip-surface: #181922;
+  --ip-border: #23252f;
+  --ip-text: #9ca3af;
+  --ip-text-strong: #e8eaf0;
+  --ip-muted: #5c6270;
+  --ip-accent: #3b82f6;
+  --ip-accent-hover: #2563eb;
+  --ip-row-hover: rgba(255, 255, 255, 0.025);
+  --ip-radius: 10px;
+
+  flex: 1;
+  min-width: 0;
+  height: 100svh;
+  overflow-y: auto;
+  padding: 32px 36px 48px;
+  background: var(--ip-bg);
+  color: var(--ip-text);
+  font: 14px/1.5 var(--sans);
+  box-sizing: border-box;
+}
+
+/* ── Page header ─────────────────────────────── */
+.ip-header h1 {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+  color: var(--ip-text-strong);
+  margin: 0 0 4px;
+  line-height: 1.2;
+}
+.ip-header p {
+  font-size: 14px;
+  color: var(--ip-muted);
+  margin: 0 0 20px;
+}
+
+/* ── Tabs ────────────────────────────────────── */
+.ip-tabs {
+  display: flex;
+  gap: 2px;
+  margin-bottom: 24px;
+  background: var(--ip-surface);
+  border-radius: 8px;
+  padding: 3px;
+  width: fit-content;
+}
+.ip-tab {
+  padding: 8px 20px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--ip-muted);
+  font: 600 13.5px/1 var(--sans);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.ip-tab:hover {
+  color: var(--ip-text);
+}
+.ip-tab.is-active {
+  background: #23252f;
+  color: var(--ip-text-strong);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+/* ── Toolbar ─────────────────────────────────── */
+.ip-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.ip-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+/* Search */
+.ip-search {
+  position: relative;
+}
+.ip-search svg {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  color: var(--ip-muted);
+  pointer-events: none;
+}
+.ip-search input {
+  width: 220px;
+  padding: 9px 12px 9px 36px;
+  border: 1px solid var(--ip-border);
+  border-radius: 8px;
+  background: var(--ip-surface);
+  color: var(--ip-text-strong);
+  font: 13.5px/1 var(--sans);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.ip-search input::placeholder {
+  color: var(--ip-muted);
+}
+.ip-search input:focus {
+  border-color: var(--ip-accent);
+}
+
+/* Filter dropdown */
+.ip-filter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  border: 1px solid var(--ip-border);
+  border-radius: 8px;
+  background: var(--ip-surface);
+  color: var(--ip-text);
+  font: 13.5px/1 var(--sans);
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.ip-filter:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+}
+.ip-filter svg {
+  width: 16px;
+  height: 16px;
+  color: var(--ip-muted);
+}
+
+/* Buttons */
+.ip-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 18px;
+  border-radius: 8px;
+  font: 600 13.5px/1 var(--sans);
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.ip-btn svg {
+  width: 16px;
+  height: 16px;
+}
+.ip-btn-ghost {
+  background: var(--ip-surface);
+  color: var(--ip-text);
+  border: 1px solid var(--ip-border);
+}
+.ip-btn-ghost:hover {
+  background: #1f2029;
+  border-color: rgba(255, 255, 255, 0.12);
+  color: var(--ip-text-strong);
+}
+.ip-btn-primary {
+  background: var(--ip-accent);
+  color: #fff;
+  border: 1px solid transparent;
+}
+.ip-btn-primary:hover {
+  background: var(--ip-accent-hover);
+}
+
+/* ── Low Stock Alert ─────────────────────────── */
+.ip-alert {
+  margin-bottom: 20px;
+  border-radius: var(--ip-radius);
+  background: rgba(245, 158, 11, 0.06);
+  border: 1px solid rgba(245, 158, 11, 0.15);
+  overflow: hidden;
+}
+.ip-alert-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s;
+}
+.ip-alert-header:hover {
+  background: rgba(245, 158, 11, 0.03);
+}
+.ip-alert-icon {
+  width: 18px;
+  height: 18px;
+  color: #f59e0b;
+  flex-shrink: 0;
+}
+.ip-alert-title {
+  font-weight: 600;
+  font-size: 13.5px;
+  color: #fbbf24;
+}
+.ip-alert-chevron {
+  width: 16px;
+  height: 16px;
+  color: var(--ip-muted);
+  margin-left: auto;
+  transition: transform 0.25s ease;
+}
+.ip-alert-chevron.is-open {
+  transform: rotate(180deg);
+}
+.ip-alert-body {
+  padding: 0 16px 14px 42px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-height: 260px;
+  overflow-y: auto;
+}
+.ip-alert-body::-webkit-scrollbar {
+  width: 4px;
+}
+.ip-alert-body::-webkit-scrollbar-thumb {
+  background: rgba(245, 158, 11, 0.2);
+  border-radius: 99px;
+}
+.ip-alert-item {
+  font-size: 13px;
+  line-height: 1.85;
+  color: var(--ip-text);
+}
+.ip-alert-item strong {
+  color: #fbbf24;
+  font-weight: 600;
+}
+.ip-alert-item span {
+  color: var(--ip-muted);
+}
+
+/* ── Table ───────────────────────────────────── */
+.ip-table-wrap {
+  border: 1px solid var(--ip-border);
+  border-radius: var(--ip-radius);
+  overflow: hidden;
+  background: var(--ip-surface);
+}
+.ip-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+.ip-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+.ip-table th {
+  padding: 13px 14px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 12px;
+  color: var(--ip-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid var(--ip-border);
+  background: var(--ip-surface);
+  white-space: nowrap;
+}
+.ip-table th .sort-arrows {
+  display: inline-flex;
+  flex-direction: column;
+  margin-left: 4px;
+  vertical-align: middle;
+  gap: 1px;
+  opacity: 0.35;
+}
+.ip-table th .sort-arrows svg {
+  width: 10px;
+  height: 10px;
+}
+.ip-table td {
+  padding: 14px;
+  border-bottom: 1px solid var(--ip-border);
+  vertical-align: middle;
+  color: var(--ip-text);
+}
+.ip-table tbody tr {
+  transition: background 0.12s;
+}
+.ip-table tbody tr:hover {
+  background: var(--ip-row-hover);
+}
+.ip-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Item cell */
+.ip-item-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.ip-item-name {
+  font-weight: 600;
+  color: var(--ip-text-strong);
+}
+.ip-item-sub {
+  font-size: 12px;
+  color: var(--ip-muted);
+}
+
+/* Unit ID */
+.ip-unit-id {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ip-muted);
+  letter-spacing: 0.02em;
+}
+
+/* Company badge */
+.ip-company-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.ip-company-badge.badge-365f {
+  background: rgba(251, 146, 60, 0.15);
+  color: #fb923c;
+}
+.ip-company-badge.badge-xsrs {
+  background: rgba(96, 165, 250, 0.15);
+  color: #60a5fa;
+}
+.ip-company-badge.badge-everafter {
+  background: rgba(248, 113, 113, 0.15);
+  color: #f87171;
+}
+.ip-company-badge.badge-printdesk {
+  background: rgba(74, 222, 128, 0.15);
+  color: #4ade80;
+}
+
+/* Condition badge */
+.ip-condition {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.ip-condition.cond-excellent {
+  background: rgba(34, 197, 94, 0.12);
+  color: #22c55e;
+}
+.ip-condition.cond-good {
+  background: rgba(245, 158, 11, 0.12);
+  color: #f59e0b;
+}
+.ip-condition.cond-fair {
+  background: rgba(99, 102, 241, 0.12);
+  color: #818cf8;
+}
+.ip-condition.cond-poor {
+  background: rgba(239, 68, 68, 0.12);
+  color: #ef4444;
+}
+
+/* Cost / Value */
+.ip-cost {
+  font-family: var(--mono);
+  font-size: 13px;
+  white-space: nowrap;
+}
+.ip-cost-value {
+  font-weight: 700;
+  color: var(--ip-text-strong);
+}
+
+/* Actions */
+.ip-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.ip-action-btn {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--ip-muted);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.ip-action-btn svg {
+  width: 16px;
+  height: 16px;
+}
+.ip-action-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--ip-text-strong);
+}
+.ip-action-btn.action-delete:hover {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+/* ── Wish List Styles ────────────────────────── */
+.ip-wishlist-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.ip-wishlist-header .ip-search {
+  margin-left: 0;
+}
+
+/* Priority badge */
+.ip-priority {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.ip-priority.priority-high {
+  background: rgba(239, 68, 68, 0.12);
+  color: #ef4444;
+}
+.ip-priority.priority-medium {
+  background: rgba(245, 158, 11, 0.12);
+  color: #f59e0b;
+}
+.ip-priority.priority-low {
+  background: rgba(34, 197, 94, 0.12);
+  color: #22c55e;
+}
+.ip-priority-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* Status badge */
+.ip-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.ip-status.status-planned {
+  background: rgba(99, 102, 241, 0.12);
+  color: #818cf8;
+}
+.ip-status.status-approved {
+  background: rgba(34, 197, 94, 0.12);
+  color: #22c55e;
+}
+.ip-status.status-purchased {
+  background: rgba(96, 165, 250, 0.12);
+  color: #60a5fa;
+}
+.ip-status.status-pending {
+  background: rgba(245, 158, 11, 0.12);
+  color: #f59e0b;
+}
+
+/* Wishlist notes */
+.ip-note {
+  font-size: 12.5px;
+  color: var(--ip-muted);
+  max-width: 220px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Wishlist link */
+.ip-link {
+  font-size: 12.5px;
+  color: var(--ip-accent);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.ip-link:hover {
+  color: #60a5fa;
+  text-decoration: underline;
+}
+
+/* ── Qty column ──────────────────────────────── */
+.ip-qty {
+  text-align: center;
+  font-weight: 600;
+  color: var(--ip-text-strong);
+}
+
+/* ── Empty state ─────────────────────────────── */
+.ip-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 24px;
+  color: var(--ip-muted);
+  text-align: center;
+}
+.ip-empty svg {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 16px;
+  opacity: 0.3;
+}
+.ip-empty p {
+  font-size: 14px;
+}
+
+/* ── Responsive ──────────────────────────────── */
+@media (max-width: 1024px) {
+  .inventory-page {
+    padding: 20px 16px 36px;
+  }
+  .ip-table-wrap {
+    overflow-x: auto;
+  }
+  .ip-table {
+    min-width: 800px;
+  }
+  .ip-alert-body {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .ip-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .ip-toolbar-right {
+    margin-left: 0;
+    flex-wrap: wrap;
+  }
+  .ip-search input {
+    width: 100%;
+  }
+}
