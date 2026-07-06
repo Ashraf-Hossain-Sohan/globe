@@ -2,6 +2,7 @@ import { useState } from 'react'
 import type { CSSProperties, JSX } from 'react'
 import './App.css'
 import InventoryPage from './components/InventoryPage'
+import ExpensesPage from './components/ExpensesPage'
 
 type NavItem = {
   id: string
@@ -99,7 +100,13 @@ const sections: NavSection[] = [
       {
         id: 'global-entry',
         label: 'Global Entry',
-        icon: icon(<path d="M12 5v14M5 12h14" />),
+        icon: icon(
+          <>
+            <circle cx="12" cy="12" r="9" />
+            <path d="M3.6 9h16.8M3.6 15h16.8" />
+            <path d="M12 3a13.5 13.5 0 0 1 3 9 13.5 13.5 0 0 1-3 9 13.5 13.5 0 0 1-3-9 13.5 13.5 0 0 1 3-9z" />
+          </>,
+        ),
       },
       {
         id: 'expenses',
@@ -220,12 +227,11 @@ const sections: NavSection[] = [
 ]
 
 function App() {
-  const [active, setActive] = useState('inventory')
+  const [active, setActive] = useState('expenses')
 
   const renderContent = () => {
-    if (active === 'inventory') {
-      return <InventoryPage />
-    }
+    if (active === 'inventory') return <InventoryPage />
+    if (active === 'expenses') return <ExpensesPage />
     return (
       <main className="content-placeholder">
         <div className="placeholder-inner">
@@ -245,23 +251,41 @@ function App() {
   return (
     <>
       <aside className="sidebar">
-        <header className="sidebar-header">
-          <span className="brand-avatar" aria-hidden="true">
-            G
-          </span>
-          <span className="brand-name">GroupAdmin</span>
-          <button type="button" className="collapse-btn" aria-label="Collapse sidebar">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <path d="M15 18l-6-6 6-6" />
+        <header className="sidebar-header" style={{ flexDirection: 'column', alignItems: 'stretch', gap: 0, padding: '16px 14px 12px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>
+            <span className="brand-avatar" aria-hidden="true">G</span>
+            <span style={{ display: 'flex', flexDirection: 'column' }}>
+              <span className="brand-name" style={{ lineHeight: 1.2 }}>Group Admin</span>
+              <span style={{ fontSize: 11, color: 'var(--sb-muted)', lineHeight: 1.2 }}>Enterprise Suite</span>
+            </span>
+          </div>
+          <button
+            id="add-company-btn"
+            type="button"
+            onClick={() => setActive('overview')}
+            style={{
+              marginTop: 10,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 6,
+              width: '100%',
+              padding: '8px 0',
+              border: '1px dashed rgba(79,110,247,0.5)',
+              borderRadius: 8,
+              background: 'rgba(79,110,247,0.08)',
+              color: '#6b8cff',
+              fontSize: 13,
+              fontWeight: 600,
+              fontFamily: 'inherit',
+              cursor: 'pointer',
+              transition: 'background 0.15s, border-color 0.15s',
+            }}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
             </svg>
+            Add Company
           </button>
         </header>
 
