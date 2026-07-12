@@ -1,0 +1,643 @@
+/* ===== BILLS PAGE ======================================================== */
+.bills-page {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100svh;
+  overflow: hidden;
+  background: #12131a;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* ── Top Header ─────────────────────────────────────────────────────────── */
+.bp-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 24px;
+  height: 56px;
+  background: #0e0f14;
+  border-bottom: 1px solid #1e2030;
+  flex-shrink: 0;
+}
+
+.bp-company-dropdown {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border: 1px solid #2a2d3e;
+  border-radius: 8px;
+  background: #1a1c25;
+  color: #c8ccd8;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.bp-company-dropdown:hover {
+  border-color: #4f6ef7;
+  color: #e8eaf0;
+}
+
+.bp-company-dropdown svg {
+  width: 13px;
+  height: 13px;
+  color: #5c6270;
+}
+
+.bp-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.bp-add-entry-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 16px;
+  height: 34px;
+  border: none;
+  border-radius: 8px;
+  background: #4f6ef7;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.bp-add-entry-btn:hover {
+  background: #3d5ce6;
+}
+
+.bp-add-entry-btn:active {
+  transform: scale(0.97);
+}
+
+.bp-add-entry-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+.bp-icon-btn {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 8px;
+  background: #1a1c25;
+  color: #8b909c;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.bp-icon-btn svg {
+  width: 17px;
+  height: 17px;
+}
+
+.bp-icon-btn:hover {
+  background: #232638;
+  color: #e8eaf0;
+}
+
+.bp-icon-btn.has-badge {
+  position: relative;
+}
+
+.bp-icon-btn .bp-notif-dot {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ef4444;
+  border: 2px solid #0e0f14;
+}
+
+.bp-avatar {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4f6ef7, #8b5cf6);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ── Main Content ───────────────────────────────────────────────────────── */
+.bp-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ── Title Row ──────────────────────────────────────────────────────────── */
+.bp-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.bp-title-block h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #e8eaf0;
+  margin: 0 0 4px 0;
+  letter-spacing: -0.5px;
+}
+
+.bp-title-sub {
+  font-size: 14px;
+  color: #5c6270;
+  margin: 0;
+}
+
+.bp-add-bill-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 18px;
+  height: 36px;
+  border: none;
+  border-radius: 8px;
+  background: #4f6ef7;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+  box-shadow: 0 2px 12px rgba(79, 110, 247, 0.25);
+}
+
+.bp-add-bill-btn:hover {
+  background: #3d5ce6;
+  box-shadow: 0 4px 18px rgba(79, 110, 247, 0.35);
+}
+
+.bp-add-bill-btn:active {
+  transform: scale(0.97);
+}
+
+.bp-add-bill-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* ── Status Summary Cards ───────────────────────────────────────────────── */
+.bp-status-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.bp-status-card {
+  background: #181a24;
+  border: 1px solid #22253a;
+  border-radius: 14px;
+  padding: 20px 22px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.bp-status-card:hover {
+  border-color: #2e3354;
+  transform: translateY(-2px);
+}
+
+.bp-status-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+.bp-status-card:hover::before {
+  opacity: 1;
+}
+
+.bp-status-card.pending::before {
+  background: radial-gradient(ellipse at 20% 50%, rgba(79, 110, 247, 0.06), transparent 70%);
+}
+
+.bp-status-card.overdue::before {
+  background: radial-gradient(ellipse at 20% 50%, rgba(239, 146, 60, 0.06), transparent 70%);
+}
+
+.bp-status-card.paid::before {
+  background: radial-gradient(ellipse at 20% 50%, rgba(34, 197, 94, 0.06), transparent 70%);
+}
+
+.bp-status-icon {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.bp-status-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.bp-status-icon.pending-icon {
+  background: rgba(79, 110, 247, 0.12);
+  color: #4f6ef7;
+}
+
+.bp-status-icon.overdue-icon {
+  background: rgba(239, 146, 60, 0.12);
+  color: #ef923c;
+}
+
+.bp-status-icon.paid-icon {
+  background: rgba(34, 197, 94, 0.12);
+  color: #22c55e;
+}
+
+.bp-status-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  position: relative;
+  z-index: 1;
+}
+
+.bp-status-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #6b7280;
+}
+
+.bp-status-amount {
+  font-size: 22px;
+  font-weight: 700;
+  color: #e8eaf0;
+  letter-spacing: -0.5px;
+  font-variant-numeric: tabular-nums;
+}
+
+.bp-status-count {
+  font-size: 12.5px;
+  color: #5c6270;
+}
+
+/* ── Company Summary Row ────────────────────────────────────────────────── */
+.bp-company-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.bp-company-card {
+  background: #181a24;
+  border: 1px solid #22253a;
+  border-radius: 12px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: border-color 0.2s, transform 0.2s;
+  cursor: pointer;
+}
+
+.bp-company-card:hover {
+  border-color: #2e3354;
+  transform: translateY(-2px);
+}
+
+.bp-company-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bp-company-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.bp-company-code {
+  font-size: 12px;
+  font-weight: 600;
+  color: #9ca3af;
+  letter-spacing: 0.04em;
+}
+
+.bp-company-amount {
+  font-size: 18px;
+  font-weight: 700;
+  color: #e8eaf0;
+  letter-spacing: -0.3px;
+  font-variant-numeric: tabular-nums;
+}
+
+.bp-company-label {
+  font-size: 12px;
+  color: #5c6270;
+}
+
+/* ── Filter Bar ─────────────────────────────────────────────────────────── */
+.bp-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.bp-filter-icon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid #22253a;
+  border-radius: 8px;
+  background: #181a24;
+  color: #5c6270;
+  cursor: pointer;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+
+.bp-filter-icon:hover {
+  border-color: #4f6ef7;
+  color: #e8eaf0;
+}
+
+.bp-filter-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.bp-filter-dropdown {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border: 1px solid #2a2d3e;
+  border-radius: 8px;
+  background: #1a1c25;
+  color: #c8ccd8;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.bp-filter-dropdown:hover {
+  border-color: #4f6ef7;
+  color: #e8eaf0;
+}
+
+.bp-filter-dropdown svg {
+  width: 13px;
+  height: 13px;
+  color: #5c6270;
+}
+
+.bp-filter-tabs {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: #181a24;
+  border: 1px solid #22253a;
+  border-radius: 8px;
+  padding: 3px;
+  overflow: hidden;
+}
+
+.bp-filter-tab {
+  padding: 5px 14px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #6b7280;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.bp-filter-tab:hover {
+  color: #c8ccd8;
+}
+
+.bp-filter-tab.active {
+  background: #4f6ef7;
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(79, 110, 247, 0.3);
+}
+
+.bp-results-count {
+  margin-left: auto;
+  font-size: 13px;
+  color: #5c6270;
+}
+
+/* ── Bills Table / Empty State ──────────────────────────────────────────── */
+.bp-table-card {
+  background: #181a24;
+  border: 1px solid #22253a;
+  border-radius: 14px;
+  overflow: hidden;
+  flex: 1;
+  min-height: 280px;
+}
+
+.bp-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px;
+  gap: 14px;
+}
+
+.bp-empty-icon {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: #1e2130;
+  border: 1px solid #2a2d3e;
+  color: #5c6270;
+  margin-bottom: 4px;
+}
+
+.bp-empty-icon svg {
+  width: 28px;
+  height: 28px;
+}
+
+.bp-empty-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #e8eaf0;
+  margin: 0;
+}
+
+.bp-empty-desc {
+  font-size: 13.5px;
+  color: #5c6270;
+  text-align: center;
+  margin: 0;
+  max-width: 280px;
+  line-height: 1.5;
+}
+
+.bp-empty-add-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 22px;
+  height: 38px;
+  margin-top: 8px;
+  border: none;
+  border-radius: 8px;
+  background: #ef4444;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+  box-shadow: 0 2px 12px rgba(239, 68, 68, 0.25);
+}
+
+.bp-empty-add-btn:hover {
+  background: #dc2626;
+  box-shadow: 0 4px 18px rgba(239, 68, 68, 0.35);
+}
+
+.bp-empty-add-btn:active {
+  transform: scale(0.97);
+}
+
+/* ── Bills Table (when data exists) ─────────────────────────────────────── */
+.bp-table-wrapper {
+  overflow-x: auto;
+}
+
+table.bp-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.bp-table thead tr {
+  border-bottom: 1px solid #22253a;
+}
+
+.bp-table thead th {
+  padding: 13px 16px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #5c6270;
+  white-space: nowrap;
+}
+
+.bp-table tbody tr {
+  border-bottom: 1px solid #1a1c28;
+  transition: background 0.15s;
+}
+
+.bp-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.bp-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.bp-table tbody td {
+  padding: 14px 16px;
+  color: #c8ccd8;
+  vertical-align: middle;
+}
+
+/* ── Scrollbar ──────────────────────────────────────────────────────────── */
+.bp-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.bp-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.bp-content::-webkit-scrollbar-thumb {
+  background: #2a2d3e;
+  border-radius: 99px;
+}
+
+.bp-content::-webkit-scrollbar-thumb:hover {
+  background: #3a3e52;
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .bp-status-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .bp-company-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .bp-status-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .bp-company-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .bp-content {
+    padding: 16px;
+  }
+
+  .bp-title-row {
+    flex-direction: column;
+    gap: 12px;
+  }
+}

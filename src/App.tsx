@@ -3,6 +3,7 @@ import type { CSSProperties, JSX } from 'react'
 import './App.css'
 import InventoryPage from './components/InventoryPage'
 import ExpensesPage from './components/ExpensesPage'
+import BillsPage from './components/BillsPage'
 
 type NavItem = {
   id: string
@@ -232,6 +233,7 @@ function App() {
   const renderContent = () => {
     if (active === 'inventory') return <InventoryPage />
     if (active === 'expenses') return <ExpensesPage />
+    if (active === 'bills') return <BillsPage />
     return (
       <main className="content-placeholder">
         <div className="placeholder-inner">
