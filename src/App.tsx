@@ -4,6 +4,7 @@ import './App.css'
 import InventoryPage from './components/InventoryPage'
 import ExpensesPage from './components/ExpensesPage'
 import BillsPage from './components/BillsPage'
+import SettingsPage from './components/SettingsPage'
 
 type NavItem = {
   id: string
@@ -228,12 +229,13 @@ const sections: NavSection[] = [
 ]
 
 function App() {
-  const [active, setActive] = useState('expenses')
+  const [active, setActive] = useState('settings')
 
   const renderContent = () => {
     if (active === 'inventory') return <InventoryPage />
     if (active === 'expenses') return <ExpensesPage />
     if (active === 'bills') return <BillsPage />
+    if (active === 'settings') return <SettingsPage />
     return (
       <main className="content-placeholder">
         <div className="placeholder-inner">
