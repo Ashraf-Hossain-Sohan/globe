@@ -6,6 +6,7 @@ import ExpensesPage from './components/ExpensesPage'
 import BillsPage from './components/BillsPage'
 import SettingsPage from './components/SettingsPage'
 import EmployeesPage from './components/EmployeesPage'
+import OfficeTimePage from './components/OfficeTimePage'
 
 type NavItem = {
   id: string
@@ -238,6 +239,7 @@ function App() {
     if (active === 'bills') return <BillsPage />
     if (active === 'settings') return <SettingsPage />
     if (active === 'employees') return <EmployeesPage />
+    if (active === 'office-time') return <OfficeTimePage />
     return (
       <main className="content-placeholder">
         <div className="placeholder-inner">

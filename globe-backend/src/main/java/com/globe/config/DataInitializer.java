@@ -2,20 +2,28 @@ package com.globe.config;
 
 import com.globe.model.Company;
 import com.globe.model.Employee;
+import com.globe.model.OfficeConfig;
 import com.globe.repository.CompanyRepository;
 import com.globe.repository.EmployeeRepository;
+import com.globe.repository.OfficeConfigRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalTime;
 
 @Component
 public class DataInitializer implements CommandLineRunner {
 
     private final CompanyRepository companyRepo;
     private final EmployeeRepository employeeRepo;
+    private final OfficeConfigRepository officeConfigRepo;
 
-    public DataInitializer(CompanyRepository companyRepo, EmployeeRepository employeeRepo) {
+    public DataInitializer(CompanyRepository companyRepo,
+                           EmployeeRepository employeeRepo,
+                           OfficeConfigRepository officeConfigRepo) {
         this.companyRepo = companyRepo;
         this.employeeRepo = employeeRepo;
+        this.officeConfigRepo = officeConfigRepo;
     }
 
     @Override
@@ -31,5 +39,15 @@ public class DataInitializer implements CommandLineRunner {
                 "Nabil Azmal Sajid", "COO", "Podcast",
                 "365F", "active", 2025, 0.0
         ));
+
+        /* ── Seed office configs ─────────────────────── */
+        officeConfigRepo.save(new OfficeConfig(
+                "XSRS", LocalTime.of(10, 0), LocalTime.of(18, 0), 5, "1,2,3,4,5"));
+        officeConfigRepo.save(new OfficeConfig(
+                "365F", LocalTime.of(10, 0), LocalTime.of(18, 0), 5, "1,2,3,4,5"));
+        officeConfigRepo.save(new OfficeConfig(
+                "EA", LocalTime.of(10, 0), LocalTime.of(18, 0), 5, "1,2,3,4,5"));
+        officeConfigRepo.save(new OfficeConfig(
+                "PD", LocalTime.of(10, 0), LocalTime.of(18, 0), 5, "1,2,3,4,5"));
     }
 }
