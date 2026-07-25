@@ -5,6 +5,7 @@ import InventoryPage from './components/InventoryPage'
 import ExpensesPage from './components/ExpensesPage'
 import BillsPage from './components/BillsPage'
 import SettingsPage from './components/SettingsPage'
+import EmployeesPage from './components/EmployeesPage'
 
 type NavItem = {
   id: string
@@ -236,6 +237,7 @@ function App() {
     if (active === 'expenses') return <ExpensesPage />
     if (active === 'bills') return <BillsPage />
     if (active === 'settings') return <SettingsPage />
+    if (active === 'employees') return <EmployeesPage />
     return (
       <main className="content-placeholder">
         <div className="placeholder-inner">

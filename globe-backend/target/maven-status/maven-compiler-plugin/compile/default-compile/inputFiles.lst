@@ -1,0 +1,9 @@
+/Users/ashraf/globe/globe-backend/src/main/java/com/globe/GlobeBackendApplication.java
+/Users/ashraf/globe/globe-backend/src/main/java/com/globe/config/DataInitializer.java
+/Users/ashraf/globe/globe-backend/src/main/java/com/globe/config/WebConfig.java
+/Users/ashraf/globe/globe-backend/src/main/java/com/globe/controller/CompanyController.java
+/Users/ashraf/globe/globe-backend/src/main/java/com/globe/controller/EmployeeController.java
+/Users/ashraf/globe/globe-backend/src/main/java/com/globe/model/Company.java
+/Users/ashraf/globe/globe-backend/src/main/java/com/globe/model/Employee.java
+/Users/ashraf/globe/globe-backend/src/main/java/com/globe/repository/CompanyRepository.java
+/Users/ashraf/globe/globe-backend/src/main/java/com/globe/repository/EmployeeRepository.java
