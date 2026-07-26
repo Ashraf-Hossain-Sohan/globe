@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import './BillsPage.css'
+import '../styles/BillsPage.css'
 
 /* ── SVG icon helper ─────────────────────────────────────────── */
 const Ico = ({

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import './SettingsPage.css'
+import '../styles/SettingsPage.css'
 
 /* ── SVG icon helper ─────────────────────────────────────────── */
 const Ico = ({

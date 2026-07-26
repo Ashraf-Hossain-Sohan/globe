@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import type { FormEvent } from 'react'
-import './OfficeTimePage.css'
+import '../styles/OfficeTimePage.css'
 
 /* ─── API Base ───────────────────────────────────────── */
 const API = 'http://localhost:8080/api'
@@ -197,7 +197,6 @@ export default function OfficeTimePage() {
 
       // Find today's record for current user (first employee in company for now)
       const todayStr = dateKey(new Date())
-      const allRecs: AttendanceRecord[] = attRes.ok ? await Promise.resolve(records) : []
       // We need to re-fetch to get latest records
       const freshAtt = await fetch(`${API}/attendance?company=${company}&year=${now.getFullYear()}&month=${now.getMonth() + 1}`)
       if (freshAtt.ok) {
@@ -498,7 +497,6 @@ export default function OfficeTimePage() {
                   const entries = recordsByDate[dk] || []
                   const today = isToday(day.date)
                   const workDay = day.inMonth && isWorkDay(day.date, config)
-                  const isPast = day.date < new Date(now.getFullYear(), now.getMonth(), now.getDate())
 
                   return (
                     <div

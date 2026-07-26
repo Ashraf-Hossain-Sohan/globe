@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import type { CSSProperties, JSX } from 'react'
-import './App.css'
+import './styles/App.css'
 import InventoryPage from './components/InventoryPage'
 import ExpensesPage from './components/ExpensesPage'
 import BillsPage from './components/BillsPage'

@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import type { FormEvent } from 'react'
-import './EmployeesPage.css'
+import '../styles/EmployeesPage.css'
 
 /* ─── API Base ───────────────────────────────────────── */
 const API = 'http://localhost:8080/api'
@@ -136,7 +136,6 @@ export default function EmployeesPage() {
 
   /* ── Totals ────────────────────────────────────── */
   const totalEmployees = stats.reduce((s, c) => s + c.total, 0)
-  const totalActive = stats.reduce((s, c) => s + c.active, 0)
 
   /* ── CRUD helpers ──────────────────────────────── */
   const openAddModal = () => {

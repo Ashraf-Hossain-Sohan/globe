@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import type { JSX } from 'react'
-import './InventoryPage.css'
+import '../styles/InventoryPage.css'
 
 /* ─── Types ──────────────────────────────────── */
 type InventoryItem = {
