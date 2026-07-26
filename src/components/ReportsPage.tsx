@@ -1,4 +1,4 @@
-import './ReportsPage.css'
+import '../styles/ReportsPage.css'
 
 /* ── Types ─────────────────────────────────────────────────────────────── */
 type CompanyRow = {

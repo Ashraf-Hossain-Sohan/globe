@@ -28,7 +28,7 @@ const Ico = ({
 )
 
 /* ── Data ────────────────────────────────────────────────────── */
-type StatusFilter = 'all' | 'draft' | 'sent' | 'paid' | 'cancelled'
+
 
 const SUMMARY = {
   draft: { amount: 0, count: 0 },
