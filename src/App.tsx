@@ -8,6 +8,7 @@ import SettingsPage from './components/SettingsPage'
 import EmployeesPage from './components/EmployeesPage'
 import OfficeTimePage from './components/OfficeTimePage'
 import UserAccessPage from './components/UserAccessPage'
+import InvoicePage from './components/InvoicePage'
 
 type NavItem = {
   id: string
@@ -242,6 +243,7 @@ function App() {
     if (active === 'employees') return <EmployeesPage />
     if (active === 'office-time') return <OfficeTimePage />
     if (active === 'user-access') return <UserAccessPage />
+    if (active === 'invoice') return <InvoicePage />
     return (
       <main className="content-placeholder">
         <div className="placeholder-inner">
