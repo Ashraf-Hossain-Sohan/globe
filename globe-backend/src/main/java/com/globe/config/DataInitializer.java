@@ -3,9 +3,11 @@ package com.globe.config;
 import com.globe.model.Company;
 import com.globe.model.Employee;
 import com.globe.model.OfficeConfig;
+import com.globe.model.UserAccess;
 import com.globe.repository.CompanyRepository;
 import com.globe.repository.EmployeeRepository;
 import com.globe.repository.OfficeConfigRepository;
+import com.globe.repository.UserAccessRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -17,13 +19,16 @@ public class DataInitializer implements CommandLineRunner {
     private final CompanyRepository companyRepo;
     private final EmployeeRepository employeeRepo;
     private final OfficeConfigRepository officeConfigRepo;
+    private final UserAccessRepository userAccessRepo;
 
     public DataInitializer(CompanyRepository companyRepo,
                            EmployeeRepository employeeRepo,
-                           OfficeConfigRepository officeConfigRepo) {
+                           OfficeConfigRepository officeConfigRepo,
+                           UserAccessRepository userAccessRepo) {
         this.companyRepo = companyRepo;
         this.employeeRepo = employeeRepo;
         this.officeConfigRepo = officeConfigRepo;
+        this.userAccessRepo = userAccessRepo;
     }
 
     @Override
@@ -49,5 +54,8 @@ public class DataInitializer implements CommandLineRunner {
                 "EA", LocalTime.of(10, 0), LocalTime.of(18, 0), 5, "1,2,3,4,5"));
         officeConfigRepo.save(new OfficeConfig(
                 "PD", LocalTime.of(10, 0), LocalTime.of(18, 0), 5, "1,2,3,4,5"));
+
+        /* ── Seed user access ────────────────────────── */
+        userAccessRepo.save(new UserAccess("ashrafhossainsohan@gmail.com", "admin", "XSRS,365F,EA,PD"));
     }
 }
