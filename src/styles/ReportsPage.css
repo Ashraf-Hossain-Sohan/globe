@@ -192,6 +192,7 @@
   border: 1px solid #22253a;
   border-radius: 14px;
   overflow: hidden;
+  flex-shrink: 0;
 }
 
 .rp-table-card-header {

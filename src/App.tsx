@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import type { CSSProperties, JSX } from 'react'
 import './styles/App.css'
 import InventoryPage from './components/InventoryPage'
@@ -235,6 +235,20 @@ const sections: NavSection[] = [
 
 function App() {
   const [active, setActive] = useState('settings')
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+
+  useEffect(() => {
+    const handleToggle = () => setIsSidebarOpen((prev) => !prev)
+    const handleClose = () => setIsSidebarOpen(false)
+
+    window.addEventListener('toggle-sidebar', handleToggle)
+    window.addEventListener('close-sidebar', handleClose)
+
+    return () => {
+      window.removeEventListener('toggle-sidebar', handleToggle)
+      window.removeEventListener('close-sidebar', handleClose)
+    }
+  }, [])
 
   const renderContent = () => {
     if (active === 'inventory') return <InventoryPage />
@@ -264,7 +278,7 @@ function App() {
 
   return (
     <>
-      <aside className="sidebar">
+      <aside className={`sidebar${isSidebarOpen ? ' is-open' : ''}`}>
         <header className="sidebar-header" style={{ flexDirection: 'column', alignItems: 'stretch', gap: 0, padding: '16px 14px 12px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>
             <span className="brand-avatar" aria-hidden="true">G</span>
@@ -276,7 +290,10 @@ function App() {
           <button
             id="add-company-btn"
             type="button"
-            onClick={() => setActive('overview')}
+            onClick={() => {
+              setActive('overview')
+              setIsSidebarOpen(false)
+            }}
             style={{
               marginTop: 10,
               display: 'flex',
@@ -313,7 +330,10 @@ function App() {
                     <button
                       type="button"
                       className={`nav-link${active === item.id ? ' is-active' : ''}`}
-                      onClick={() => setActive(item.id)}
+                      onClick={() => {
+                        setActive(item.id)
+                        setIsSidebarOpen(false)
+                      }}
                       style={item.color ? ({ '--icon-color': item.color } as CSSProperties) : undefined}
                     >
                       {item.icon}
@@ -336,6 +356,14 @@ function App() {
           </span>
         </footer>
       </aside>
+
+      {isSidebarOpen && (
+        <div
+          className="sidebar-backdrop"
+          onClick={() => setIsSidebarOpen(false)}
+          aria-hidden="true"
+        />
+      )}
 
       {renderContent()}
     </>
