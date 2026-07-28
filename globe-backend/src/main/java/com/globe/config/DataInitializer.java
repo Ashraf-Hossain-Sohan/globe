@@ -56,6 +56,9 @@ public class DataInitializer implements CommandLineRunner {
                 "PD", LocalTime.of(10, 0), LocalTime.of(18, 0), 5, "1,2,3,4,5"));
 
         /* ── Seed user access ────────────────────────── */
-        userAccessRepo.save(new UserAccess("ashrafhossainsohan@gmail.com", "admin", "XSRS,365F,EA,PD"));
+        // We'll give this legacy seeded user a default password. Real password should be encoded, 
+        // but since this is DataInitializer and DataSeeder also exists, we can use a dummy hash or inject PasswordEncoder.
+        // Or simply remove this from DataInitializer since DataSeeder now handles the initial admin.
+        // Actually, let's remove this line from DataInitializer since DataSeeder handles it properly with password encoding.
     }
 }

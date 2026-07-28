@@ -2,6 +2,7 @@ package com.globe.controller;
 
 import com.globe.model.OfficeConfig;
 import com.globe.repository.OfficeConfigRepository;
+import com.globe.service.AuditLogService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +14,12 @@ import java.util.List;
 public class OfficeConfigController {
 
     private final OfficeConfigRepository configRepo;
+    private final AuditLogService auditLogService;
 
-    public OfficeConfigController(OfficeConfigRepository configRepo) {
+    public OfficeConfigController(OfficeConfigRepository configRepo,
+                                  AuditLogService auditLogService) {
         this.configRepo = configRepo;
+        this.auditLogService = auditLogService;
     }
 
     /* ── Get config for a company ─────────────────── */
@@ -43,7 +47,11 @@ public class OfficeConfigController {
             existing.setWorkEndTime(updated.getWorkEndTime());
             existing.setGracePeriodMinutes(updated.getGracePeriodMinutes());
             existing.setWorkDays(updated.getWorkDays());
-            return ResponseEntity.ok(configRepo.save(existing));
+            OfficeConfig saved = configRepo.save(existing);
+            auditLogService.log("UPDATE", "OfficeConfig", String.valueOf(saved.getId()),
+                    "Updated Office Config for " + saved.getCompany() +
+                    ": start=" + saved.getWorkStartTime() + ", end=" + saved.getWorkEndTime());
+            return ResponseEntity.ok(saved);
         }).orElse(ResponseEntity.notFound().build());
     }
 }

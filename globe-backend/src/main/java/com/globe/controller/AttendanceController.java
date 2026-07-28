@@ -6,6 +6,7 @@ import com.globe.model.OfficeConfig;
 import com.globe.repository.AttendanceRepository;
 import com.globe.repository.EmployeeRepository;
 import com.globe.repository.OfficeConfigRepository;
+import com.globe.service.AuditLogService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,13 +23,16 @@ public class AttendanceController {
     private final AttendanceRepository attendanceRepo;
     private final EmployeeRepository employeeRepo;
     private final OfficeConfigRepository configRepo;
+    private final AuditLogService auditLogService;
 
     public AttendanceController(AttendanceRepository attendanceRepo,
                                 EmployeeRepository employeeRepo,
-                                OfficeConfigRepository configRepo) {
+                                OfficeConfigRepository configRepo,
+                                AuditLogService auditLogService) {
         this.attendanceRepo = attendanceRepo;
         this.employeeRepo = employeeRepo;
         this.configRepo = configRepo;
+        this.auditLogService = auditLogService;
     }
 
     /* ── List records for a month (calendar view) ──── */
@@ -62,7 +66,10 @@ public class AttendanceController {
         if (record.getStatus() == null || record.getStatus().isBlank()) {
             record.setStatus(determineStatus(record));
         }
-        return attendanceRepo.save(record);
+        AttendanceRecord saved = attendanceRepo.save(record);
+        auditLogService.log("CREATE", "Attendance", String.valueOf(saved.getId()),
+                "Created Attendance: " + saved.getEmployeeName() + " on " + saved.getDate());
+        return saved;
     }
 
     /* ── Update ────────────────────────────────────── */
@@ -78,18 +85,22 @@ public class AttendanceController {
             existing.setClockOut(updated.getClockOut());
             existing.setStatus(updated.getStatus());
             existing.setNotes(updated.getNotes());
-            return ResponseEntity.ok(attendanceRepo.save(existing));
+            AttendanceRecord saved = attendanceRepo.save(existing);
+            auditLogService.log("UPDATE", "Attendance", String.valueOf(saved.getId()),
+                    "Updated Attendance: " + saved.getEmployeeName() + " on " + saved.getDate());
+            return ResponseEntity.ok(saved);
         }).orElse(ResponseEntity.notFound().build());
     }
 
     /* ── Delete ────────────────────────────────────── */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        if (!attendanceRepo.existsById(id)) {
-            return ResponseEntity.notFound().build();
-        }
-        attendanceRepo.deleteById(id);
-        return ResponseEntity.noContent().build();
+        return attendanceRepo.findById(id).map(existing -> {
+            auditLogService.log("DELETE", "Attendance", String.valueOf(id),
+                    "Deleted Attendance: " + existing.getEmployeeName() + " on " + existing.getDate());
+            attendanceRepo.deleteById(id);
+            return ResponseEntity.noContent().<Void>build();
+        }).orElse(ResponseEntity.notFound().build());
     }
 
     /* ── Clock In ──────────────────────────────────── */
@@ -114,12 +125,6 @@ public class AttendanceController {
         }
 
         LocalTime now = LocalTime.now();
-        String status = "present";
-
-        // Check if late based on office config
-        configRepo.findByCompany(company).ifPresent(config -> {
-            // status will be set after
-        });
 
         AttendanceRecord record = new AttendanceRecord(
                 employeeId, emp.getName(), company,
@@ -127,7 +132,10 @@ public class AttendanceController {
                 determineClockInStatus(company, now), null
         );
 
-        return ResponseEntity.ok(attendanceRepo.save(record));
+        AttendanceRecord saved = attendanceRepo.save(record);
+        auditLogService.log("CREATE", "Attendance", String.valueOf(saved.getId()),
+                "Clock In: " + emp.getName() + " at " + now.toString().substring(0, 5));
+        return ResponseEntity.ok(saved);
     }
 
     /* ── Clock Out ─────────────────────────────────── */
@@ -138,8 +146,12 @@ public class AttendanceController {
                 return ResponseEntity.badRequest().body(
                         (Object) Map.of("error", "Already clocked out"));
             }
-            record.setClockOut(LocalTime.now());
-            return ResponseEntity.ok((Object) attendanceRepo.save(record));
+            LocalTime now = LocalTime.now();
+            record.setClockOut(now);
+            AttendanceRecord saved = attendanceRepo.save(record);
+            auditLogService.log("UPDATE", "Attendance", String.valueOf(saved.getId()),
+                    "Clock Out: " + saved.getEmployeeName() + " at " + now.toString().substring(0, 5));
+            return ResponseEntity.ok((Object) saved);
         }).orElse(ResponseEntity.notFound().build());
     }
 

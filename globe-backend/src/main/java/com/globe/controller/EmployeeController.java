@@ -3,6 +3,7 @@ package com.globe.controller;
 import com.globe.model.Employee;
 import com.globe.repository.CompanyRepository;
 import com.globe.repository.EmployeeRepository;
+import com.globe.service.AuditLogService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +16,14 @@ public class EmployeeController {
 
     private final EmployeeRepository employeeRepo;
     private final CompanyRepository companyRepo;
+    private final AuditLogService auditLogService;
 
-    public EmployeeController(EmployeeRepository employeeRepo, CompanyRepository companyRepo) {
+    public EmployeeController(EmployeeRepository employeeRepo,
+                              CompanyRepository companyRepo,
+                              AuditLogService auditLogService) {
         this.employeeRepo = employeeRepo;
         this.companyRepo = companyRepo;
+        this.auditLogService = auditLogService;
     }
 
     /* ── List all (optionally filter by company code) ─── */
@@ -41,7 +46,10 @@ public class EmployeeController {
     /* ── Create ─────────────────────────────────────── */
     @PostMapping
     public Employee create(@Valid @RequestBody Employee employee) {
-        return employeeRepo.save(employee);
+        Employee saved = employeeRepo.save(employee);
+        auditLogService.log("CREATE", "Employee", String.valueOf(saved.getId()),
+                "Created Employee: " + saved.getName() + " in " + saved.getCompany());
+        return saved;
     }
 
     /* ── Update ─────────────────────────────────────── */
@@ -56,18 +64,22 @@ public class EmployeeController {
             existing.setStatus(updated.getStatus());
             existing.setSinceYear(updated.getSinceYear());
             existing.setSalary(updated.getSalary());
-            return ResponseEntity.ok(employeeRepo.save(existing));
+            Employee saved = employeeRepo.save(existing);
+            auditLogService.log("UPDATE", "Employee", String.valueOf(saved.getId()),
+                    "Updated Employee: " + saved.getName());
+            return ResponseEntity.ok(saved);
         }).orElse(ResponseEntity.notFound().build());
     }
 
     /* ── Delete ─────────────────────────────────────── */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        if (!employeeRepo.existsById(id)) {
-            return ResponseEntity.notFound().build();
-        }
-        employeeRepo.deleteById(id);
-        return ResponseEntity.noContent().build();
+        return employeeRepo.findById(id).map(existing -> {
+            auditLogService.log("DELETE", "Employee", String.valueOf(id),
+                    "Deleted Employee: " + existing.getName());
+            employeeRepo.deleteById(id);
+            return ResponseEntity.noContent().<Void>build();
+        }).orElse(ResponseEntity.notFound().build());
     }
 
     /* ── Stats per company ──────────────────────────── */

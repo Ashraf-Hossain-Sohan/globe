@@ -10,6 +10,9 @@ import OfficeTimePage from './components/OfficeTimePage'
 import UserAccessPage from './components/UserAccessPage'
 import InvoicePage from './components/InvoicePage'
 import ReportsPage from './components/ReportsPage'
+import AuditLogPage from './components/AuditLogPage'
+import LoginPage from './components/LoginPage'
+import { useAuth } from './context/AuthContext'
 
 type NavItem = {
   id: string
@@ -234,6 +237,7 @@ const sections: NavSection[] = [
 ]
 
 function App() {
+  const { user, loading, logout } = useAuth()
   const [active, setActive] = useState('settings')
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
@@ -258,6 +262,7 @@ function App() {
     if (active === 'employees') return <EmployeesPage />
     if (active === 'office-time') return <OfficeTimePage />
     if (active === 'user-access') return <UserAccessPage />
+    if (active === 'audit-log') return <AuditLogPage />
     if (active === 'invoice') return <InvoicePage />
     if (active === 'reports') return <ReportsPage />
     return (
@@ -274,6 +279,14 @@ function App() {
         </div>
       </main>
     )
+  }
+
+  if (loading) {
+    return <div style={{ display: 'flex', height: '100vh', alignItems: 'center', justifyContent: 'center', background: '#0f172a', color: 'white' }}>Loading...</div>
+  }
+
+  if (!user) {
+    return <LoginPage />
   }
 
   return (
@@ -347,13 +360,30 @@ function App() {
         </nav>
 
         <footer className="sidebar-footer">
-          <span className="user-avatar" aria-hidden="true">
-            A
-          </span>
-          <span className="user-meta">
-            <span className="user-name">Ashraf Hossain</span>
-            <span className="user-email">ashrafhossainsohan@gmail.com</span>
-          </span>
+          <div style={{ display: 'flex', alignItems: 'center', flex: 1, overflow: 'hidden' }}>
+            <span className="user-avatar" aria-hidden="true">
+              {user.name.charAt(0).toUpperCase()}
+            </span>
+            <span className="user-meta" style={{ flex: 1, minWidth: 0 }}>
+              <span className="user-name">{user.name}</span>
+              <span className="user-email" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user.email}</span>
+            </span>
+          </div>
+          <button 
+            type="button" 
+            onClick={logout}
+            style={{ 
+              background: 'transparent', border: 'none', color: '#ef4444', 
+              cursor: 'pointer', padding: '4px', borderRadius: '4px' 
+            }}
+            title="Log out"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+              <polyline points="16 17 21 12 16 7" />
+              <line x1="21" y1="12" x2="9" y2="12" />
+            </svg>
+          </button>
         </footer>
       </aside>
 
