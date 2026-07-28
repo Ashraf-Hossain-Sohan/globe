@@ -112,6 +112,29 @@ export default function ProfilePage() {
 
       </header>
 
+      <div className="pf-body">
+
+        <div className="pf-container">
+
+          <div className="pf-title-block">
+
+            <h1 className="pf-title">
+              Profile
+            </h1>
+
+            <p className="pf-subtitle">
+              Manage your personal information and account settings
+            </p>
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+
     </div>
   )
+
 }
