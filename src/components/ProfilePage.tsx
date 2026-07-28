@@ -43,6 +43,10 @@ export default function ProfilePage() {
       setAvatarError(false)
     }
   }
+  const handleSavePersonalInfo = (e: FormEvent) => {
+    e.preventDefault()
+    alert('Personal information updated successfully!')
+  }
 
   return (
     <div className="pf-page" id="profile-page">
@@ -191,6 +195,135 @@ export default function ProfilePage() {
               </p>
 
             </div>
+
+
+          </div>
+
+          <div className="pf-card" id="pf-personal-info-card">
+
+            <div className="pf-card-header">
+
+              <div className="pf-header-icon blue-icon">
+
+                <Ico size={18}>
+                  <circle cx="12" cy="8" r="4" />
+                  <path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1" />
+                </Ico>
+
+              </div>
+
+
+              <div className="pf-header-text">
+
+                <h3>
+                  Personal Information
+                </h3>
+
+                <p>
+                  Update your name, phone number, and avatar
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <form
+              onSubmit={handleSavePersonalInfo}
+              className="pf-form"
+            >
+
+              <div className="pf-form-group">
+
+                <label
+                  className="pf-label"
+                  htmlFor="pf-display-name"
+                >
+                  Display Name
+                </label>
+
+
+                <input
+                  id="pf-display-name"
+                  type="text"
+                  className="pf-input"
+                  value={displayName}
+                  onChange={(e) => setDisplayName(e.target.value)}
+                />
+
+              </div>
+
+
+
+              <div className="pf-form-group">
+
+                <label
+                  className="pf-label"
+                  htmlFor="pf-phone"
+                >
+                  Phone Number
+                </label>
+
+
+                <input
+                  id="pf-phone"
+                  type="text"
+                  className="pf-input"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                />
+
+              </div>
+
+
+
+              <div className="pf-form-group">
+
+                <label
+                  className="pf-label"
+                  htmlFor="pf-avatar-url"
+                >
+                  Avatar URL
+                </label>
+
+
+                <input
+                  id="pf-avatar-url"
+                  type="text"
+                  className="pf-input"
+                  value={avatarUrl}
+                  onChange={(e) => {
+                    setAvatarUrl(e.target.value)
+                    setAvatarError(false)
+                  }}
+                />
+
+              </div>
+
+
+
+              <div className="pf-form-actions">
+
+                <button
+                  className="pf-btn-primary"
+                  type="submit"
+                  id="pf-save-personal-btn"
+                >
+
+                  <Ico size={15}>
+                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+                    <polyline points="17 21 17 13 7 13 7 21" />
+                    <polyline points="7 3 7 8 15 8" />
+                  </Ico>
+
+                  Save Changes
+
+                </button>
+
+              </div>
+
+
+            </form>
 
 
           </div>
