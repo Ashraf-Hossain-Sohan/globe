@@ -34,6 +34,8 @@ export default function ProfilePage() {
   const [avatarUrl, setAvatarUrl] = useState('https://example.com/avatar.jpg')
   const [currentEmail, setCurrentEmail] = useState('ashrafhossainsohan@gmail.com')
   const [newEmail, setNewEmail] = useState('newemail@example.com')
+  const [newPassword, setNewPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'info' | 'error' } | null>(null)
 
   const [avatarError, setAvatarError] = useState(false)
@@ -67,6 +69,19 @@ export default function ProfilePage() {
     }
     setCurrentEmail(newEmail)
     showToast(`Email updated to ${newEmail}`)
+  }
+
+  const handleUpdatePassword = (e: FormEvent) => {
+    e.preventDefault()
+    if (newPassword !== confirmPassword) {
+      showToast('Passwords do not match!', 'error')
+      return
+    }
+    showToast('Password updated successfully!')
+  }
+
+  const handleSendResetEmail = () => {
+    showToast(`Password reset link sent to ${currentEmail}`, 'info')
   }
 
   return (
@@ -455,6 +470,158 @@ export default function ProfilePage() {
             </form>
           </div>
 
+          <div className="pf-card" id="pf-change-password-card">
+
+
+            <div className="pf-card-header">
+
+
+              <div className="pf-header-icon blue-icon">
+
+                <Ico size={18}>
+
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+
+                </Ico>
+
+              </div>
+
+
+
+              <div className="pf-header-text">
+
+                <h3>
+                  Change Password
+                </h3>
+
+
+                <p>
+                  Update your password or send a reset link
+                </p>
+
+
+              </div>
+
+
+            </div>
+
+
+
+
+            <form
+              onSubmit={handleUpdatePassword}
+              className="pf-form"
+            >
+
+
+              <div className="pf-form-group">
+
+
+                <label
+                  className="pf-label"
+                  htmlFor="pf-new-password"
+                >
+                  New Password
+                </label>
+
+
+                <input
+
+                  id="pf-new-password"
+
+                  type="password"
+
+                  className="pf-input"
+
+                  value={newPassword}
+
+                  onChange={(e) => setNewPassword(e.target.value)}
+
+                />
+
+
+              </div>
+
+
+
+              <div className="pf-form-group">
+
+
+                <label
+                  className="pf-label"
+                  htmlFor="pf-confirm-password"
+                >
+                  Confirm Password
+                </label>
+
+
+                <input
+
+                  id="pf-confirm-password"
+
+                  type="password"
+
+                  className="pf-input"
+
+                  value={confirmPassword}
+
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+
+                />
+
+
+              </div>
+
+
+
+              <div className="pf-btn-row">
+
+
+                <button
+
+                  className="pf-btn-outline"
+
+                  type="submit"
+
+                  id="pf-update-password-btn"
+
+                >
+
+                  Update Password
+
+                </button>
+
+
+
+
+                <button
+
+                  className="pf-btn-outline"
+
+                  type="button"
+
+                  id="pf-send-reset-btn"
+
+                  onClick={handleSendResetEmail}
+
+                >
+
+                  Send Reset Email
+
+                </button>
+
+
+
+              </div>
+
+
+            </form>
+
+
+
+          </div>
 
         </div>
 
