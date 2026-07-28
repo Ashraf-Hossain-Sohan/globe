@@ -5,6 +5,7 @@ import InventoryPage from './components/InventoryPage'
 import ExpensesPage from './components/ExpensesPage'
 import BillsPage from './components/BillsPage'
 import SettingsPage from './components/SettingsPage'
+import ProfilePage from './components/ProfilePage'
 import EmployeesPage from './components/EmployeesPage'
 import OfficeTimePage from './components/OfficeTimePage'
 import UserAccessPage from './components/UserAccessPage'
@@ -238,7 +239,7 @@ const sections: NavSection[] = [
 
 function App() {
   const { user, loading, logout } = useAuth()
-  const [active, setActive] = useState('settings')
+  const [active, setActive] = useState('profile')
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
   useEffect(() => {
@@ -259,12 +260,13 @@ function App() {
     if (active === 'expenses') return <ExpensesPage />
     if (active === 'bills') return <BillsPage />
     if (active === 'settings') return <SettingsPage />
-    if (active === 'employees') return <EmployeesPage />
-    if (active === 'office-time') return <OfficeTimePage />
-    if (active === 'user-access') return <UserAccessPage />
-    if (active === 'audit-log') return <AuditLogPage />
-    if (active === 'invoice') return <InvoicePage />
-    if (active === 'reports') return <ReportsPage />
+if (active === 'profile') return <ProfilePage />
+if (active === 'employees') return <EmployeesPage />
+if (active === 'office-time') return <OfficeTimePage />
+if (active === 'user-access') return <UserAccessPage />
+if (active === 'audit-log') return <AuditLogPage />
+if (active === 'invoice') return <InvoicePage />
+if (active === 'reports') return <ReportsPage />
     return (
       <main className="content-placeholder">
         <div className="placeholder-inner">
@@ -359,32 +361,49 @@ function App() {
           ))}
         </nav>
 
-        <footer className="sidebar-footer">
-          <div style={{ display: 'flex', alignItems: 'center', flex: 1, overflow: 'hidden' }}>
-            <span className="user-avatar" aria-hidden="true">
-              {user.name.charAt(0).toUpperCase()}
-            </span>
-            <span className="user-meta" style={{ flex: 1, minWidth: 0 }}>
-              <span className="user-name">{user.name}</span>
-              <span className="user-email" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user.email}</span>
-            </span>
-          </div>
-          <button 
-            type="button" 
-            onClick={logout}
-            style={{ 
-              background: 'transparent', border: 'none', color: '#ef4444', 
-              cursor: 'pointer', padding: '4px', borderRadius: '4px' 
-            }}
-            title="Log out"
-          >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-              <polyline points="16 17 21 12 16 7" />
-              <line x1="21" y1="12" x2="9" y2="12" />
-            </svg>
-          </button>
-        </footer>
+<footer
+  className="sidebar-footer"
+  onClick={() => setActive('profile')}
+  style={{ cursor: 'pointer' }}
+  title="Open Profile"
+>
+  <div style={{ display: 'flex', alignItems: 'center', flex: 1, overflow: 'hidden' }}>
+    <span className="user-avatar" aria-hidden="true">
+      {user.name.charAt(0).toUpperCase()}
+    </span>
+
+    <span className="user-meta" style={{ flex: 1, minWidth: 0 }}>
+      <span className="user-name">{user.name}</span>
+
+      <span
+        className="user-email"
+        style={{
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap'
+        }}
+      >
+        {user.email}
+      </span>
+    </span>
+  </div>
+
+  <button
+    type="button"
+    onClick={logout}
+    style={{
+      background: 'transparent',
+      border: 'none',
+      color: '#ef4444',
+      cursor: 'pointer',
+      padding: '4px',
+      borderRadius: '4px'
+    }}
+    title="Log out"
+  >
+    ...
+  </button>
+</footer>
       </aside>
 
       {isSidebarOpen && (
