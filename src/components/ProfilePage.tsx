@@ -33,6 +33,8 @@ export default function ProfilePage() {
   const [phone, setPhone] = useState('+880 1XXX-XXXXXX')
   const [avatarUrl, setAvatarUrl] = useState('https://example.com/avatar.jpg')
   const [currentEmail, setCurrentEmail] = useState('ashrafhossainsohan@gmail.com')
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'info' | 'error' } | null>(null)
+
   const [avatarError, setAvatarError] = useState(false)
   const handleAvatarFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -43,14 +45,30 @@ export default function ProfilePage() {
       setAvatarError(false)
     }
   }
+
+  const showToast = (message: string, type: 'success' | 'info' | 'error' = 'success') => {
+    setToast({ message, type })
+    setTimeout(() => {
+      setToast(null)
+    }, 3500)
+  }
+
   const handleSavePersonalInfo = (e: FormEvent) => {
     e.preventDefault()
-    alert('Personal information updated successfully!')
+    showToast('Personal information updated successfully!')
   }
 
   return (
     <div className="pf-page" id="profile-page">
+      {/* ── Toast Notification ───────────────────────────── */}
+      {toast && (
+        <div className={`pf-toast pf-toast-${toast.type}`}>
+          <span className="pf-toast-dot" />
+          <span>{toast.message}</span>
+        </div>
+      )}
 
+      {/* ── Top Header Bar ─────────────────────────────────── */}
       <header className="pf-header">
         <button
           className="pf-company-dropdown"
