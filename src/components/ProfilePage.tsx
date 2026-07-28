@@ -33,6 +33,7 @@ export default function ProfilePage() {
   const [phone, setPhone] = useState('+880 1XXX-XXXXXX')
   const [avatarUrl, setAvatarUrl] = useState('https://example.com/avatar.jpg')
   const [currentEmail, setCurrentEmail] = useState('ashrafhossainsohan@gmail.com')
+  const [newEmail, setNewEmail] = useState('newemail@example.com')
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'info' | 'error' } | null>(null)
 
   const [avatarError, setAvatarError] = useState(false)
@@ -56,6 +57,16 @@ export default function ProfilePage() {
   const handleSavePersonalInfo = (e: FormEvent) => {
     e.preventDefault()
     showToast('Personal information updated successfully!')
+  }
+
+  const handleUpdateEmail = (e: FormEvent) => {
+    e.preventDefault()
+    if (!newEmail || newEmail === currentEmail) {
+      showToast('Please enter a new email address', 'error')
+      return
+    }
+    setCurrentEmail(newEmail)
+    showToast(`Email updated to ${newEmail}`)
   }
 
   return (
@@ -344,6 +355,104 @@ export default function ProfilePage() {
             </form>
 
 
+          </div>
+
+          <div className="pf-card" id="pf-change-email-card">
+
+
+            <div className="pf-card-header">
+
+
+              <div className="pf-header-icon blue-icon">
+
+                <Ico size={18}>
+
+                  <rect x="2" y="4" width="20" height="16" rx="2" />
+
+                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+
+                </Ico>
+
+              </div>
+
+
+
+              <div className="pf-header-text">
+
+                <h3>
+                  Change Email
+                </h3>
+
+
+                <p>
+                  Current email: {currentEmail}
+                </p>
+
+
+              </div>
+
+
+            </div>
+
+
+
+
+            <form
+              onSubmit={handleUpdateEmail}
+              className="pf-form"
+            >
+
+
+              <div className="pf-form-group">
+
+
+                <label
+                  className="pf-label"
+                  htmlFor="pf-new-email"
+                >
+                  New Email Address
+                </label>
+
+
+
+                <input
+
+                  id="pf-new-email"
+
+                  type="email"
+
+                  className="pf-input"
+
+                  placeholder="newemail@example.com"
+
+                  value={newEmail}
+
+                  onChange={(e) => setNewEmail(e.target.value)}
+
+                />
+
+
+              </div>
+
+
+
+              <div className="pf-form-actions">
+
+
+                <button
+
+                  className="pf-btn-outline"
+
+                  type="submit"
+
+                  id="pf-update-email-btn"
+
+                >
+
+                  Update Email
+                </button>
+              </div>
+            </form>
           </div>
 
 
