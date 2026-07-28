@@ -1,11 +1,19 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import type { CSSProperties, JSX } from 'react'
-import './App.css'
+import './styles/App.css'
 import InventoryPage from './components/InventoryPage'
 import ExpensesPage from './components/ExpensesPage'
 import BillsPage from './components/BillsPage'
 import SettingsPage from './components/SettingsPage'
 import ProfilePage from './components/ProfilePage'
+import EmployeesPage from './components/EmployeesPage'
+import OfficeTimePage from './components/OfficeTimePage'
+import UserAccessPage from './components/UserAccessPage'
+import InvoicePage from './components/InvoicePage'
+import ReportsPage from './components/ReportsPage'
+import AuditLogPage from './components/AuditLogPage'
+import LoginPage from './components/LoginPage'
+import { useAuth } from './context/AuthContext'
 
 type NavItem = {
   id: string
@@ -230,14 +238,35 @@ const sections: NavSection[] = [
 ]
 
 function App() {
+  const { user, loading, logout } = useAuth()
   const [active, setActive] = useState('profile')
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+
+  useEffect(() => {
+    const handleToggle = () => setIsSidebarOpen((prev) => !prev)
+    const handleClose = () => setIsSidebarOpen(false)
+
+    window.addEventListener('toggle-sidebar', handleToggle)
+    window.addEventListener('close-sidebar', handleClose)
+
+    return () => {
+      window.removeEventListener('toggle-sidebar', handleToggle)
+      window.removeEventListener('close-sidebar', handleClose)
+    }
+  }, [])
 
   const renderContent = () => {
     if (active === 'inventory') return <InventoryPage />
     if (active === 'expenses') return <ExpensesPage />
     if (active === 'bills') return <BillsPage />
     if (active === 'settings') return <SettingsPage />
-    if (active === 'profile') return <ProfilePage />
+if (active === 'profile') return <ProfilePage />
+if (active === 'employees') return <EmployeesPage />
+if (active === 'office-time') return <OfficeTimePage />
+if (active === 'user-access') return <UserAccessPage />
+if (active === 'audit-log') return <AuditLogPage />
+if (active === 'invoice') return <InvoicePage />
+if (active === 'reports') return <ReportsPage />
     return (
       <main className="content-placeholder">
         <div className="placeholder-inner">
@@ -254,9 +283,17 @@ function App() {
     )
   }
 
+  if (loading) {
+    return <div style={{ display: 'flex', height: '100vh', alignItems: 'center', justifyContent: 'center', background: '#0f172a', color: 'white' }}>Loading...</div>
+  }
+
+  if (!user) {
+    return <LoginPage />
+  }
+
   return (
     <>
-      <aside className="sidebar">
+      <aside className={`sidebar${isSidebarOpen ? ' is-open' : ''}`}>
         <header className="sidebar-header" style={{ flexDirection: 'column', alignItems: 'stretch', gap: 0, padding: '16px 14px 12px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>
             <span className="brand-avatar" aria-hidden="true">G</span>
@@ -268,7 +305,10 @@ function App() {
           <button
             id="add-company-btn"
             type="button"
-            onClick={() => setActive('overview')}
+            onClick={() => {
+              setActive('overview')
+              setIsSidebarOpen(false)
+            }}
             style={{
               marginTop: 10,
               display: 'flex',
@@ -305,7 +345,10 @@ function App() {
                     <button
                       type="button"
                       className={`nav-link${active === item.id ? ' is-active' : ''}`}
-                      onClick={() => setActive(item.id)}
+                      onClick={() => {
+                        setActive(item.id)
+                        setIsSidebarOpen(false)
+                      }}
                       style={item.color ? ({ '--icon-color': item.color } as CSSProperties) : undefined}
                     >
                       {item.icon}
@@ -318,16 +361,58 @@ function App() {
           ))}
         </nav>
 
-        <footer className="sidebar-footer" onClick={() => setActive('profile')} style={{ cursor: 'pointer' }} title="Open Profile">
-          <span className="user-avatar" aria-hidden="true">
-            A
-          </span>
-          <span className="user-meta">
-            <span className="user-name">Ashraf Hossain</span>
-            <span className="user-email">ashrafhossainsohan@gmail.com</span>
-          </span>
-        </footer>
+<footer
+  className="sidebar-footer"
+  onClick={() => setActive('profile')}
+  style={{ cursor: 'pointer' }}
+  title="Open Profile"
+>
+  <div style={{ display: 'flex', alignItems: 'center', flex: 1, overflow: 'hidden' }}>
+    <span className="user-avatar" aria-hidden="true">
+      {user.name.charAt(0).toUpperCase()}
+    </span>
+
+    <span className="user-meta" style={{ flex: 1, minWidth: 0 }}>
+      <span className="user-name">{user.name}</span>
+
+      <span
+        className="user-email"
+        style={{
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap'
+        }}
+      >
+        {user.email}
+      </span>
+    </span>
+  </div>
+
+  <button
+    type="button"
+    onClick={logout}
+    style={{
+      background: 'transparent',
+      border: 'none',
+      color: '#ef4444',
+      cursor: 'pointer',
+      padding: '4px',
+      borderRadius: '4px'
+    }}
+    title="Log out"
+  >
+    ...
+  </button>
+</footer>
       </aside>
+
+      {isSidebarOpen && (
+        <div
+          className="sidebar-backdrop"
+          onClick={() => setIsSidebarOpen(false)}
+          aria-hidden="true"
+        />
+      )}
 
       {renderContent()}
     </>

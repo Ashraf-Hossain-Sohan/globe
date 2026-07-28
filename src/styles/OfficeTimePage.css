@@ -1,0 +1,859 @@
+/* ===== OFFICE TIME PAGE ================================================== */
+.officetime-page {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100svh;
+  overflow: hidden;
+  background: #12131a;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* ── Top Header ─────────────────────────────────────────────────────────── */
+.ot-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 24px;
+  height: 56px;
+  background: #0e0f14;
+  border-bottom: 1px solid #1e2030;
+  flex-shrink: 0;
+}
+
+.ot-company-dropdown {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border: 1px solid #2a2d3e;
+  border-radius: 8px;
+  background: #1a1c25;
+  color: #c8ccd8;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.ot-company-dropdown:hover {
+  border-color: #4f6ef7;
+  color: #e8eaf0;
+}
+
+.ot-company-dropdown svg { width: 13px; height: 13px; color: #5c6270; }
+
+.ot-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.ot-add-entry-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 16px;
+  height: 34px;
+  border: none;
+  border-radius: 8px;
+  background: #4f6ef7;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.ot-add-entry-btn:hover { background: #3d5ce6; }
+.ot-add-entry-btn:active { transform: scale(0.97); }
+
+.ot-icon-btn {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid #2a2d3e;
+  border-radius: 8px;
+  background: #1a1c25;
+  color: #8b909c;
+  cursor: pointer;
+  transition: all 0.15s;
+  position: relative;
+}
+
+.ot-icon-btn:hover { border-color: #4f6ef7; color: #e8eaf0; }
+
+.ot-notification-dot {
+  position: absolute;
+  top: 5px; right: 5px;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #ef4444;
+  border: 1.5px solid #0e0f14;
+}
+
+.ot-user-avatar-small {
+  display: grid;
+  place-items: center;
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4f6ef7, #7c3aed);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  transition: opacity 0.15s;
+}
+
+.ot-user-avatar-small:hover { opacity: 0.85; }
+
+.ot-header-user {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.ot-header-user svg { width: 12px; height: 12px; color: #5c6270; }
+
+/* ── Body ───────────────────────────────────────────────────────────────── */
+.ot-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 28px 36px;
+}
+
+.ot-body::-webkit-scrollbar { width: 6px; }
+.ot-body::-webkit-scrollbar-track { background: transparent; }
+.ot-body::-webkit-scrollbar-thumb { background: #2a2d3e; border-radius: 3px; }
+
+/* ── Title Row ──────────────────────────────────────────────────────────── */
+.ot-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  gap: 16px;
+}
+
+.ot-title-text h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #e8eaf0;
+  margin: 0 0 4px;
+  letter-spacing: -0.5px;
+}
+
+.ot-title-text p {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
+}
+
+.ot-title-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+/* ── Company Selector ───────────────────────────────────────────────────── */
+.ot-company-select-wrap {
+  position: relative;
+}
+
+.ot-company-select-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border: 1px solid #2a2d3e;
+  border-radius: 8px;
+  background: #1a1c25;
+  color: #c8ccd8;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.ot-company-select-btn:hover { border-color: #4f6ef7; color: #e8eaf0; }
+.ot-company-select-btn svg { width: 13px; height: 13px; color: #5c6270; }
+
+.ot-company-dropdown-list {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 180px;
+  padding: 6px;
+  background: #1a1c28;
+  border: 1px solid #2a2d3e;
+  border-radius: 10px;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.5);
+  z-index: 100;
+  animation: ot-dropIn 0.18s ease;
+}
+
+@keyframes ot-dropIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.ot-company-dropdown-list button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #c8ccd8;
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.12s;
+  text-align: left;
+}
+
+.ot-company-dropdown-list button:hover { background: rgba(79,110,247,0.1); }
+.ot-company-dropdown-list button.is-selected { background: rgba(79,110,247,0.15); color: #60a5fa; font-weight: 600; }
+
+.ot-filter-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ── Clock In/Out Card ──────────────────────────────────────────────────── */
+.ot-clock-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 22px;
+  background: #161821;
+  border: 1px solid #1e2030;
+  border-radius: 14px;
+  margin-bottom: 24px;
+  animation: ot-fadeUp 0.35s ease;
+}
+
+@keyframes ot-fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.ot-clock-icon {
+  display: grid;
+  place-items: center;
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  background: rgba(96,165,250,0.12);
+  color: #60a5fa;
+  flex-shrink: 0;
+}
+
+.ot-clock-icon svg { width: 20px; height: 20px; }
+
+.ot-clock-info { flex: 1; }
+
+.ot-clock-info h3 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #e8eaf0;
+  line-height: 1.3;
+}
+
+.ot-clock-info p {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.ot-clock-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #4f6ef7;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.ot-clock-btn:hover { background: #3d5ce6; }
+.ot-clock-btn:active { transform: scale(0.97); }
+.ot-clock-btn svg { width: 14px; height: 14px; }
+
+.ot-clock-btn.is-out {
+  background: rgba(239,68,68,0.12);
+  color: #f87171;
+}
+
+.ot-clock-btn.is-out:hover { background: rgba(239,68,68,0.2); }
+
+.ot-clock-time {
+  font-size: 12px;
+  color: #4ade80;
+  margin-top: 2px;
+}
+
+.ot-clock-time.is-complete {
+  color: #6b7280;
+}
+
+/* ── Calendar ───────────────────────────────────────────────────────────── */
+.ot-calendar {
+  background: #161821;
+  border: 1px solid #1e2030;
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 24px;
+  animation: ot-fadeUp 0.4s ease;
+}
+
+.ot-cal-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.ot-cal-header svg {
+  width: 18px; height: 18px;
+  color: #60a5fa;
+}
+
+.ot-cal-month {
+  font-size: 18px;
+  font-weight: 700;
+  color: #e8eaf0;
+  letter-spacing: -0.3px;
+}
+
+.ot-cal-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.ot-cal-nav-btn {
+  display: grid;
+  place-items: center;
+  width: 30px; height: 30px;
+  padding: 0;
+  border: 1px solid #2a2d3e;
+  border-radius: 6px;
+  background: transparent;
+  color: #8b909c;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.ot-cal-nav-btn:hover { border-color: #4f6ef7; color: #e8eaf0; }
+.ot-cal-nav-btn svg { width: 14px; height: 14px; }
+
+.ot-cal-today-btn {
+  padding: 5px 14px;
+  border: 1px solid #2a2d3e;
+  border-radius: 6px;
+  background: transparent;
+  color: #8b909c;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.ot-cal-today-btn:hover { border-color: #4f6ef7; color: #e8eaf0; }
+
+/* Calendar Grid */
+.ot-cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+  background: #1e2030;
+  border: 1px solid #1e2030;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.ot-cal-dow {
+  padding: 10px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #5c6270;
+  text-align: center;
+  background: #12131a;
+}
+
+.ot-cal-cell {
+  background: #12131a;
+  min-height: 100px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: background 0.15s;
+  cursor: pointer;
+  position: relative;
+}
+
+.ot-cal-cell:hover { background: #161821; }
+
+.ot-cal-cell.is-outside {
+  background: #0e0f14;
+  opacity: 0.35;
+}
+
+.ot-cal-cell.is-today {
+  outline: 2px solid #4f6ef7;
+  outline-offset: -2px;
+  border-radius: 2px;
+}
+
+.ot-cal-cell.is-today .ot-cal-day {
+  color: #4f6ef7;
+}
+
+.ot-cal-day {
+  font-size: 14px;
+  font-weight: 600;
+  color: #c8ccd8;
+  line-height: 1;
+}
+
+.ot-cal-entries {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-top: 2px;
+  flex: 1;
+  min-height: 0;
+}
+
+.ot-cal-entry {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: #c8ccd8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.5;
+}
+
+.ot-cal-entry.status-present {
+  background: rgba(34,197,94,0.12);
+  color: #4ade80;
+}
+
+.ot-cal-entry.status-late {
+  background: rgba(251,146,60,0.12);
+  color: #fb923c;
+}
+
+.ot-cal-entry.status-absent {
+  background: rgba(239,68,68,0.1);
+  color: #f87171;
+}
+
+.ot-cal-entry.status-half-day {
+  background: rgba(96,165,250,0.12);
+  color: #60a5fa;
+}
+
+.ot-cal-must-come {
+  font-size: 10px;
+  color: #3b82f6;
+  margin-top: auto;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.ot-cal-must-come:hover { color: #60a5fa; }
+
+.ot-cal-dash {
+  font-size: 12px;
+  color: #2a2d3e;
+}
+
+/* ── Attendance Report ──────────────────────────────────────────────────── */
+.ot-report {
+  background: #161821;
+  border: 1px solid #1e2030;
+  border-radius: 14px;
+  padding: 20px;
+  animation: ot-fadeUp 0.45s ease;
+}
+
+.ot-report-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.ot-report-icon {
+  display: grid;
+  place-items: center;
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: rgba(96,165,250,0.12);
+  color: #60a5fa;
+  flex-shrink: 0;
+}
+
+.ot-report-icon svg { width: 18px; height: 18px; }
+
+.ot-report-title { flex: 1; }
+
+.ot-report-title h3 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #e8eaf0;
+}
+
+.ot-report-title p {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: #5c6270;
+}
+
+.ot-export-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  background: rgba(34,197,94,0.1);
+  color: #4ade80;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.ot-export-btn:hover { background: rgba(34,197,94,0.18); }
+.ot-export-btn svg { width: 14px; height: 14px; }
+
+/* Report Table */
+.ot-report-table-wrap {
+  overflow-x: auto;
+}
+
+.ot-report-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.ot-report-table thead th {
+  padding: 10px 14px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #5c6270;
+  border-bottom: 1px solid #1e2030;
+  white-space: nowrap;
+}
+
+.ot-report-table tbody td {
+  padding: 12px 14px;
+  color: #c8ccd8;
+  border-bottom: 1px solid #1a1c25;
+  white-space: nowrap;
+}
+
+.ot-report-table tbody tr:hover {
+  background: rgba(255,255,255,0.02);
+}
+
+.ot-report-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.ot-report-name {
+  font-weight: 600;
+  color: #e8eaf0;
+}
+
+.ot-report-role {
+  font-size: 12px;
+  color: #5c6270;
+}
+
+.ot-stat-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.ot-stat-badge.stat-present { background: rgba(34,197,94,0.1); color: #4ade80; }
+.ot-stat-badge.stat-late { background: rgba(251,146,60,0.1); color: #fb923c; }
+.ot-stat-badge.stat-absent { background: rgba(239,68,68,0.08); color: #f87171; }
+.ot-stat-badge.stat-half { background: rgba(96,165,250,0.1); color: #60a5fa; }
+
+.ot-report-empty {
+  text-align: center;
+  padding: 28px 20px;
+  color: #3a3d4e;
+  font-size: 13px;
+}
+
+/* ── Loading / Error ────────────────────────────────────────────────────── */
+.ot-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  color: #5c6270;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.ot-spinner {
+  width: 20px; height: 20px;
+  border: 2px solid #2a2d3e;
+  border-top-color: #4f6ef7;
+  border-radius: 50%;
+  animation: ot-spin 0.7s linear infinite;
+}
+
+@keyframes ot-spin { to { transform: rotate(360deg); } }
+
+.ot-error {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  background: rgba(239,68,68,0.08);
+  border: 1px solid rgba(239,68,68,0.2);
+  border-radius: 10px;
+  color: #f87171;
+  font-size: 13px;
+}
+
+.ot-error svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+.ot-error-dismiss {
+  margin-left: auto;
+  padding: 4px 12px;
+  border: none;
+  border-radius: 6px;
+  background: rgba(239,68,68,0.15);
+  color: #f87171;
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.ot-error-dismiss:hover { background: rgba(239,68,68,0.25); }
+
+/* ===== MODAL ============================================================= */
+.ot-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px);
+  display: grid;
+  place-items: center;
+  z-index: 1000;
+  animation: ot-overlayIn 0.2s ease;
+}
+
+@keyframes ot-overlayIn { from { opacity: 0; } to { opacity: 1; } }
+
+.ot-modal {
+  background: #161821;
+  border: 1px solid #1e2030;
+  border-radius: 16px;
+  width: 520px;
+  max-width: 92vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+  animation: ot-modalIn 0.25s ease;
+}
+
+@keyframes ot-modalIn {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.ot-modal::-webkit-scrollbar { width: 5px; }
+.ot-modal::-webkit-scrollbar-thumb { background: #2a2d3e; border-radius: 3px; }
+
+.ot-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid #1e2030;
+}
+
+.ot-modal-header h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #e8eaf0;
+  margin: 0;
+}
+
+.ot-modal-close {
+  display: grid;
+  place-items: center;
+  width: 32px; height: 32px;
+  padding: 0;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: #5c6270;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.ot-modal-close:hover { background: rgba(239,68,68,0.1); color: #f87171; }
+.ot-modal-close svg { width: 18px; height: 18px; }
+
+.ot-modal-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.ot-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ot-form-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #9ca3af;
+}
+
+.ot-form-group label .ot-required { color: #ef4444; margin-left: 2px; }
+
+.ot-form-input {
+  padding: 10px 14px;
+  border: 1px solid #2a2d3e;
+  border-radius: 8px;
+  background: #1a1c28;
+  color: #e8eaf0;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.ot-form-input::placeholder { color: #4a4d5e; }
+.ot-form-input:focus { border-color: #4f6ef7; box-shadow: 0 0 0 3px rgba(79,110,247,0.12); }
+
+.ot-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.ot-form-select {
+  padding: 10px 14px;
+  border: 1px solid #2a2d3e;
+  border-radius: 8px;
+  background: #1a1c28;
+  color: #e8eaf0;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235c6270' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+}
+
+.ot-form-select:focus { border-color: #4f6ef7; box-shadow: 0 0 0 3px rgba(79,110,247,0.12); }
+.ot-form-select option { background: #1a1c28; color: #e8eaf0; }
+
+.ot-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 16px 24px 20px;
+  border-top: 1px solid #1e2030;
+}
+
+.ot-btn-cancel {
+  padding: 9px 20px;
+  border: 1px solid #2a2d3e;
+  border-radius: 8px;
+  background: transparent;
+  color: #9ca3af;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.ot-btn-cancel:hover { border-color: #4a4d5e; color: #e8eaf0; }
+
+.ot-btn-save {
+  padding: 9px 24px;
+  border: none;
+  border-radius: 8px;
+  background: #4f6ef7;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.ot-btn-save:hover { background: #3d5ce6; }
+.ot-btn-save:active { transform: scale(0.97); }
+.ot-btn-save:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ── Responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .ot-body { padding: 20px 16px; }
+  .ot-title-row { flex-direction: column; gap: 12px; }
+  .ot-cal-cell { min-height: 72px; padding: 6px 4px; }
+  .ot-cal-day { font-size: 12px; }
+  .ot-cal-entry { font-size: 9px; }
+  .ot-form-row { grid-template-columns: 1fr; }
+}
