@@ -33,6 +33,16 @@ export default function ProfilePage() {
   const [phone, setPhone] = useState('+880 1XXX-XXXXXX')
   const [avatarUrl, setAvatarUrl] = useState('https://example.com/avatar.jpg')
   const [currentEmail, setCurrentEmail] = useState('ashrafhossainsohan@gmail.com')
+  const [avatarError, setAvatarError] = useState(false)
+  const handleAvatarFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+
+    if (file) {
+      const url = URL.createObjectURL(file)
+      setAvatarUrl(url)
+      setAvatarError(false)
+    }
+  }
 
   return (
     <div className="pf-page" id="profile-page">
@@ -125,6 +135,63 @@ export default function ProfilePage() {
             <p className="pf-subtitle">
               Manage your personal information and account settings
             </p>
+
+          </div>
+
+          <div className="pf-card pf-avatar-card" id="pf-avatar-banner">
+
+            <label
+              className="pf-avatar-wrapper"
+              htmlFor="avatar-file-input"
+            >
+
+              {avatarUrl && !avatarError ? (
+                <img
+                  src={avatarUrl}
+                  alt={displayName}
+                  className="pf-avatar-img"
+                  onError={() => setAvatarError(true)}
+                />
+              ) : (
+                <div className="pf-avatar-circle">
+                  {displayName.charAt(0) || 'A'}
+                </div>
+              )}
+
+
+              <span className="pf-camera-badge">
+
+                <Ico size={11}>
+                  <path d="M14.5 4h-5L8 6H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-4l-1.5-2Z" />
+                  <circle cx="12" cy="13" r="3" />
+                </Ico>
+
+              </span>
+
+
+              <input
+                type="file"
+                id="avatar-file-input"
+                accept="image/*"
+                onChange={handleAvatarFileSelect}
+                style={{ display: 'none' }}
+              />
+
+            </label>
+
+
+            <div className="pf-avatar-info">
+
+              <h2 className="pf-user-name">
+                {displayName}
+              </h2>
+
+              <p className="pf-user-email">
+                {currentEmail}
+              </p>
+
+            </div>
+
 
           </div>
 
