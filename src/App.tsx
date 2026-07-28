@@ -5,6 +5,7 @@ import InventoryPage from './components/InventoryPage'
 import ExpensesPage from './components/ExpensesPage'
 import BillsPage from './components/BillsPage'
 import SettingsPage from './components/SettingsPage'
+import ProfilePage from './components/ProfilePage'
 
 type NavItem = {
   id: string
@@ -229,13 +230,14 @@ const sections: NavSection[] = [
 ]
 
 function App() {
-  const [active, setActive] = useState('settings')
+  const [active, setActive] = useState('profile')
 
   const renderContent = () => {
     if (active === 'inventory') return <InventoryPage />
     if (active === 'expenses') return <ExpensesPage />
     if (active === 'bills') return <BillsPage />
     if (active === 'settings') return <SettingsPage />
+    if (active === 'profile') return <ProfilePage />
     return (
       <main className="content-placeholder">
         <div className="placeholder-inner">
@@ -316,7 +318,7 @@ function App() {
           ))}
         </nav>
 
-        <footer className="sidebar-footer">
+        <footer className="sidebar-footer" onClick={() => setActive('profile')} style={{ cursor: 'pointer' }} title="Open Profile">
           <span className="user-avatar" aria-hidden="true">
             A
           </span>
