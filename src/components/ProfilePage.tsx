@@ -37,8 +37,9 @@ export default function ProfilePage() {
   const [newPassword, setNewPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'info' | 'error' } | null>(null)
-
   const [avatarError, setAvatarError] = useState(false)
+  const [copiedId, setCopiedId] = useState(false)
+
   const handleAvatarFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
 
@@ -82,6 +83,13 @@ export default function ProfilePage() {
 
   const handleSendResetEmail = () => {
     showToast(`Password reset link sent to ${currentEmail}`, 'info')
+  }
+
+  const copyUserId = () => {
+    navigator.clipboard.writeText('85fc84f2-9d3e-4a12-b8c7-e6f9a01b2345')
+    setCopiedId(true)
+    showToast('User ID copied to clipboard!', 'info')
+    setTimeout(() => setCopiedId(false), 2000)
   }
 
   return (
@@ -619,6 +627,124 @@ export default function ProfilePage() {
 
             </form>
 
+
+
+          </div>
+
+          <div className="pf-card" id="pf-account-info-card">
+
+
+            <div className="pf-card-header">
+
+
+              <div className="pf-header-icon blue-icon">
+
+                <Ico size={18}>
+
+                  <polygon points="12 2 2 7 2 17 12 22 22 17 22 7 12 2" />
+
+                </Ico>
+
+              </div>
+
+
+
+              <div className="pf-header-text">
+
+                <h3>
+                  Account Info
+                </h3>
+
+              </div>
+
+
+            </div>
+
+
+
+
+            <div className="pf-info-rows">
+
+
+              <div className="pf-info-row">
+
+                <span className="pf-info-label">
+                  User ID
+                </span>
+
+
+
+                <button
+
+                  type="button"
+
+                  className="pf-info-value"
+
+                  onClick={copyUserId}
+
+                >
+
+                  <code>
+                    85fc84f2...
+                  </code>
+
+
+                  {
+                    copiedId
+                      ?
+                      <span>
+                        Copied!
+                      </span>
+                      :
+                      <span>
+                        Copy
+                      </span>
+                  }
+
+
+                </button>
+
+
+              </div>
+
+
+
+
+              <div className="pf-info-row">
+
+                <span className="pf-info-label">
+                  Created
+                </span>
+
+
+                <span className="pf-info-value">
+                  2/18/2026
+                </span>
+
+
+              </div>
+
+
+
+
+
+              <div className="pf-info-row">
+
+                <span className="pf-info-label">
+                  Last Sign In
+                </span>
+
+
+                <span className="pf-info-value">
+                  7/19/2026
+                </span>
+
+
+              </div>
+
+
+
+            </div>
 
 
           </div>
