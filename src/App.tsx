@@ -12,6 +12,9 @@ import UserAccessPage from './components/UserAccessPage'
 import InvoicePage from './components/InvoicePage'
 import ReportsPage from './components/ReportsPage'
 import AuditLogPage from './components/AuditLogPage'
+import GlobalEntryPage from './components/GlobalEntryPage'
+import CompanyDashboardPage from './components/CompanyDashboardPage'
+import OverviewPage from './components/OverviewPage'
 import LoginPage from './components/LoginPage'
 import { useAuth } from './context/AuthContext'
 
@@ -241,6 +244,7 @@ function App() {
   const { user, loading, logout } = useAuth()
   const [active, setActive] = useState('profile')
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const [showProfileMenu, setShowProfileMenu] = useState(false)
 
   useEffect(() => {
     const handleToggle = () => setIsSidebarOpen((prev) => !prev)
@@ -261,8 +265,14 @@ function App() {
     if (active === 'bills') return <BillsPage />
     if (active === 'settings') return <SettingsPage />
 if (active === 'profile') return <ProfilePage />
+if (active === 'overview') return <OverviewPage />
 if (active === 'employees') return <EmployeesPage />
 if (active === 'office-time') return <OfficeTimePage />
+if (active === 'global-entry') return <GlobalEntryPage />
+if (active === 'xsrs') return <CompanyDashboardPage companyCode="XSRS" companyName="XSRS IT" companyDesc="IT Services & Software Consulting" />
+if (active === 'frames') return <CompanyDashboardPage companyCode="365F" companyName="365 Frames" companyDesc="Commercial Photography & Cinematography" />
+if (active === 'everafter') return <CompanyDashboardPage companyCode="EA" companyName="EverAfter" companyDesc="Wedding Shoot Specialist" />
+if (active === 'printdesk') return <CompanyDashboardPage companyCode="PD" companyName="PrintDesk" companyDesc="3D Printing & Desk Organization" />
 if (active === 'user-access') return <UserAccessPage />
 if (active === 'audit-log') return <AuditLogPage />
 if (active === 'invoice') return <InvoicePage />
@@ -363,11 +373,9 @@ if (active === 'reports') return <ReportsPage />
 
 <footer
   className="sidebar-footer"
-  onClick={() => setActive('profile')}
-  style={{ cursor: 'pointer' }}
-  title="Open Profile"
+  style={{ cursor: 'pointer', overflow: 'visible' }}
 >
-  <div style={{ display: 'flex', alignItems: 'center', flex: 1, overflow: 'hidden' }}>
+  <div style={{ display: 'flex', alignItems: 'center', flex: 1, overflow: 'hidden' }} onClick={() => setActive('profile')}>
     <span className="user-avatar" aria-hidden="true">
       {user.name.charAt(0).toUpperCase()}
     </span>
@@ -388,21 +396,38 @@ if (active === 'reports') return <ReportsPage />
     </span>
   </div>
 
-  <button
-    type="button"
-    onClick={logout}
-    style={{
-      background: 'transparent',
-      border: 'none',
-      color: '#ef4444',
-      cursor: 'pointer',
-      padding: '4px',
-      borderRadius: '4px'
-    }}
-    title="Log out"
-  >
-    ...
-  </button>
+  <div className="dash-dropdown-container" style={{ position: 'relative' }}>
+    <button
+      type="button"
+      onClick={() => setShowProfileMenu(!showProfileMenu)}
+      style={{
+        background: 'transparent',
+        border: 'none',
+        color: '#5c6270',
+        cursor: 'pointer',
+        padding: '4px',
+        borderRadius: '4px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}
+      title="More options"
+    >
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+    </button>
+    
+    {showProfileMenu && (
+      <div className="dash-dropdown-menu" style={{minWidth: '180px', bottom: 'calc(100% + 8px)', top: 'auto', right: '0'}}>
+        <div className="dash-dropdown-header" style={{flexDirection: 'column', alignItems: 'flex-start', gap: '4px'}}>
+          <span style={{color: '#fff'}}>{user?.name || 'Admin'}</span>
+          <span style={{fontSize: '11px', color: '#5c6270', fontWeight: 'normal'}}>{user?.email || 'admin@globe.com'}</span>
+        </div>
+        <div className="dash-dropdown-item" onClick={() => { setShowProfileMenu(false); setActive('profile'); }}>Profile</div>
+        <div className="dash-dropdown-item" onClick={() => { setShowProfileMenu(false); setActive('settings'); }}>Settings</div>
+        <div className="dash-dropdown-item danger" onClick={() => { setShowProfileMenu(false); logout(); }}>Logout</div>
+      </div>
+    )}
+  </div>
 </footer>
       </aside>
 

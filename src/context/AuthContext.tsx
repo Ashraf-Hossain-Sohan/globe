@@ -28,7 +28,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     // Check if user is logged in
-    fetch('http://localhost:8080/api/auth/me', {credentials: 'include'})
+    fetch('/api/auth/me', {credentials: 'include'})
       .then(res => {
         if (res.ok) {
           return res.json()
@@ -51,7 +51,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   const logout = () => {
-    fetch('http://localhost:8080/api/auth/logout', { method: 'POST', credentials: 'include' })
+    fetch('/api/auth/logout', { method: 'POST', credentials: 'include' })
       .finally(() => {
         setUser(null)
       })

@@ -3,7 +3,7 @@ import type { FormEvent } from 'react'
 import '../styles/EmployeesPage.css'
 
 /* ─── API Base ───────────────────────────────────────── */
-const API = 'http://localhost:8080/api'
+const API = '/api'
 
 /* ─── Types ──────────────────────────────────────────── */
 interface Employee {
@@ -112,9 +112,9 @@ export default function EmployeesPage() {
       setLoading(true)
       setError(null)
       const [empRes, statsRes, compRes] = await Promise.all([
-        fetch(`${API}/employees${filter ? `?company=${filter}` : ''}`),
-        fetch(`${API}/employees/stats`),
-        fetch(`${API}/companies`),
+        fetch(`${API}/employees${filter ? `?company=${filter}` : ''}`, { credentials: 'include' }),
+        fetch(`${API}/employees/stats`, { credentials: 'include' }),
+        fetch(`${API}/companies`, { credentials: 'include' }),
       ])
       if (!empRes.ok || !statsRes.ok || !compRes.ok) throw new Error('Failed to fetch data')
       const [empData, statsData, compData] = await Promise.all([
@@ -175,6 +175,7 @@ export default function EmployeesPage() {
       const res = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify(form),
       })
       if (!res.ok) throw new Error('Save failed')
@@ -190,7 +191,7 @@ export default function EmployeesPage() {
   const handleDelete = async (id: number) => {
     if (!confirm('Delete this employee?')) return
     try {
-      const res = await fetch(`${API}/employees/${id}`, { method: 'DELETE' })
+      const res = await fetch(`${API}/employees/${id}`, { method: 'DELETE', credentials: 'include' })
       if (!res.ok) throw new Error('Delete failed')
       await fetchAll()
     } catch (err) {
@@ -200,6 +201,13 @@ export default function EmployeesPage() {
 
   /* ── Group employees by company for display ──── */
   const grouped: Record<string, Employee[]> = {}
+  
+  // Only show companies that match the filter (or all if no filter)
+  const companiesToShow = filter ? companies.filter(c => c.code === filter) : companies;
+  for (const c of companiesToShow) {
+    grouped[c.code] = []
+  }
+  
   for (const emp of employees) {
     if (!grouped[emp.company]) grouped[emp.company] = []
     grouped[emp.company].push(emp)
@@ -370,14 +378,14 @@ export default function EmployeesPage() {
             </div>
 
             {/* Employee Sections */}
-            {employees.length === 0 ? (
+            {Object.keys(grouped).length === 0 ? (
               <div className="ep-empty">
                 <Ico size={48}>
                   <path d="M16 19v-1a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v1" />
                   <circle cx="9" cy="7" r="3" />
                   <path d="M22 19v-1a4 4 0 0 0-3-3.85M16 4.13a4 4 0 0 1 0 7.75" />
                 </Ico>
-                <p>No employees found. Click "Add Employee" to get started.</p>
+                <p>No companies or employees found.</p>
               </div>
             ) : (
               Object.entries(grouped).map(([code, emps]) => (

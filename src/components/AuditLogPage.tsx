@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import './AuditLogPage.css'
+import '../styles/AuditLogPage.css'
 
 interface AuditLog {
   id: number
@@ -26,7 +26,7 @@ interface Filters {
   actions: string[]
 }
 
-const API = 'http://localhost:8080/api/audit-logs'
+const API = '/api/audit-logs'
 
 export default function AuditLogPage() {
   const [logs, setLogs] = useState<AuditLog[]>([])

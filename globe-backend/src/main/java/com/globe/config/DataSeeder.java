@@ -31,5 +31,18 @@ public class DataSeeder implements CommandLineRunner {
             userAccessRepo.save(admin);
             System.out.println("✅ Default admin user seeded: ashraf@globe.com / admin123");
         }
+
+        // Seed HR user Rafi if not exists
+        if (userAccessRepo.findByEmail("rafi@globe.com").isEmpty()) {
+            UserAccess hr = new UserAccess(
+                    "Rafi",
+                    "rafi@globe.com",
+                    passwordEncoder.encode("hr123"),
+                    "hr",
+                    "XSRS,365F,EA,PD"
+            );
+            userAccessRepo.save(hr);
+            System.out.println("✅ HR user seeded: rafi@globe.com / hr123");
+        }
     }
 }

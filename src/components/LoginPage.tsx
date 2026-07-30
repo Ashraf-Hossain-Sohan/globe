@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useAuth } from '../context/AuthContext'
-import './LoginPage.css'
+import '../styles/LoginPage.css'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -15,7 +15,7 @@ export default function LoginPage() {
     setLoading(true)
 
     try {
-      const res = await fetch('http://localhost:8080/api/auth/login', {
+      const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),

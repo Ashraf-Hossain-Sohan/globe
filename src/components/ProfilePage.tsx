@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
-import './ProfilePage.css'
+import '../styles/ProfilePage.css'
 
 /* ── SVG icon helper ─────────────────────────────────────────── */
 const Ico = ({

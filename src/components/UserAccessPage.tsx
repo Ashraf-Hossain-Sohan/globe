@@ -3,7 +3,7 @@ import type { FormEvent } from 'react'
 import '../styles/UserAccessPage.css'
 
 /* ─── API Base ───────────────────────────────────────── */
-const API = 'http://localhost:8080/api'
+const API = '/api'
 
 /* ─── Types ──────────────────────────────────────────── */
 interface UserAccess {

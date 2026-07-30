@@ -1,0 +1,436 @@
+/* ===== GLOBAL ENTRY PAGE ==================================================== */
+.global-entry-page {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100svh;
+  overflow: hidden;
+  background: #12131a;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* ── Top Header ─────────────────────────────────────────────────────────── */
+.ge-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  height: 56px;
+  background: #0e0f14;
+  border-bottom: 1px solid #1e2030;
+  flex-shrink: 0;
+}
+
+.ge-header-title {
+  color: #8b909c;
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.ge-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ge-add-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 16px;
+  height: 34px;
+  border: none;
+  border-radius: 8px;
+  background: #4f6ef7;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.ge-add-btn:hover {
+  background: #3d5ce6;
+}
+
+.ge-add-btn:active {
+  transform: scale(0.97);
+}
+
+/* ── Main Content ───────────────────────────────────────────────────────── */
+.ge-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 32px 40px;
+}
+
+.ge-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.ge-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ge-body::-webkit-scrollbar-thumb {
+  background: #2a2d3e;
+  border-radius: 3px;
+}
+
+/* ── Title Row ──────────────────────────────────────────────────────────── */
+.ge-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  gap: 16px;
+}
+
+.ge-title-text h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #e8eaf0;
+  margin: 0 0 4px;
+  letter-spacing: -0.5px;
+}
+
+.ge-title-text p {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* ── Filters Row ────────────────────────────────────────────────────────── */
+.ge-filters-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  background: #161821;
+  border: 1px solid #1e2030;
+  border-radius: 12px;
+  animation: ge-fadeUp 0.35s ease backwards;
+}
+
+@keyframes ge-fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ge-filter-input, .ge-filter-select {
+  padding: 8px 12px;
+  background: #1a1c25;
+  border: 1px solid #2a2d3e;
+  border-radius: 6px;
+  color: #e8eaf0;
+  font-size: 13px;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+
+.ge-filter-input:focus, .ge-filter-select:focus {
+  outline: none;
+  border-color: #4f6ef7;
+}
+
+.search-input {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* ── Table Area ─────────────────────────────────────────────────────────── */
+.ge-table-container {
+  margin-bottom: 24px;
+  animation: ge-fadeUp 0.45s ease backwards;
+}
+
+.ge-table-header {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid #1e2030;
+  color: #5c6270;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.ge-table-row {
+  display: flex;
+  align-items: center;
+  padding: 14px 16px;
+  border-bottom: 1px solid #1a1c25;
+  transition: background 0.15s;
+  animation: ge-slideRow 0.3s ease backwards;
+}
+
+.ge-table-row:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+@keyframes ge-slideRow {
+  from { opacity: 0; transform: translateX(-8px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.ge-col {
+  padding-right: 12px;
+}
+
+.ge-col.date { flex: 0 0 120px; }
+.ge-col.title { flex: 1; min-width: 200px; }
+.ge-col.category { flex: 0 0 140px; }
+.ge-col.company { flex: 0 0 140px; }
+.ge-col.amount { flex: 0 0 120px; text-align: right; }
+.ge-col.actions { flex: 0 0 60px; display: flex; justify-content: flex-end; }
+
+/* ── Cell Styles ────────────────────────────────────────────────────────── */
+.ge-date-text {
+  font-size: 13px;
+  color: #8b909c;
+}
+
+.ge-title-main {
+  font-size: 14px;
+  font-weight: 600;
+  color: #e8eaf0;
+  margin-bottom: 2px;
+}
+
+.ge-desc-text {
+  font-size: 12px;
+  color: #5c6270;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ge-category-tag {
+  display: inline-block;
+  background: #1a1c28;
+  border: 1px solid #2a2d3e;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #c8ccd8;
+}
+
+.ge-company-text {
+  font-size: 13px;
+  color: #8b909c;
+}
+
+.ge-amount-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: #e8eaf0;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.ge-action-btn {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #5c6270;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.ge-action-btn:hover {
+  background: rgba(239, 68, 68, 0.1);
+  color: #f87171;
+}
+
+/* ── Modal ──────────────────────────────────────────────────────────────── */
+.ge-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: grid;
+  place-items: center;
+  z-index: 1000;
+  animation: ge-overlayIn 0.2s ease;
+}
+
+@keyframes ge-overlayIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.ge-modal {
+  background: #161821;
+  border: 1px solid #1e2030;
+  border-radius: 16px;
+  width: 480px;
+  max-width: 92vw;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+  animation: ge-modalIn 0.25s ease;
+}
+
+@keyframes ge-modalIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.ge-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid #1e2030;
+}
+
+.ge-modal-header h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #e8eaf0;
+  margin: 0;
+}
+
+.ge-modal-close {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: #5c6270;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.ge-modal-close:hover {
+  background: rgba(239, 68, 68, 0.1);
+  color: #f87171;
+}
+
+.ge-modal-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ge-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ge-form-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #9ca3af;
+  letter-spacing: 0.02em;
+}
+
+.ge-form-input, .ge-form-select {
+  padding: 10px 14px;
+  border: 1px solid #2a2d3e;
+  border-radius: 8px;
+  background: #1a1c28;
+  color: #e8eaf0;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.ge-form-input:focus, .ge-form-select:focus {
+  border-color: #4f6ef7;
+  box-shadow: 0 0 0 3px rgba(79, 110, 247, 0.15);
+}
+
+.ge-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 24px;
+  border-top: 1px solid #1e2030;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 0 0 16px 16px;
+}
+
+.ge-btn-cancel {
+  padding: 10px 16px;
+  border: 1px solid #2a2d3e;
+  border-radius: 8px;
+  background: #1a1c25;
+  color: #c8ccd8;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.ge-btn-cancel:hover {
+  background: #232638;
+}
+
+.ge-btn-save {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #4f6ef7;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.ge-btn-save:hover:not(:disabled) {
+  background: #3d5ce6;
+}
+
+.ge-btn-save:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Empty State ────────────────────────────────────────────────────────── */
+.ge-empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: #5c6270;
+}
+
+.ge-empty svg {
+  width: 48px;
+  height: 48px;
+  opacity: 0.25;
+  margin-bottom: 16px;
+}
+
+.ge-empty p {
+  font-size: 14px;
+  margin: 0;
+}
