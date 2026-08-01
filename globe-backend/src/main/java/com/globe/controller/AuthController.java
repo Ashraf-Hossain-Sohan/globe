@@ -54,7 +54,7 @@ public class AuthController {
                     "User logged in: " + userName, request.email(), userName);
 
             return ResponseEntity.ok(buildUserMap(user));
-        } catch (BadCredentialsException e) {
+        } catch (org.springframework.security.core.AuthenticationException e) {
             return ResponseEntity.status(401).body(Map.of("error", "Invalid email or password"));
         }
     }

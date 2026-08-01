@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import '../styles/AuditLogPage.css'
 
 interface AuditLog {
@@ -21,9 +21,9 @@ interface Stats {
 }
 
 interface Filters {
-  users: string[]
-  entityTypes: string[]
-  actions: string[]
+  users?: string[]
+  entityTypes?: string[]
+  actions?: string[]
 }
 
 const API = '/api/audit-logs'
@@ -87,7 +87,9 @@ export default function AuditLogPage() {
   }, [])
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchLogs()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, action, entityType, userEmail, dateFrom, dateTo, search])
 
   const formatDate = (dateString: string) => {
@@ -176,7 +178,7 @@ export default function AuditLogPage() {
           <div className="al-filter-group">
             <select value={action} onChange={(e) => { setAction(e.target.value); setPage(0); }} className="al-filter-select">
               <option value="">All Actions</option>
-              {filters.actions.map(act => (
+              {filters.actions?.map(act => (
                 <option key={act} value={act}>{act}</option>
               ))}
             </select>
@@ -185,7 +187,7 @@ export default function AuditLogPage() {
           <div className="al-filter-group">
             <select value={entityType} onChange={(e) => { setEntityType(e.target.value); setPage(0); }} className="al-filter-select">
               <option value="">All Entities</option>
-              {filters.entityTypes.map(entity => (
+              {filters.entityTypes?.map(entity => (
                 <option key={entity} value={entity}>{entity}</option>
               ))}
             </select>
@@ -194,7 +196,7 @@ export default function AuditLogPage() {
           <div className="al-filter-group">
             <select value={userEmail} onChange={(e) => { setUserEmail(e.target.value); setPage(0); }} className="al-filter-select">
               <option value="">All Users</option>
-              {filters.users.map(u => (
+              {filters.users?.map(u => (
                 <option key={u} value={u}>{u}</option>
               ))}
             </select>

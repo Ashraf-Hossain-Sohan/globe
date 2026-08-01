@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import {
   LineChart, Line, BarChart, Bar, PieChart, Pie, Cell,
   XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer
 } from 'recharts'
 import { useAuth } from '../context/AuthContext'
 import '../styles/OverviewPage.css'
-import '../components/GlobalEntryPage.css' // Reuse modal styles
+import '../styles/GlobalEntryPage.css' // Reuse modal styles
 
 interface OverviewMetrics {
   totalRevenue: number
@@ -61,14 +61,14 @@ export default function OverviewPage() {
       if (res.ok) {
         setNotifications(await res.json())
       }
-    } catch (err) {}
+    } catch (e) { console.error(e) }
   }
 
   const handleMarkAsRead = async (id: number) => {
     try {
       await fetch(`/api/notifications/${id}/read`, { method: 'POST', credentials: 'include' })
       setNotifications(notifications.map(n => n.id === id ? { ...n, read: true } : n))
-    } catch (err) {}
+    } catch (e) { console.error(e) }
   }
 
   const fetchOverview = async () => {

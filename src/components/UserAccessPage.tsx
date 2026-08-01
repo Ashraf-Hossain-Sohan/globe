@@ -106,6 +106,7 @@ export default function UserAccessPage() {
   }, [])
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchAll()
   }, [fetchAll])
 
@@ -152,7 +153,7 @@ export default function UserAccessPage() {
 
     // Build company access string e.g. "XSRS,EA"
     const selectedCompanies = Object.entries(form.companyAccess)
-      .filter(([_, enabled]) => enabled)
+      .filter(([, enabled]) => enabled)
       .map(([code]) => code)
       .join(',')
 

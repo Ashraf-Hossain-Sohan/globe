@@ -26,8 +26,15 @@ export default function LoginPage() {
         const data = await res.json()
         login(data)
       } else {
-        const err = await res.json()
-        setError(err.error || 'Login failed')
+        let err;
+        try {
+          err = await res.json();
+        } catch (e) {
+          setError('Server returned an unexpected response. Is the backend running?');
+          setLoading(false);
+          return;
+        }
+        setError(err.error || 'Login failed');
       }
     } catch (err) {
       setError('Network error. Please try again later.')

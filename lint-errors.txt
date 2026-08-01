@@ -1,0 +1,244 @@
+
+> globe@0.0.0 lint
+> eslint .
+
+
+/Users/ashraf/globe/src/components/CompanyDashboardPage.tsx
+   36:23  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-explicit-any
+   47:54  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-explicit-any
+   65:5   error    Error: Cannot access variable before it is declared
+
+`fetchMetrics` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+/Users/ashraf/globe/src/components/CompanyDashboardPage.tsx:65:5
+  63 |
+  64 |   useEffect(() => {
+> 65 |     fetchMetrics()
+     |     ^^^^^^^^^^^^ `fetchMetrics` accessed before it is declared
+  66 |   }, [companyCode, timeFilter])
+  67 |
+  68 |   useEffect(() => {
+
+/Users/ashraf/globe/src/components/CompanyDashboardPage.tsx:88:3
+   86 |   }
+   87 |
+>  88 |   const fetchMetrics = async () => {
+      |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>  89 |     setLoading(true)
+      | ^^^^^^^^^^^^^^^^^^^^
+>  90 |     setError('')
+      …
+      | ^^^^^^^^^^^^^^^^^^^^
+> 103 |     }
+      | ^^^^^^^^^^^^^^^^^^^^
+> 104 |   }
+      | ^^^^ `fetchMetrics` is declared here
+  105 |
+  106 |   const handleSaveEntry = async () => {
+  107 |     setFormError('')                                                                                                                                                                                                           react-hooks/immutability
+   66:6   warning  React Hook useEffect has a missing dependency: 'fetchMetrics'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   react-hooks/exhaustive-deps
+   69:5   error    Error: Cannot access variable before it is declared
+
+`fetchNotifications` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+/Users/ashraf/globe/src/components/CompanyDashboardPage.tsx:69:5
+  67 |
+  68 |   useEffect(() => {
+> 69 |     fetchNotifications()
+     |     ^^^^^^^^^^^^^^^^^^ `fetchNotifications` accessed before it is declared
+  70 |   }, [])
+  71 |
+  72 |   const fetchNotifications = async () => {
+
+/Users/ashraf/globe/src/components/CompanyDashboardPage.tsx:72:3
+  70 |   }, [])
+  71 |
+> 72 |   const fetchNotifications = async () => {
+     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 73 |     try {
+     | ^^^^^^^^^
+> 74 |       const res = await fetch('/api/notifications', { credentials: 'include' })
+     | ^^^^^^^^^
+> 75 |       if (res.ok) {
+     | ^^^^^^^^^
+> 76 |         setNotifications(await res.json())
+     | ^^^^^^^^^
+> 77 |       }
+     | ^^^^^^^^^
+> 78 |     } catch (err) {}
+     | ^^^^^^^^^
+> 79 |   }
+     | ^^^^ `fetchNotifications` is declared here
+  80 |
+  81 |   const handleMarkAsRead = async (id: number) => {
+  82 |     try {  react-hooks/immutability
+   78:14  error    'err' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @typescript-eslint/no-unused-vars
+   78:19  error    Empty block statement                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             no-empty
+   85:14  error    'err' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @typescript-eslint/no-unused-vars
+   85:19  error    Empty block statement                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             no-empty
+   99:14  error    'err' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @typescript-eslint/no-unused-vars
+  128:14  error    'err' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @typescript-eslint/no-unused-vars
+  442:58  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-explicit-any
+
+/Users/ashraf/globe/src/components/EmployeesPage.tsx
+  135:21  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/ashraf/globe/src/components/EmployeesPage.tsx:135:21
+  133 |   }, [filter])
+  134 |
+> 135 |   useEffect(() => { fetchAll() }, [fetchAll])
+      |                     ^^^^^^^^ Avoid calling setState() directly within an effect
+  136 |
+  137 |   /* ── Totals ────────────────────────────────────── */
+  138 |   const totalEmployees = stats.reduce((s, c) => s + c.total, 0)  react-hooks/set-state-in-effect
+
+/Users/ashraf/globe/src/components/GlobalEntryPage.tsx
+  37:5   error  Error: Cannot access variable before it is declared
+
+`fetchEntries` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+/Users/ashraf/globe/src/components/GlobalEntryPage.tsx:37:5
+  35 |
+  36 |   useEffect(() => {
+> 37 |     fetchEntries()
+     |     ^^^^^^^^^^^^ `fetchEntries` accessed before it is declared
+  38 |   }, [])
+  39 |
+  40 |   const fetchEntries = async () => {
+
+/Users/ashraf/globe/src/components/GlobalEntryPage.tsx:40:3
+  38 |   }, [])
+  39 |
+> 40 |   const fetchEntries = async () => {
+     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 41 |     try {
+     | ^^^^^^^^^
+> 42 |       const res = await fetch('/api/global-entries', { credentials: 'include' })
+     …
+     | ^^^^^^^^^
+> 50 |     }
+     | ^^^^^^^^^
+> 51 |   }
+     | ^^^^ `fetchEntries` is declared here
+  52 |
+  53 |   const handleSave = async () => {
+  54 |     setFormError('')  react-hooks/immutability
+  46:14  error  'err' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-unused-vars
+  80:14  error  'err' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-unused-vars
+  95:14  error  'err' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-unused-vars
+
+/Users/ashraf/globe/src/components/LoginPage.tsx
+  32:18  error  'e' is defined but never used    @typescript-eslint/no-unused-vars
+  39:14  error  'err' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/ashraf/globe/src/components/OfficeTimePage.tsx
+  213:6   warning  React Hook useCallback has a missing dependency: 'now'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    react-hooks/exhaustive-deps
+  215:21  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/ashraf/globe/src/components/OfficeTimePage.tsx:215:21
+  213 |   }, [company, year, month])
+  214 |
+> 215 |   useEffect(() => { fetchAll() }, [fetchAll])
+      |                     ^^^^^^^^ Avoid calling setState() directly within an effect
+  216 |
+  217 |   /* ── Calendar data ─────────────────────────────── */
+  218 |   const calDays = getCalendarDays(year, month)  react-hooks/set-state-in-effect
+  254:14  error    'err' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             @typescript-eslint/no-unused-vars
+  269:14  error    'err' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             @typescript-eslint/no-unused-vars
+  339:14  error    'err' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             @typescript-eslint/no-unused-vars
+
+/Users/ashraf/globe/src/components/OverviewPage.tsx
+   19:21  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-explicit-any
+   20:21  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-explicit-any
+   21:17  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-explicit-any
+   22:19  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-explicit-any
+   33:54  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-explicit-any
+   51:5   error    Error: Cannot access variable before it is declared
+
+`fetchOverview` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+/Users/ashraf/globe/src/components/OverviewPage.tsx:51:5
+  49 |
+  50 |   useEffect(() => {
+> 51 |     fetchOverview()
+     |     ^^^^^^^^^^^^^ `fetchOverview` accessed before it is declared
+  52 |   }, [timeFilter])
+  53 |
+  54 |   useEffect(() => {
+
+/Users/ashraf/globe/src/components/OverviewPage.tsx:74:3
+  72 |   }
+  73 |
+> 74 |   const fetchOverview = async () => {
+     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 75 |     setLoading(true)
+     | ^^^^^^^^^^^^^^^^^^^^
+> 76 |     setError('')
+     …
+     | ^^^^^^^^^^^^^^^^^^^^
+> 89 |     }
+     | ^^^^^^^^^^^^^^^^^^^^
+> 90 |   }
+     | ^^^^ `fetchOverview` is declared here
+  91 |
+  92 |   const handleSaveEntry = async () => {
+  93 |     setFormError('')                                                                                                                                                                                                                                 react-hooks/immutability
+   52:6   warning  React Hook useEffect has a missing dependency: 'fetchOverview'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  react-hooks/exhaustive-deps
+   55:5   error    Error: Cannot access variable before it is declared
+
+`fetchNotifications` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+/Users/ashraf/globe/src/components/OverviewPage.tsx:55:5
+  53 |
+  54 |   useEffect(() => {
+> 55 |     fetchNotifications()
+     |     ^^^^^^^^^^^^^^^^^^ `fetchNotifications` accessed before it is declared
+  56 |   }, [])
+  57 |
+  58 |   const fetchNotifications = async () => {
+
+/Users/ashraf/globe/src/components/OverviewPage.tsx:58:3
+  56 |   }, [])
+  57 |
+> 58 |   const fetchNotifications = async () => {
+     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 59 |     try {
+     | ^^^^^^^^^
+> 60 |       const res = await fetch('/api/notifications', { credentials: 'include' })
+     | ^^^^^^^^^
+> 61 |       if (res.ok) {
+     | ^^^^^^^^^
+> 62 |         setNotifications(await res.json())
+     | ^^^^^^^^^
+> 63 |       }
+     | ^^^^^^^^^
+> 64 |     } catch (err) {}
+     | ^^^^^^^^^
+> 65 |   }
+     | ^^^^ `fetchNotifications` is declared here
+  66 |
+  67 |   const handleMarkAsRead = async (id: number) => {
+  68 |     try {  react-hooks/immutability
+   64:14  error    'err' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @typescript-eslint/no-unused-vars
+   64:19  error    Empty block statement                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             no-empty
+   71:14  error    'err' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @typescript-eslint/no-unused-vars
+   71:19  error    Empty block statement                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             no-empty
+   85:14  error    'err' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @typescript-eslint/no-unused-vars
+  114:14  error    'err' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @typescript-eslint/no-unused-vars
+  128:14  error    'err' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @typescript-eslint/no-unused-vars
+  348:50  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-explicit-any
+
+✖ 40 problems (37 errors, 3 warnings)
+
