@@ -79,6 +79,10 @@ export default function OverviewPage() {
         ? `/api/dashboard/overview?months=${timeFilter}` 
         : `/api/dashboard/overview`
       const res = await fetch(url, { credentials: 'include' })
+      if (res.status === 401) {
+        logout()
+        return
+      }
       if (!res.ok) throw new Error('Failed to load overview data')
       const data = await res.json()
       setMetrics(data)
