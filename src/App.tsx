@@ -47,67 +47,40 @@ const icon = (paths: JSX.Element) => (
   </svg>
 )
 
-const sections: NavSection[] = [
-  {
-    title: 'Companies',
-    items: [
-      {
-        id: 'overview',
-        label: 'Overview',
-        color: '#60a5fa',
-        icon: icon(
-          <>
-            <rect x="3" y="3" width="7" height="9" rx="1" />
-            <rect x="14" y="3" width="7" height="5" rx="1" />
-            <rect x="14" y="12" width="7" height="9" rx="1" />
-            <rect x="3" y="16" width="7" height="5" rx="1" />
-          </>,
-        ),
-      },
-      {
-        id: 'xsrs',
-        label: 'XSRS IT',
-        color: '#60a5fa',
-        icon: icon(
-          <>
-            <rect x="2" y="4" width="20" height="13" rx="2" />
-            <path d="M8 21h8M12 17v4" />
-          </>,
-        ),
-      },
-      {
-        id: 'frames',
-        label: '365 Frames',
-        color: '#fb923c',
-        icon: icon(
-          <>
-            <path d="M14.5 4h-5L8 6H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-4l-1.5-2Z" />
-            <circle cx="12" cy="13" r="3.5" />
-          </>,
-        ),
-      },
-      {
-        id: 'everafter',
-        label: 'EverAfter',
-        color: '#f87171',
-        icon: icon(
-          <path d="M19 14c1.5-1.5 3-3.3 3-5.5A4.5 4.5 0 0 0 12 5 4.5 4.5 0 0 0 2 8.5c0 2.2 1.5 4 3 5.5l7 7Z" />,
-        ),
-      },
-      {
-        id: 'printdesk',
-        label: 'PrintDesk',
-        color: '#4ade80',
-        icon: icon(
-          <>
-            <path d="M6 9V2h12v7" />
-            <path d="M6 18H4a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-2" />
-            <rect x="6" y="14" width="12" height="8" rx="1" />
-          </>,
-        ),
-      },
-    ],
-  },
+const DEFAULT_COMPANY_ICONS: Record<string, JSX.Element> = {
+  'XSRS': icon(
+    <>
+      <rect x="2" y="4" width="20" height="13" rx="2" />
+      <path d="M8 21h8M12 17v4" />
+    </>
+  ),
+  '365F': icon(
+    <>
+      <path d="M14.5 4h-5L8 6H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-4l-1.5-2Z" />
+      <circle cx="12" cy="13" r="3.5" />
+    </>
+  ),
+  'EA': icon(
+    <path d="M19 14c1.5-1.5 3-3.3 3-5.5A4.5 4.5 0 0 0 12 5 4.5 4.5 0 0 0 2 8.5c0 2.2 1.5 4 3 5.5l7 7Z" />
+  ),
+  'PD': icon(
+    <>
+      <path d="M6 9V2h12v7" />
+      <path d="M6 18H4a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-2" />
+      <rect x="6" y="14" width="12" height="8" rx="1" />
+    </>
+  )
+}
+
+const GENERIC_COMPANY_ICON = icon(
+  <>
+    <rect x="4" y="2" width="16" height="20" rx="2" />
+    <path d="M9 22v-4h6v4" />
+    <path d="M8 6h.01M16 6h.01M12 6h.01M12 10h.01M16 10h.01M8 10h.01M8 14h.01M12 14h.01M16 14h.01" />
+  </>
+)
+
+const MANAGEMENT_AND_ADMIN_SECTIONS: NavSection[] = [
   {
     title: 'Management',
     items: [
@@ -242,20 +215,41 @@ const sections: NavSection[] = [
 
 function App() {
   const { user, loading, logout } = useAuth()
-  const [active, setActive] = useState('profile')
+  const [active, setActive] = useState('overview')
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const [showProfileMenu, setShowProfileMenu] = useState(false)
+  interface AppCompany { id: number; code: string; name: string; description: string; color?: string;  }
+  const [companies, setCompanies] = useState<AppCompany[]>([])
+
+  //remodel the dark mode and white mode 
+
+  /*useEffect(() => {
+    if (user) {
+      document.body.className = user.theme === 'dark' ? 'dark-mode' : 'light-mode'
+    }
+  }, [user])*/
+
+  useEffect(() => {
+    if (!user) return
+    fetch('/api/companies', { credentials: 'include' })
+      .then(res => res.json())
+      .then(data => setCompanies(data))
+      .catch(err => console.error(err))
+  }, [user])
 
   useEffect(() => {
     const handleToggle = () => setIsSidebarOpen((prev) => !prev)
     const handleClose = () => setIsSidebarOpen(false)
+    const handleNavigate = (e: CustomEvent) => setActive(e.detail)
 
     window.addEventListener('toggle-sidebar', handleToggle)
     window.addEventListener('close-sidebar', handleClose)
+    window.addEventListener('navigate', handleNavigate as EventListener)
 
     return () => {
       window.removeEventListener('toggle-sidebar', handleToggle)
       window.removeEventListener('close-sidebar', handleClose)
+      window.removeEventListener('navigate', handleNavigate as EventListener)
     }
   }, [])
 
@@ -269,10 +263,14 @@ if (active === 'overview') return <OverviewPage />
 if (active === 'employees') return <EmployeesPage />
 if (active === 'office-time') return <OfficeTimePage />
 if (active === 'global-entry') return <GlobalEntryPage />
-if (active === 'xsrs') return <CompanyDashboardPage companyCode="XSRS" companyName="XSRS IT" companyDesc="IT Services & Software Consulting" />
-if (active === 'frames') return <CompanyDashboardPage companyCode="365F" companyName="365 Frames" companyDesc="Commercial Photography & Cinematography" />
-if (active === 'everafter') return <CompanyDashboardPage companyCode="EA" companyName="EverAfter" companyDesc="Wedding Shoot Specialist" />
-if (active === 'printdesk') return <CompanyDashboardPage companyCode="PD" companyName="PrintDesk" companyDesc="3D Printing & Desk Organization" />
+
+    if (active.startsWith('company-')) {
+      const code = active.replace('company-', '')
+      const company = companies.find(c => c.code === code)
+      if (company) {
+        return <CompanyDashboardPage companyCode={company.code} companyName={company.name} companyDesc={company.description} />
+      }
+    }
 if (active === 'user-access') return <UserAccessPage />
 if (active === 'audit-log') return <AuditLogPage />
 if (active === 'invoice') return <InvoicePage />
@@ -286,7 +284,7 @@ if (active === 'reports') return <ReportsPage />
             <rect x="14" y="12" width="7" height="9" rx="1" />
             <rect x="3" y="16" width="7" height="5" rx="1" />
           </svg>
-          <h2>{sections.flatMap(s => s.items).find(i => i.id === active)?.label ?? 'Page'}</h2>
+          <h2>{active === 'overview' ? 'Overview' : (active.startsWith('company-') ? companies.find(c => c.code === active.replace('company-', ''))?.name : MANAGEMENT_AND_ADMIN_SECTIONS.flatMap(s => s.items).find(i => i.id === active)?.label ?? 'Page')}</h2>
           <p>This section is under development.</p>
         </div>
       </main>
@@ -312,41 +310,57 @@ if (active === 'reports') return <ReportsPage />
               <span style={{ fontSize: 11, color: 'var(--sb-muted)', lineHeight: 1.2 }}>Enterprise Suite</span>
             </span>
           </div>
-          <button
-            id="add-company-btn"
-            type="button"
-            onClick={() => {
-              setActive('overview')
-              setIsSidebarOpen(false)
-            }}
-            style={{
-              marginTop: 10,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: 6,
-              width: '100%',
-              padding: '8px 0',
-              border: '1px dashed rgba(79,110,247,0.5)',
-              borderRadius: 8,
-              background: 'rgba(79,110,247,0.08)',
-              color: '#6b8cff',
-              fontSize: 13,
-              fontWeight: 600,
-              fontFamily: 'inherit',
-              cursor: 'pointer',
-              transition: 'background 0.15s, border-color 0.15s',
-            }}
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
-            </svg>
-            Add Company
-          </button>
+
         </header>
 
         <nav className="sidebar-nav">
-          {sections.map((section) => (
+          <div className="nav-section">
+            <p className="nav-section-title">Companies</p>
+            <ul>
+              <li>
+                <button
+                  type="button"
+                  className={`nav-link${active === 'overview' ? ' is-active' : ''}`}
+                  onClick={() => {
+                    setActive('overview')
+                    setIsSidebarOpen(false)
+                  }}
+                  style={{ '--icon-color': '#60a5fa' } as CSSProperties}
+                >
+                  {icon(
+                    <>
+                      <rect x="3" y="3" width="7" height="9" rx="1" />
+                      <rect x="14" y="3" width="7" height="5" rx="1" />
+                      <rect x="14" y="12" width="7" height="9" rx="1" />
+                      <rect x="3" y="16" width="7" height="5" rx="1" />
+                    </>
+                  )}
+                  <span>Overview</span>
+                </button>
+              </li>
+              {companies.map(company => {
+                const isSelected = active === `company-${company.code}`
+                return (
+                  <li key={company.id}>
+                    <button
+                      type="button"
+                      className={`nav-link${isSelected ? ' is-active' : ''}`}
+                      onClick={() => {
+                        setActive(`company-${company.code}`)
+                        setIsSidebarOpen(false)
+                      }}
+                      style={company.color ? ({ '--icon-color': company.color } as CSSProperties) : undefined}
+                    >
+                      {DEFAULT_COMPANY_ICONS[company.code] || GENERIC_COMPANY_ICON}
+                      <span>{company.name}</span>
+                    </button>
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
+
+          {MANAGEMENT_AND_ADMIN_SECTIONS.map((section) => (
             <div key={section.title} className="nav-section">
               <p className="nav-section-title">{section.title}</p>
               <ul>
@@ -375,7 +389,7 @@ if (active === 'reports') return <ReportsPage />
   className="sidebar-footer"
   style={{ cursor: 'pointer', overflow: 'visible' }}
 >
-  <div style={{ display: 'flex', alignItems: 'center', flex: 1, overflow: 'hidden' }} onClick={() => setActive('profile')}>
+  <div style={{ display: 'flex', alignItems: 'center', flex: 1, gap: '10px', overflow: 'hidden' }} onClick={() => setActive('profile')}>
     <span className="user-avatar" aria-hidden="true">
       {user.name.charAt(0).toUpperCase()}
     </span>

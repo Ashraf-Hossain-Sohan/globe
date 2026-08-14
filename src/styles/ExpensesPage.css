@@ -50,7 +50,7 @@
 .ep-search svg {
   width: 15px;
   height: 15px;
-  color: #5c6270;
+  color: #d1d5db;
   flex-shrink: 0;
 }
 
@@ -83,7 +83,7 @@
   border: none;
   border-radius: 8px;
   background: #1a1c25;
-  color: #8b909c;
+  color: #d1d5db;
   cursor: pointer;
   transition: background 0.15s, color 0.15s;
 }
@@ -185,7 +185,7 @@
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #6b7280;
+  color: #d1d5db;
 }
 
 .ep-stat-icon {
@@ -263,7 +263,7 @@
 }
 
 .ep-stat-sub {
-  color: #5c6270;
+  color: #d1d5db;
   font-size: 12.5px;
 }
 
@@ -318,7 +318,7 @@ table.ep-table {
   font-weight: 600;
   letter-spacing: 0.07em;
   text-transform: uppercase;
-  color: #5c6270;
+  color: #d1d5db;
   white-space: nowrap;
 }
 
@@ -388,7 +388,7 @@ table.ep-table {
 
 /* Date */
 .ep-date {
-  color: #8b909c;
+  color: #d1d5db;
   font-variant-numeric: tabular-nums;
   font-size: 12.5px;
 }
@@ -445,7 +445,7 @@ table.ep-table {
   border: none;
   border-radius: 6px;
   background: transparent;
-  color: #5c6270;
+  color: #d1d5db;
   cursor: pointer;
   transition: background 0.15s, color 0.15s;
 }
@@ -471,7 +471,7 @@ table.ep-table {
 
 .ep-count {
   font-size: 12.5px;
-  color: #5c6270;
+  color: #d1d5db;
 }
 
 .ep-pagination {
@@ -489,7 +489,7 @@ table.ep-table {
   border: 1px solid #22253a;
   border-radius: 7px;
   background: transparent;
-  color: #8b909c;
+  color: #d1d5db;
   font-size: 12.5px;
   font-family: inherit;
   cursor: pointer;
@@ -532,7 +532,7 @@ table.ep-table {
   gap: 7px;
   font-size: 12px;
   font-weight: 600;
-  color: #5c6270;
+  color: #d1d5db;
   text-transform: uppercase;
   letter-spacing: 0.07em;
   white-space: nowrap;
@@ -568,7 +568,7 @@ table.ep-table {
 .ep-filter-chip svg {
   width: 13px;
   height: 13px;
-  color: #5c6270;
+  color: #d1d5db;
 }
 
 .ep-filter-chip:hover {

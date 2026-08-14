@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react'
+import TopHeader from './shared/TopHeader'
 import '../styles/ReportsPage.css'
 
 /* ── Types ─────────────────────────────────────────────────────────────── */
@@ -16,12 +18,6 @@ type ReportItem = {
 }
 
 /* ── Data ───────────────────────────────────────────────────────────────── */
-const companies: CompanyRow[] = [
-  { id: 'xsrs', name: 'XSRS IT', dotColor: '#60a5fa', revenue: 10000, expenses: 1000 },
-  { id: 'frames', name: '365 Frames', dotColor: '#fb923c', revenue: 0, expenses: 15000 },
-  { id: 'everafter', name: 'EverAfter', dotColor: '#f87171', revenue: 0, expenses: 0 },
-  { id: 'printdesk', name: 'PrintDesk', dotColor: '#4ade80', revenue: 0, expenses: 0 },
-]
 
 const reports: ReportItem[] = [
   { id: 'monthly', name: 'Monthly Financial Report', desc: 'P&L summary for current month' },
@@ -105,6 +101,19 @@ const IconGrid = () => (
 
 /* ── Component ──────────────────────────────────────────────────────────── */
 export default function ReportsPage() {
+  const [companies, setCompanies] = useState<CompanyRow[]>([])
+
+  useEffect(() => {
+    fetch('/api/reports/summary', { credentials: 'include' })
+      .then(res => res.json())
+      .then(data => {
+        setCompanies(data)
+      })
+      .catch(err => {
+        console.error(err)
+      })
+  }, [])
+
   const totalRevenue = companies.reduce((s, c) => s + c.revenue, 0)
   const totalExpenses = companies.reduce((s, c) => s + c.expenses, 0)
   const netProfit = totalRevenue - totalExpenses
@@ -117,27 +126,18 @@ export default function ReportsPage() {
   return (
     <main className="reports-page">
       {/* ── Top Bar ───────────────────────────────────────────────────────── */}
-      <header className="rp-header">
-        <button
-          className="mobile-sidebar-toggle"
-          type="button"
-          onClick={() => window.dispatchEvent(new CustomEvent('toggle-sidebar'))}
-          aria-label="Toggle sidebar"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="3" y1="12" x2="21" y2="12" />
-            <line x1="3" y1="6" x2="21" y2="6" />
-            <line x1="3" y1="18" x2="21" y2="18" />
-          </svg>
-        </button>
-        <span className="rp-header-title">Reports</span>
-        <div className="rp-header-actions">
+      {/* ── Top Bar ───────────────────────────────────────────────────────── */}
+      <TopHeader
+        className="rp-header"
+        leftContent={
+          <span className="rp-header-title">Reports</span>
+        }
+        rightContent={
           <button id="rp-grid-btn" type="button" className="rp-icon-btn" title="View">
             <IconGrid />
           </button>
-          <div className="rp-avatar" title="Profile">A</div>
-        </div>
-      </header>
+        }
+      />
 
       {/* ── Scrollable Body ───────────────────────────────────────────────── */}
       <div className="rp-content">

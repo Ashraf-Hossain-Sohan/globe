@@ -1,0 +1,755 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ProfilePage Component > matches the snapshot 1`] = `
+<div>
+  <div
+    class="pf-page"
+    id="profile-page"
+  >
+    <header
+      class="pf-header"
+    >
+      <div
+        class="global-header-left"
+      >
+        <button
+          aria-label="Toggle sidebar"
+          class="mobile-sidebar-toggle"
+          type="button"
+        >
+          <svg
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+          >
+            <line
+              x1="3"
+              x2="21"
+              y1="12"
+              y2="12"
+            />
+            <line
+              x1="3"
+              x2="21"
+              y1="6"
+              y2="6"
+            />
+            <line
+              x1="3"
+              x2="21"
+              y1="18"
+              y2="18"
+            />
+          </svg>
+        </button>
+        <button
+          class="pf-company-dropdown"
+          id="pf-company-filter"
+          type="button"
+        >
+          All Companies
+          <svg
+            aria-hidden="true"
+            fill="none"
+            height="13"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="1.8"
+            viewBox="0 0 24 24"
+            width="13"
+          >
+            <path
+              d="M6 9l6 6 6-6"
+            />
+          </svg>
+        </button>
+      </div>
+      <div
+        class="global-header-right"
+      >
+        <button
+          class="pf-add-entry-btn"
+          id="pf-add-entry"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            fill="none"
+            height="14"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="1.8"
+            viewBox="0 0 24 24"
+            width="14"
+          >
+            <line
+              x1="12"
+              x2="12"
+              y1="5"
+              y2="19"
+            />
+            <line
+              x1="5"
+              x2="19"
+              y1="12"
+              y2="12"
+            />
+          </svg>
+          Add Entry
+        </button>
+        <button
+          class="pf-icon-btn"
+          id="pf-theme-toggle-header"
+          title="Toggle theme"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            fill="none"
+            height="16"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="1.8"
+            viewBox="0 0 24 24"
+            width="16"
+          >
+            <circle
+              cx="12"
+              cy="12"
+              r="4"
+            />
+            <path
+              d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+            />
+          </svg>
+        </button>
+        <div
+          class="global-header-icons"
+        >
+          <div
+            class="dash-dropdown-container"
+          >
+            <button
+              class="icon-btn bell-icon-wrapper"
+            >
+              <svg
+                fill="none"
+                height="18"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="18"
+              >
+                <path
+                  d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"
+                />
+                <path
+                  d="M13.73 21a2 2 0 0 1-3.46 0"
+                />
+              </svg>
+            </button>
+          </div>
+          <div
+            class="dash-dropdown-container"
+          >
+            <div
+              class="user-avatar-mini"
+              style="cursor: pointer; background: linear-gradient(135deg, var(--sb-primary), #818cf8);"
+            >
+              A
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div
+      class="pf-body"
+    >
+      <div
+        class="pf-container"
+      >
+        <div
+          class="pf-title-block"
+        >
+          <h1
+            class="pf-title"
+          >
+            Profile
+          </h1>
+          <p
+            class="pf-subtitle"
+          >
+            Manage your personal information and account settings
+          </p>
+        </div>
+        <div
+          class="pf-card pf-avatar-card"
+          id="pf-avatar-banner"
+        >
+          <label
+            class="pf-avatar-wrapper"
+            for="avatar-file-input"
+            title="Click to change avatar"
+          >
+            <img
+              alt="Ashraf Hossain"
+              class="pf-avatar-img"
+              src="https://example.com/avatar.jpg"
+            />
+            <span
+              aria-label="Change photo"
+              class="pf-camera-badge"
+            >
+              <svg
+                aria-hidden="true"
+                fill="none"
+                height="11"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.8"
+                viewBox="0 0 24 24"
+                width="11"
+              >
+                <path
+                  d="M14.5 4h-5L8 6H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-4l-1.5-2Z"
+                />
+                <circle
+                  cx="12"
+                  cy="13"
+                  r="3"
+                />
+              </svg>
+            </span>
+            <input
+              accept="image/*"
+              id="avatar-file-input"
+              style="display: none;"
+              type="file"
+            />
+          </label>
+          <div
+            class="pf-avatar-info"
+          >
+            <h2
+              class="pf-user-name"
+            >
+              Ashraf Hossain
+            </h2>
+            <p
+              class="pf-user-email"
+            >
+              ashrafhossainsohan@gmail.com
+            </p>
+          </div>
+        </div>
+        <div
+          class="pf-card"
+          id="pf-personal-info-card"
+        >
+          <div
+            class="pf-card-header"
+          >
+            <div
+              class="pf-header-icon blue-icon"
+            >
+              <svg
+                aria-hidden="true"
+                fill="none"
+                height="18"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.8"
+                viewBox="0 0 24 24"
+                width="18"
+              >
+                <circle
+                  cx="12"
+                  cy="8"
+                  r="4"
+                />
+                <path
+                  d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"
+                />
+              </svg>
+            </div>
+            <div
+              class="pf-header-text"
+            >
+              <h3>
+                Personal Information
+              </h3>
+              <p>
+                Update your name, phone number, and avatar
+              </p>
+            </div>
+          </div>
+          <form
+            class="pf-form"
+          >
+            <div
+              class="pf-form-group"
+            >
+              <label
+                class="pf-label"
+                for="pf-display-name"
+              >
+                Display Name
+              </label>
+              <input
+                class="pf-input"
+                id="pf-display-name"
+                type="text"
+                value="Ashraf Hossain"
+              />
+            </div>
+            <div
+              class="pf-form-group"
+            >
+              <label
+                class="pf-label"
+                for="pf-phone"
+              >
+                Phone Number
+              </label>
+              <div
+                class="pf-input-icon-wrapper"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="pf-input-left-icon"
+                  fill="none"
+                  height="15"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.8"
+                  viewBox="0 0 24 24"
+                  width="15"
+                >
+                  <path
+                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+                  />
+                </svg>
+                <input
+                  class="pf-input pf-input-has-left-icon"
+                  id="pf-phone"
+                  type="text"
+                  value="+880 1XXX-XXXXXX"
+                />
+              </div>
+            </div>
+            <div
+              class="pf-form-group"
+            >
+              <label
+                class="pf-label"
+                for="pf-avatar-url"
+              >
+                Avatar URL
+              </label>
+              <input
+                class="pf-input"
+                id="pf-avatar-url"
+                type="text"
+                value="https://example.com/avatar.jpg"
+              />
+            </div>
+            <div
+              class="pf-form-actions"
+            >
+              <button
+                class="pf-btn-primary"
+                id="pf-save-personal-btn"
+                type="submit"
+              >
+                <svg
+                  aria-hidden="true"
+                  fill="none"
+                  height="15"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.8"
+                  viewBox="0 0 24 24"
+                  width="15"
+                >
+                  <path
+                    d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"
+                  />
+                  <polyline
+                    points="17 21 17 13 7 13 7 21"
+                  />
+                  <polyline
+                    points="7 3 7 8 15 8"
+                  />
+                </svg>
+                Save Changes
+              </button>
+            </div>
+          </form>
+        </div>
+        <div
+          class="pf-card"
+          id="pf-change-email-card"
+        >
+          <div
+            class="pf-card-header"
+          >
+            <div
+              class="pf-header-icon blue-icon"
+            >
+              <svg
+                aria-hidden="true"
+                fill="none"
+                height="18"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.8"
+                viewBox="0 0 24 24"
+                width="18"
+              >
+                <rect
+                  height="16"
+                  rx="2"
+                  width="20"
+                  x="2"
+                  y="4"
+                />
+                <path
+                  d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"
+                />
+              </svg>
+            </div>
+            <div
+              class="pf-header-text"
+            >
+              <h3>
+                Change Email
+              </h3>
+              <p>
+                Current email: 
+                <span
+                  class="pf-current-email-text"
+                >
+                  ashrafhossainsohan@gmail.com
+                </span>
+              </p>
+            </div>
+          </div>
+          <form
+            class="pf-form"
+          >
+            <div
+              class="pf-form-group"
+            >
+              <label
+                class="pf-label"
+                for="pf-new-email"
+              >
+                New Email Address
+              </label>
+              <input
+                class="pf-input"
+                id="pf-new-email"
+                placeholder="newemail@example.com"
+                type="email"
+                value="newemail@example.com"
+              />
+            </div>
+            <div
+              class="pf-form-actions"
+            >
+              <button
+                class="pf-btn-outline"
+                id="pf-update-email-btn"
+                type="submit"
+              >
+                <svg
+                  aria-hidden="true"
+                  fill="none"
+                  height="15"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.8"
+                  viewBox="0 0 24 24"
+                  width="15"
+                >
+                  <rect
+                    height="16"
+                    rx="2"
+                    width="20"
+                    x="2"
+                    y="4"
+                  />
+                  <path
+                    d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"
+                  />
+                </svg>
+                Update Email
+              </button>
+            </div>
+          </form>
+        </div>
+        <div
+          class="pf-card"
+          id="pf-change-password-card"
+        >
+          <div
+            class="pf-card-header"
+          >
+            <div
+              class="pf-header-icon blue-icon"
+            >
+              <svg
+                aria-hidden="true"
+                fill="none"
+                height="18"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.8"
+                viewBox="0 0 24 24"
+                width="18"
+              >
+                <rect
+                  height="11"
+                  rx="2"
+                  ry="2"
+                  width="18"
+                  x="3"
+                  y="11"
+                />
+                <path
+                  d="M7 11V7a5 5 0 0 1 10 0v4"
+                />
+              </svg>
+            </div>
+            <div
+              class="pf-header-text"
+            >
+              <h3>
+                Change Password
+              </h3>
+              <p>
+                Update your password now or send a reset link to your email
+              </p>
+            </div>
+          </div>
+          <form
+            class="pf-form"
+          >
+            <div
+              class="pf-form-group"
+            >
+              <label
+                class="pf-label"
+                for="pf-new-password"
+              >
+                New Password
+              </label>
+              <input
+                class="pf-input"
+                id="pf-new-password"
+                type="password"
+                value="••••••••"
+              />
+            </div>
+            <div
+              class="pf-form-group"
+            >
+              <label
+                class="pf-label"
+                for="pf-confirm-password"
+              >
+                Confirm Password
+              </label>
+              <input
+                class="pf-input"
+                id="pf-confirm-password"
+                type="password"
+                value="••••••••"
+              />
+            </div>
+            <div
+              class="pf-btn-row"
+            >
+              <button
+                class="pf-btn-outline"
+                id="pf-update-password-btn"
+                type="submit"
+              >
+                <svg
+                  aria-hidden="true"
+                  fill="none"
+                  height="15"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.8"
+                  viewBox="0 0 24 24"
+                  width="15"
+                >
+                  <path
+                    d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"
+                  />
+                </svg>
+                Update Password
+              </button>
+              <button
+                class="pf-btn-outline"
+                id="pf-send-reset-btn"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  fill="none"
+                  height="15"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.8"
+                  viewBox="0 0 24 24"
+                  width="15"
+                >
+                  <rect
+                    height="16"
+                    rx="2"
+                    width="20"
+                    x="2"
+                    y="4"
+                  />
+                  <path
+                    d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"
+                  />
+                </svg>
+                Send Reset Email
+              </button>
+            </div>
+          </form>
+        </div>
+        <div
+          class="pf-card"
+          id="pf-account-info-card"
+        >
+          <div
+            class="pf-card-header"
+          >
+            <div
+              class="pf-header-icon blue-icon"
+            >
+              <svg
+                aria-hidden="true"
+                fill="none"
+                height="18"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.8"
+                viewBox="0 0 24 24"
+                width="18"
+              >
+                <polygon
+                  points="12 2 2 7 2 17 12 22 22 17 22 7 12 2"
+                />
+              </svg>
+            </div>
+            <div
+              class="pf-header-text"
+            >
+              <h3>
+                Account Info
+              </h3>
+            </div>
+          </div>
+          <div
+            class="pf-info-rows"
+          >
+            <div
+              class="pf-info-row"
+            >
+              <span
+                class="pf-info-label"
+              >
+                User ID
+              </span>
+              <button
+                class="pf-info-value pf-info-copyable"
+                title="Click to copy full User ID"
+                type="button"
+              >
+                <code>
+                  85fc84f2...
+                </code>
+                <svg
+                  aria-hidden="true"
+                  class="pf-copy-icon"
+                  fill="none"
+                  height="12"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.8"
+                  viewBox="0 0 24 24"
+                  width="12"
+                >
+                  <rect
+                    height="13"
+                    rx="2"
+                    ry="2"
+                    width="13"
+                    x="9"
+                    y="9"
+                  />
+                  <path
+                    d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div
+              class="pf-info-row"
+            >
+              <span
+                class="pf-info-label"
+              >
+                Created
+              </span>
+              <span
+                class="pf-info-value"
+              >
+                2/18/2026
+              </span>
+            </div>
+            <div
+              class="pf-info-row"
+            >
+              <span
+                class="pf-info-label"
+              >
+                Last Sign In
+              </span>
+              <span
+                class="pf-info-value"
+              >
+                7/19/2026
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

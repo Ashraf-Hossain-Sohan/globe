@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import type { FormEvent } from 'react'
+import TopHeader from './shared/TopHeader'
 import '../styles/UserAccessPage.css'
 
 /* ─── API Base ───────────────────────────────────────── */
@@ -85,8 +86,8 @@ export default function UserAccessPage() {
       setLoading(true)
       setError(null)
       const [uaRes, compRes] = await Promise.all([
-        fetch(`${API}/user-access`),
-        fetch(`${API}/companies`),
+        fetch(`${API}/user-access`, { credentials: 'include' }),
+        fetch(`${API}/companies`, { credentials: 'include' }),
       ])
 
       if (!uaRes.ok || !compRes.ok) throw new Error('Failed to fetch user access configuration')
@@ -170,6 +171,7 @@ export default function UserAccessPage() {
         method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
+        credentials: 'include'
       })
 
       if (!res.ok) {
@@ -189,7 +191,7 @@ export default function UserAccessPage() {
   const handleDelete = async (id: number) => {
     if (!confirm('Are you sure you want to delete this user access rule?')) return
     try {
-      const res = await fetch(`${API}/user-access/${id}`, { method: 'DELETE' })
+      const res = await fetch(`${API}/user-access/${id}`, { method: 'DELETE', credentials: 'include' })
       if (!res.ok) throw new Error('Delete failed')
       await fetchAll()
     } catch (err) {
@@ -217,41 +219,26 @@ export default function UserAccessPage() {
   return (
     <div className="ua-page" id="ua-page">
       {/* ── Top Header ──────────────────────────────── */}
-      <header className="ua-header">
-        <button
-          className="mobile-sidebar-toggle"
-          type="button"
-          onClick={() => window.dispatchEvent(new CustomEvent('toggle-sidebar'))}
-          aria-label="Toggle sidebar"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="3" y1="12" x2="21" y2="12" />
-            <line x1="3" y1="6" x2="21" y2="6" />
-            <line x1="3" y1="18" x2="21" y2="18" />
-          </svg>
-        </button>
-        <button className="ua-company-dropdown" type="button">
-          All Companies
-          <Ico size={13}><path d="M6 9l6 6 6-6" /></Ico>
-        </button>
-        <div className="ua-header-actions">
-          <button className="ua-add-entry-btn" type="button" onClick={openAddModal}>
-            <Ico size={14}><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></Ico>
-            Add Entry
+      <TopHeader
+        className="ua-header"
+        leftContent={
+          <button className="ua-company-dropdown" type="button">
+            All Companies
+            <Ico size={13}><path d="M6 9l6 6 6-6" /></Ico>
           </button>
-          <button className="ua-icon-btn" type="button" title="Toggle theme">
-            <Ico size={16}><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" /></Ico>
-          </button>
-          <button className="ua-icon-btn" type="button" title="Notifications">
-            <Ico size={16}><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" /><path d="M13.73 21a2 2 0 0 1-3.46 0" /></Ico>
-            <span className="ua-notification-dot" />
-          </button>
-          <div className="ua-header-user">
-            <button className="ua-user-avatar-small" type="button" title="Profile">A</button>
-            <Ico size={12}><path d="M6 9l6 6 6-6" /></Ico>
-          </div>
-        </div>
-      </header>
+        }
+        rightContent={
+          <>
+            <button className="ua-add-entry-btn" type="button" onClick={openAddModal}>
+              <Ico size={14}><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></Ico>
+              Add Entry
+            </button>
+            <button className="ua-icon-btn" type="button" title="Toggle theme">
+              <Ico size={16}><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" /></Ico>
+            </button>
+          </>
+        }
+      />
 
       {/* ── Body ────────────────────────────────────── */}
       <div className="ua-body">

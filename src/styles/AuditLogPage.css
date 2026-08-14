@@ -23,7 +23,7 @@
 }
 
 .al-header-title {
-  color: #8b909c;
+  color: #d1d5db;
   font-size: 13px;
   font-weight: 500;
   text-transform: uppercase;
@@ -100,7 +100,7 @@
 
 .al-title-text p {
   font-size: 14px;
-  color: #6b7280;
+  color: #d1d5db;
   margin: 0;
 }
 
@@ -212,7 +212,7 @@
 }
 
 .al-filter-separator {
-  color: #5c6270;
+  color: #d1d5db;
   margin: 0 8px;
 }
 
@@ -243,7 +243,7 @@
   align-items: center;
   padding: 12px 16px;
   border-bottom: 1px solid #1e2030;
-  color: #5c6270;
+  color: #d1d5db;
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.05em;
@@ -281,7 +281,7 @@
 /* ── Cell Styles ────────────────────────────────────────────────────────── */
 .al-time-text {
   font-size: 13px;
-  color: #8b909c;
+  color: #d1d5db;
 }
 
 .al-user-info {
@@ -297,7 +297,7 @@
 
 .al-user-email {
   font-size: 11px;
-  color: #5c6270;
+  color: #d1d5db;
 }
 
 .al-entity-tag {
@@ -310,7 +310,7 @@
 }
 
 .al-dash {
-  color: #5c6270;
+  color: #d1d5db;
 }
 
 .al-desc-text {
@@ -325,7 +325,7 @@
 .al-ip-text {
   font-size: 12px;
   font-family: 'JetBrains Mono', monospace;
-  color: #6b7280;
+  color: #d1d5db;
 }
 
 /* ── Badges ─────────────────────────────────────────────────────────────── */
@@ -344,7 +344,7 @@
 .badge-create { background: rgba(59, 130, 246, 0.12); color: #60a5fa; }
 .badge-update { background: rgba(245, 158, 11, 0.12); color: #fbbf24; }
 .badge-delete { background: rgba(239, 68, 68, 0.2); color: #f87171; }
-.badge-default { background: rgba(107, 114, 128, 0.15); color: #9ca3af; }
+.badge-default { background: rgba(107, 114, 128, 0.15); color: #d1d5db; }
 
 /* ── Pagination ─────────────────────────────────────────────────────────── */
 .al-pagination {
@@ -378,14 +378,14 @@
 
 .al-page-info {
   font-size: 13px;
-  color: #8b909c;
+  color: #d1d5db;
 }
 
 /* ── Empty & Loading States ─────────────────────────────────────────────── */
 .al-empty {
   text-align: center;
   padding: 40px 20px;
-  color: #5c6270;
+  color: #d1d5db;
 }
 
 .al-empty svg {
@@ -405,7 +405,7 @@
   align-items: center;
   justify-content: center;
   padding: 80px 20px;
-  color: #5c6270;
+  color: #d1d5db;
   gap: 10px;
   font-size: 14px;
 }

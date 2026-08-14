@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import TopHeader from './shared/TopHeader'
 import '../styles/AuditLogPage.css'
 
 interface AuditLog {
@@ -110,11 +111,12 @@ export default function AuditLogPage() {
 
   return (
     <div className="audit-log-page">
-      <header className="al-header">
-        <div className="al-header-left">
+      <TopHeader
+        className="al-header"
+        leftContent={
           <span className="al-header-title">System Audit Log</span>
-        </div>
-        <div className="al-header-actions">
+        }
+        rightContent={
           <button className="al-refresh-btn" onClick={() => { fetchStats(); fetchLogs(); }}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8" />
@@ -122,8 +124,8 @@ export default function AuditLogPage() {
             </svg>
             Refresh Logs
           </button>
-        </div>
-      </header>
+        }
+      />
 
       <main className="al-body">
         <div className="al-title-row">

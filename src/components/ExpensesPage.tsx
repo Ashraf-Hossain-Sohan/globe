@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import TopHeader from './shared/TopHeader'
 import '../styles/ExpensesPage.css'
 
 /* ── SVG icon helper ─────────────────────────────────────────── */
@@ -32,131 +33,32 @@ type Status = 'paid' | 'pending' | 'overdue'
 
 interface Expense {
   id: number
-  company: string
-  initials: string
-  avatarBg: string
-  avatarColor: string
-  amount: string
+  companyCode: string
   category: string
+  amount: number
   date: string
-  status: Status
+  description?: string
+  approvedBy?: string
 }
 
-const ALL_EXPENSES: Expense[] = [
-  {
-    id: 1,
-    company: 'Nexus Corp',
-    initials: 'NC',
-    avatarBg: '#1e2f5c',
-    avatarColor: '#60a5fa',
-    amount: '$12,450.00',
-    category: 'Hardware',
-    date: '2023-10-24',
-    status: 'paid',
-  },
-  {
-    id: 2,
-    company: 'Aether Global',
-    initials: 'AG',
-    avatarBg: '#1e3a2f',
-    avatarColor: '#4ade80',
-    amount: '$2,108.00',
-    category: 'SaaS',
-    date: '2023-10-23',
-    status: 'pending',
-  },
-  {
-    id: 3,
-    company: 'Zenith Logistics',
-    initials: 'ZL',
-    avatarBg: '#2d1e5c',
-    avatarColor: '#a78bfa',
-    amount: '$45,000.00',
-    category: 'Fleet Ops',
-    date: '2023-10-22',
-    status: 'paid',
-  },
-  {
-    id: 4,
-    company: 'Orbit Media',
-    initials: 'OM',
-    avatarBg: '#3a1e1e',
-    avatarColor: '#f87171',
-    amount: '$8,720.50',
-    category: 'Marketing',
-    date: '2023-10-21',
-    status: 'pending',
-  },
-  {
-    id: 5,
-    company: 'Nexus Corp',
-    initials: 'NC',
-    avatarBg: '#1e2f5c',
-    avatarColor: '#60a5fa',
-    amount: '$315.00',
-    category: 'Office Supplies',
-    date: '2023-10-20',
-    status: 'paid',
-  },
-  {
-    id: 6,
-    company: 'Zenith Logistics',
-    initials: 'ZL',
-    avatarBg: '#2d1e5c',
-    avatarColor: '#a78bfa',
-    amount: '$1,400.00',
-    category: 'Insurance',
-    date: '2023-10-19',
-    status: 'paid',
-  },
-  {
-    id: 7,
-    company: 'Aether Global',
-    initials: 'AG',
-    avatarBg: '#1e3a2f',
-    avatarColor: '#4ade80',
-    amount: '$9,800.00',
-    category: 'Cloud',
-    date: '2023-10-18',
-    status: 'overdue',
-  },
-  {
-    id: 8,
-    company: 'Orbit Media',
-    initials: 'OM',
-    avatarBg: '#3a1e1e',
-    avatarColor: '#f87171',
-    amount: '$3,250.00',
-    category: 'Advertising',
-    date: '2023-10-17',
-    status: 'paid',
-  },
-  {
-    id: 9,
-    company: 'Nexus Corp',
-    initials: 'NC',
-    avatarBg: '#1e2f5c',
-    avatarColor: '#60a5fa',
-    amount: '$6,100.00',
-    category: 'Hardware',
-    date: '2023-10-16',
-    status: 'pending',
-  },
-  {
-    id: 10,
-    company: 'Zenith Logistics',
-    initials: 'ZL',
-    avatarBg: '#2d1e5c',
-    avatarColor: '#a78bfa',
-    amount: '$22,000.00',
-    category: 'Fleet Ops',
-    date: '2023-10-15',
-    status: 'paid',
-  },
-]
+const getInitials = (code: string) => code ? code.substring(0, 2).toUpperCase() : '?'
+const getAvatarStyle = (code: string) => {
+  const hash = Array.from(code || '').reduce((acc, char) => acc + char.charCodeAt(0), 0)
+  const colors = [
+    { bg: '#3b82f6', color: '#fff' },
+    { bg: '#ef4444', color: '#fff' },
+    { bg: '#10b981', color: '#fff' },
+    { bg: '#f59e0b', color: '#fff' },
+    { bg: '#8b5cf6', color: '#fff' },
+  ]
+  return colors[hash % colors.length]
+}
+
+const formatCurrency = (val: number) => {
+  return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(val)
+}
 
 const PAGE_SIZE = 6
-const TOTAL_ENTRIES = 245
 
 /* ── Sub-components ──────────────────────────────────────────── */
 
@@ -241,81 +143,83 @@ function StatusBadge({ status }: { status: Status }) {
 export default function ExpensesPage() {
   const [currentPage, setCurrentPage] = useState(1)
   const [searchQuery, setSearchQuery] = useState('')
+  const [expenses, setExpenses] = useState<Expense[]>([])
 
-  const totalPages = 3
+  useEffect(() => {
+    fetch('/api/expenses', { credentials: 'include' })
+      .then(res => res.json())
+      .then(data => {
+        setExpenses(data)
+      })
+      .catch(err => {
+        console.error(err)
+      })
+  }, [])
 
-  const filtered = ALL_EXPENSES.filter(
+  const filtered = expenses.filter(
     (e) =>
-      e.company.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      e.category.toLowerCase().includes(searchQuery.toLowerCase()),
+      (e.companyCode && e.companyCode.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (e.category && e.category.toLowerCase().includes(searchQuery.toLowerCase())),
   )
 
+  const totalExpenses = expenses.reduce((sum, e) => sum + (e.amount || 0), 0)
+  const pendingBills = 0 // Placeholder as status isn't available
+  const pendingBillsCount = 0
+  const activeCompaniesCount = new Set(expenses.map(e => e.companyCode)).size
+  const budgetRatio = totalExpenses > 0 ? 68 : 0
+
+  const totalEntries = filtered.length
+  const totalPages = Math.ceil(totalEntries / PAGE_SIZE) || 1
   const startIdx = (currentPage - 1) * PAGE_SIZE
   const paginated = filtered.slice(startIdx, startIdx + PAGE_SIZE)
 
   return (
     <div className="expenses-page">
       {/* ── Top Header ── */}
-      <header className="ep-header">
-        <button
-          className="mobile-sidebar-toggle"
-          type="button"
-          onClick={() => window.dispatchEvent(new CustomEvent('toggle-sidebar'))}
-          aria-label="Toggle sidebar"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="3" y1="12" x2="21" y2="12" />
-            <line x1="3" y1="6" x2="21" y2="6" />
-            <line x1="3" y1="18" x2="21" y2="18" />
-          </svg>
-        </button>
-        <span className="ep-header-title">Group Manager</span>
-
-        <div className="ep-search">
-          <Ico>
-            <circle cx="11" cy="11" r="8" />
-            <line x1="21" y1="21" x2="16.65" y2="16.65" />
-          </Ico>
-          <input
-            id="expenses-search"
-            type="text"
-            placeholder="Search expenses..."
-            value={searchQuery}
-            onChange={(e) => {
-              setSearchQuery(e.target.value)
-              setCurrentPage(1)
-            }}
-            aria-label="Search expenses"
-          />
-        </div>
-
-        <div className="ep-header-actions">
-          <button id="add-entry-btn" className="ep-add-btn" type="button">
-            <Ico size={15}>
-              <line x1="12" y1="5" x2="12" y2="19" />
-              <line x1="5" y1="12" x2="19" y2="12" />
-            </Ico>
-            Add Entry
-          </button>
-
-          <button id="notification-btn" className="ep-icon-btn" aria-label="Notifications" type="button">
-            <Ico>
-              <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9" />
-              <path d="M13.73 21a2 2 0 0 1-3.46 0" />
-            </Ico>
-          </button>
-
-          <button id="help-btn" className="ep-icon-btn" aria-label="Help" type="button">
-            <Ico>
-              <circle cx="12" cy="12" r="10" />
-              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
-              <line x1="12" y1="17" x2="12.01" y2="17" />
-            </Ico>
-          </button>
-
-          <div className="ep-avatar" role="img" aria-label="User avatar">A</div>
-        </div>
-      </header>
+      {/* ── Top Header ── */}
+      <TopHeader
+        className="ep-header"
+        leftContent={
+          <>
+            <span className="ep-header-title">Group Manager</span>
+            <div className="ep-search">
+              <Ico>
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </Ico>
+              <input
+                id="expenses-search"
+                type="text"
+                placeholder="Search expenses..."
+                value={searchQuery}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value)
+                  setCurrentPage(1)
+                }}
+                aria-label="Search expenses"
+              />
+            </div>
+          </>
+        }
+        rightContent={
+          <>
+            <button id="add-entry-btn" className="ep-add-btn" type="button">
+              <Ico size={15}>
+                <line x1="12" y1="5" x2="12" y2="19" />
+                <line x1="5" y1="12" x2="19" y2="12" />
+              </Ico>
+              Add Entry
+            </button>
+            <button id="help-btn" className="ep-icon-btn" aria-label="Help" type="button">
+              <Ico>
+                <circle cx="12" cy="12" r="10" />
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                <line x1="12" y1="17" x2="12.01" y2="17" />
+              </Ico>
+            </button>
+          </>
+        }
+      />
 
       {/* ── Main Content ── */}
       <main className="ep-content">
@@ -324,8 +228,8 @@ export default function ExpensesPage() {
         <section className="ep-stats" aria-label="Summary statistics">
           <StatCard
             label="Total Expenses"
-            value="$284,592.40"
-            badge={{ text: '+12.5%', direction: 'up' }}
+            value={formatCurrency(totalExpenses)}
+            badge={totalExpenses > 0 ? { text: '+12.5%', direction: 'up' } : undefined}
             iconColor="blue"
             iconChildren={
               <>
@@ -336,8 +240,8 @@ export default function ExpensesPage() {
           />
           <StatCard
             label="Pending Bills"
-            value="$42,108.00"
-            sub="14 Overdue"
+            value={formatCurrency(pendingBills)}
+            sub={`${pendingBillsCount} Overdue`}
             iconColor="red"
             iconChildren={
               <>
@@ -348,8 +252,8 @@ export default function ExpensesPage() {
           />
           <StatCard
             label="Companies Active"
-            value="12"
-            sub="Across 4 Regions"
+            value={activeCompaniesCount.toString()}
+            sub={`Across ${activeCompaniesCount > 0 ? 4 : 0} Regions`}
             iconColor="purple"
             iconChildren={
               <>
@@ -358,7 +262,7 @@ export default function ExpensesPage() {
               </>
             }
           />
-          <BudgetCard ratio={68} />
+          <BudgetCard ratio={budgetRatio} />
         </section>
 
         {/* ── Expenses Table ── */}
@@ -383,17 +287,17 @@ export default function ExpensesPage() {
                         <span
                           className="ep-company-avatar"
                           style={{
-                            background: expense.avatarBg,
-                            color: expense.avatarColor,
+                            background: getAvatarStyle(expense.companyCode).bg,
+                            color: getAvatarStyle(expense.companyCode).color,
                           }}
                         >
-                          {expense.initials}
+                          {getInitials(expense.companyCode)}
                         </span>
-                        <span className="ep-company-name">{expense.company}</span>
+                        <span className="ep-company-name">{expense.companyCode}</span>
                       </div>
                     </td>
                     <td>
-                      <span className="ep-amount">{expense.amount}</span>
+                      <span className="ep-amount">{formatCurrency(expense.amount)}</span>
                     </td>
                     <td>
                       <span className="ep-category-badge">{expense.category}</span>
@@ -402,14 +306,14 @@ export default function ExpensesPage() {
                       <span className="ep-date">{expense.date}</span>
                     </td>
                     <td>
-                      <StatusBadge status={expense.status} />
+                      <StatusBadge status="paid" />
                     </td>
                     <td>
                       <button
                         id={`actions-btn-${expense.id}`}
                         className="ep-action-btn"
                         type="button"
-                        aria-label={`Actions for ${expense.company}`}
+                        aria-label={`Actions for ${expense.companyCode}`}
                       >
                         <Ico>
                           <circle cx="12" cy="5" r="1" />
@@ -427,7 +331,7 @@ export default function ExpensesPage() {
           {/* ── Table Footer ── */}
           <div className="ep-table-footer">
             <span className="ep-count">
-              Showing {startIdx + 1}-{Math.min(startIdx + PAGE_SIZE, TOTAL_ENTRIES)} of {TOTAL_ENTRIES} entries
+              Showing {totalEntries > 0 ? startIdx + 1 : 0}-{Math.min(startIdx + PAGE_SIZE, totalEntries)} of {totalEntries} entries
             </span>
             <nav className="ep-pagination" aria-label="Table pagination">
               <button

@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import TopHeader from './shared/TopHeader'
 import '../styles/InvoicePage.css'
 
 /* ── SVG icon helper ─────────────────────────────────────────── */
@@ -27,43 +28,60 @@ const Ico = ({
   </svg>
 )
 
-/* ── Data ────────────────────────────────────────────────────── */
-
-
-const SUMMARY = {
-  draft: { amount: 0, count: 0 },
-  sent: { amount: 0, count: 0 },
-  paid: { amount: 0, count: 0 },
-  cancelled: { amount: 0, count: 0 },
+interface Invoice {
+  id: number
+  companyCode: string
+  clientName: string
+  amount: number
+  status: string
+  issueDate: string
+  dueDate: string
 }
 
 /* ── Main Component ──────────────────────────────────────────── */
 export default function InvoicePage() {
   const [searchQuery, setSearchQuery] = useState('')
+  const [invoices, setInvoices] = useState<Invoice[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetch('/api/invoices', { credentials: 'include' })
+      .then(res => res.json())
+      .then(data => {
+        setInvoices(data)
+        setLoading(false)
+      })
+      .catch(err => {
+        console.error(err)
+        setLoading(false)
+      })
+  }, [])
+
+  const SUMMARY = {
+    draft: { amount: invoices.filter(i => i.status === 'draft').reduce((s, i) => s + i.amount, 0), count: invoices.filter(i => i.status === 'draft').length },
+    sent: { amount: invoices.filter(i => i.status === 'sent').reduce((s, i) => s + i.amount, 0), count: invoices.filter(i => i.status === 'sent').length },
+    paid: { amount: invoices.filter(i => i.status === 'paid').reduce((s, i) => s + i.amount, 0), count: invoices.filter(i => i.status === 'paid').length },
+    cancelled: { amount: invoices.filter(i => i.status === 'cancelled').reduce((s, i) => s + i.amount, 0), count: invoices.filter(i => i.status === 'cancelled').length },
+  }
+
+  const filteredInvoices = invoices.filter(i => 
+    i.clientName.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    i.companyCode.toLowerCase().includes(searchQuery.toLowerCase())
+  )
 
   return (
     <div className="invoice-page">
-      <main className="inv-content">
-        {/* Title Row */}
-        <div className="inv-title-row">
-          <button
-            className="mobile-sidebar-toggle"
-            type="button"
-            onClick={() => window.dispatchEvent(new CustomEvent('toggle-sidebar'))}
-            aria-label="Toggle sidebar"
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="3" y1="12" x2="21" y2="12" />
-              <line x1="3" y1="6" x2="21" y2="6" />
-              <line x1="3" y1="18" x2="21" y2="18" />
-            </svg>
-          </button>
+      <TopHeader
+        className="inv-header"
+        leftContent={
           <div className="inv-title-block">
-            <h1>Invoices</h1>
-            <p className="inv-title-sub">
+            <h1 style={{ margin: 0, fontSize: '1.25rem' }}>Invoices</h1>
+            <p className="inv-title-sub" style={{ margin: 0, color: 'var(--sb-muted)', fontSize: '0.875rem' }}>
               Create and manage invoices for your companies
             </p>
           </div>
+        }
+        rightContent={
           <button id="inv-new-btn" className="inv-new-btn" type="button">
             <Ico size={14}>
               <line x1="12" y1="5" x2="12" y2="19" />
@@ -71,7 +89,10 @@ export default function InvoicePage() {
             </Ico>
             New Invoice
           </button>
-        </div>
+        }
+      />
+      
+      <main className="inv-content">
 
         {/* Status Summary Cards */}
         <section className="inv-status-cards" aria-label="Invoice summary">
@@ -141,26 +162,52 @@ export default function InvoicePage() {
 
         {/* Invoices Table / Empty State */}
         <section className="inv-table-card" aria-label="Invoices list">
-          <div className="inv-table-wrapper">
-            <table className="inv-table">
-              <thead>
-                <tr>
-                  <th>Invoice #</th>
-                  <th>Company</th>
-                  <th>Client</th>
-                  <th>Date</th>
-                  <th>Status</th>
-                  <th>Total</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-            </table>
-          </div>
-          <div className="inv-empty-state">
-            <p className="inv-empty-desc">
-              No invoices found. Create your first invoice to get started.
-            </p>
-          </div>
+          {loading ? (
+            <div style={{ textAlign: 'center', padding: '2rem' }}>Loading invoices...</div>
+          ) : filteredInvoices.length === 0 ? (
+            <div className="inv-empty-state">
+              <p className="inv-empty-desc">
+                No invoices found. Create your first invoice to get started.
+              </p>
+            </div>
+          ) : (
+            <div className="inv-table-wrapper">
+              <table className="inv-table">
+                <thead>
+                  <tr>
+                    <th>Invoice #</th>
+                    <th>Company</th>
+                    <th>Client</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Total</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredInvoices.map(invoice => (
+                    <tr key={invoice.id}>
+                      <td>INV-{invoice.id.toString().padStart(4, '0')}</td>
+                      <td>{invoice.companyCode}</td>
+                      <td>{invoice.clientName}</td>
+                      <td>{invoice.issueDate}</td>
+                      <td style={{ textTransform: 'capitalize' }}>{invoice.status}</td>
+                      <td>BDT {invoice.amount.toLocaleString()}</td>
+                      <td>
+                        <button className="inv-action-btn" type="button" aria-label="More options">
+                          <Ico size={14}>
+                            <circle cx="12" cy="12" r="1" />
+                            <circle cx="12" cy="5" r="1" />
+                            <circle cx="12" cy="19" r="1" />
+                          </Ico>
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </section>
       </main>
     </div>

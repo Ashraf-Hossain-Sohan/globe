@@ -45,7 +45,7 @@
 }
 
 .pf-company-dropdown svg {
-  color: #5c6270;
+  color: #d1d5db;
 }
 
 .pf-header-actions {
@@ -89,7 +89,7 @@
   border: 1px solid #232636;
   border-radius: 8px;
   background: #141622;
-  color: #8b909c;
+  color: #d1d5db;
   cursor: pointer;
   transition: all 0.15s;
   position: relative;
@@ -139,7 +139,7 @@
 }
 
 .pf-header-user svg {
-  color: #5c6270;
+  color: #d1d5db;
 }
 
 /* ── Toast Notification ─────────────────────────────────────────────────── */
@@ -238,7 +238,7 @@
 
 .pf-subtitle {
   font-size: 13.5px;
-  color: #6b7280;
+  color: #d1d5db;
   margin: 0;
 }
 
@@ -311,7 +311,7 @@
   border: 2px solid #13151f;
   display: grid;
   place-items: center;
-  color: #8b909c;
+  color: #d1d5db;
   transition: all 0.15s;
 }
 
@@ -336,7 +336,7 @@
 
 .pf-user-email {
   font-size: 13.5px;
-  color: #6b7280;
+  color: #d1d5db;
   margin: 0;
   line-height: 1.3;
 }
@@ -371,7 +371,7 @@
 
 .pf-header-text p {
   font-size: 13px;
-  color: #6b7280;
+  color: #d1d5db;
   margin: 3px 0 0;
   line-height: 1.3;
 }
@@ -397,7 +397,7 @@
 .pf-label {
   font-size: 13px;
   font-weight: 500;
-  color: #9ca3af;
+  color: #d1d5db;
 }
 
 .pf-input {
@@ -415,7 +415,7 @@
 }
 
 .pf-input::placeholder {
-  color: #4b5563;
+  color: #d1d5db;
 }
 
 .pf-input:focus {
@@ -435,7 +435,7 @@
 .pf-input-left-icon {
   position: absolute;
   left: 14px;
-  color: #4b5563;
+  color: #d1d5db;
   pointer-events: none;
 }
 
@@ -530,12 +530,12 @@
 
 .pf-info-label {
   font-size: 13.5px;
-  color: #6b7280;
+  color: #d1d5db;
 }
 
 .pf-info-value {
   font-size: 13.5px;
-  color: #9ca3af;
+  color: #d1d5db;
 }
 
 .pf-info-copyable {
@@ -556,14 +556,14 @@
 
 .pf-info-copyable code {
   background: transparent;
-  color: #9ca3af;
+  color: #d1d5db;
   font-family: 'Consolas', 'Courier New', monospace;
   font-size: 13px;
   padding: 0;
 }
 
 .pf-copy-icon {
-  color: #4b5563;
+  color: #d1d5db;
   transition: color 0.15s;
 }
 

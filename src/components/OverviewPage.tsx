@@ -1,11 +1,22 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import {
   LineChart, Line, BarChart, Bar, PieChart, Pie, Cell,
   XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer
 } from 'recharts'
 import { useAuth } from '../context/AuthContext'
+import TopHeader from './shared/TopHeader'
 import '../styles/OverviewPage.css'
 import '../styles/GlobalEntryPage.css' // Reuse modal styles
+
+interface Transaction {
+  id: number
+  title: string
+  amount: number
+  category: string
+  entryDate: string
+  company: string
+}
+
 
 interface OverviewMetrics {
   totalRevenue: number
@@ -16,24 +27,19 @@ interface OverviewMetrics {
   accountsPayable: number
   monthlyBurnRate: number
   workingCapital: number
-  revenueByCompany: any[]
-  costDistribution: any[]
-  monthlyTrend: any[]
-  recentActivity: any[]
+  revenueByCompany: { company: string; revenue: number; expenses: number }[]
+  costDistribution: { name: string; value: number; fill: string }[]
+  monthlyTrend: { month: string; revenue: number; expenses: number; profit: number }[]
+  recentActivity: Transaction[]
 }
 
 export default function OverviewPage() {
-  const { user, logout } = useAuth()
+  const { logout } = useAuth()
   const [metrics, setMetrics] = useState<OverviewMetrics | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [timeFilter, setTimeFilter] = useState(6) // default 6 months
 
-  // Notifications & Profile Dropdowns
-  const [notifications, setNotifications] = useState<any[]>([])
-  const [showNotifMenu, setShowNotifMenu] = useState(false)
-  const [showProfileMenu, setShowProfileMenu] = useState(false)
-  const unreadCount = notifications.filter(n => !n.read).length
 
   // Modal State
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -47,31 +53,9 @@ export default function OverviewPage() {
   })
   const [formError, setFormError] = useState('')
 
-  useEffect(() => {
-    fetchOverview()
-  }, [timeFilter])
 
-  useEffect(() => {
-    fetchNotifications()
-  }, [])
 
-  const fetchNotifications = async () => {
-    try {
-      const res = await fetch('/api/notifications', { credentials: 'include' })
-      if (res.ok) {
-        setNotifications(await res.json())
-      }
-    } catch (e) { console.error(e) }
-  }
-
-  const handleMarkAsRead = async (id: number) => {
-    try {
-      await fetch(`/api/notifications/${id}/read`, { method: 'POST', credentials: 'include' })
-      setNotifications(notifications.map(n => n.id === id ? { ...n, read: true } : n))
-    } catch (e) { console.error(e) }
-  }
-
-  const fetchOverview = async () => {
+  const fetchOverview = useCallback(async () => {
     setLoading(true)
     setError('')
     try {
@@ -86,12 +70,18 @@ export default function OverviewPage() {
       if (!res.ok) throw new Error('Failed to load overview data')
       const data = await res.json()
       setMetrics(data)
-    } catch (err) {
+    } catch {
       setError('Could not load overview metrics.')
     } finally {
       setLoading(false)
     }
-  }
+  }, [timeFilter, logout])
+  useEffect(() => {
+    const init = async () => {
+      await fetchOverview()
+    }
+    init()
+  }, [fetchOverview])
 
   const handleSaveEntry = async () => {
     setFormError('')
@@ -115,7 +105,7 @@ export default function OverviewPage() {
         category: 'Expense', company: 'XSRS IT',
         entryDate: new Date().toISOString().split('T')[0]
       })
-    } catch (err) {
+    } catch {
       setFormError('Failed to save the entry.')
     }
   }
@@ -129,7 +119,7 @@ export default function OverviewPage() {
       })
       if (!res.ok) throw new Error('Failed to delete')
       fetchOverview() // Instant refresh
-    } catch (err) {
+    } catch {
       alert('Could not delete entry.')
     }
   }
@@ -141,65 +131,20 @@ export default function OverviewPage() {
 
   return (
     <div className="overview-page">
-      <header className="overview-header">
-        <div className="overview-header-left">
+      <TopHeader
+        leftContent={
           <div className="dash-company-select">
             <span>All Companies</span>
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9l6 6 6-6"/></svg>
           </div>
-        </div>
-        <div className="overview-header-right">
+        }
+        rightContent={
           <button className="dash-add-btn" onClick={() => setIsModalOpen(true)}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
             Add Entry
           </button>
-          <div className="dash-header-icons">
-            <div className="dash-dropdown-container">
-              <button className="icon-btn bell-icon-wrapper" onClick={() => setShowNotifMenu(!showNotifMenu)}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-                {unreadCount > 0 && <div className="red-dot"></div>}
-              </button>
-              {showNotifMenu && (
-                <div className="dash-dropdown-menu">
-                  <div className="dash-dropdown-header">
-                    <span>Notifications</span>
-                    {unreadCount > 0 && <span style={{fontSize:'10px', background:'#3b82f6', padding:'2px 6px', borderRadius:'10px'}}>{unreadCount} New</span>}
-                  </div>
-                  <div style={{maxHeight: '300px', overflowY: 'auto'}}>
-                    {notifications.length === 0 ? (
-                      <div className="dash-dropdown-item" style={{justifyContent: 'center', color: '#5c6270'}}>No notifications</div>
-                    ) : (
-                      notifications.map(n => (
-                        <div key={n.id} className={`dash-dropdown-item notif-item ${!n.read ? 'notif-unread' : ''}`} onClick={() => { handleMarkAsRead(n.id); setShowNotifMenu(false); }}>
-                          <span className="notif-text">{n.message}</span>
-                          <span className="notif-time">{new Date(n.createdAt).toLocaleString()}</span>
-                        </div>
-                      ))
-                    )}
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <div className="dash-dropdown-container">
-              <div className="user-avatar-mini" onClick={() => setShowProfileMenu(!showProfileMenu)} style={{cursor: 'pointer'}}>
-                {user?.name?.charAt(0) || 'A'}
-              </div>
-              {showProfileMenu && (
-                <div className="dash-dropdown-menu" style={{minWidth: '180px'}}>
-                  <div className="dash-dropdown-header" style={{flexDirection: 'column', alignItems: 'flex-start', gap: '4px'}}>
-                    <span style={{color: '#fff'}}>{user?.name || 'Admin'}</span>
-                    <span style={{fontSize: '11px', color: '#5c6270', fontWeight: 'normal'}}>{user?.email || 'admin@globe.com'}</span>
-                  </div>
-                  <div className="dash-dropdown-item" onClick={() => setShowProfileMenu(false)}>Profile</div>
-                  <div className="dash-dropdown-item" onClick={() => setShowProfileMenu(false)}>Settings</div>
-                  <div className="dash-dropdown-item danger" onClick={() => { setShowProfileMenu(false); logout(); }}>Logout</div>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </header>
+        }
+      />
 
       <div className="overview-body">
         <div className="dash-title-section">
@@ -286,7 +231,7 @@ export default function OverviewPage() {
               <div className="ov-chart-card">
                 <h3>Revenue by Company</h3>
                 <div className="ov-chart-wrap">
-                  <ResponsiveContainer width="100%" height="100%">
+                  <ResponsiveContainer width="100%" height={220}>
                     <BarChart data={metrics.revenueByCompany} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                       <CartesianGrid strokeDasharray="3 3" stroke="#2a2d3e" vertical={false} />
                       <XAxis dataKey="company" stroke="#5c6270" fontSize={10} tickLine={false} axisLine={{stroke: '#2a2d3e'}} />
@@ -302,7 +247,7 @@ export default function OverviewPage() {
               <div className="ov-chart-card">
                 <h3>Cost Distribution</h3>
                 <div className="ov-chart-wrap flex-center">
-                  <ResponsiveContainer width="100%" height="100%">
+                  <ResponsiveContainer width="100%" height={220}>
                     <PieChart>
                       <Pie data={metrics.costDistribution.length ? metrics.costDistribution : [{name: 'No Data', value: 1, fill: '#2a2d3e'}]} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={60} outerRadius={90} paddingAngle={2}>
                         {metrics.costDistribution.map((entry, index) => (
@@ -326,7 +271,7 @@ export default function OverviewPage() {
             <div className="ov-chart-card wide">
               <h3>Monthly Trend</h3>
               <div className="ov-chart-wrap large">
-                <ResponsiveContainer width="100%" height="100%">
+                <ResponsiveContainer width="100%" height={280}>
                   <LineChart data={metrics.monthlyTrend} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#2a2d3e" vertical={false} />
                     <XAxis dataKey="month" stroke="#5c6270" fontSize={10} tickLine={false} axisLine={{stroke: '#2a2d3e'}} />
@@ -349,7 +294,7 @@ export default function OverviewPage() {
             <div className="ov-chart-card wide activity" style={{marginTop:'16px'}}>
               <h3>Recent Activity</h3>
               <div className="ov-activity-list">
-                {metrics.recentActivity.map((tx: any) => {
+                {metrics.recentActivity.map((tx) => {
                   const shortName = tx.company === 'XSRS IT' ? 'XSRS' : tx.company === '365 Frames' ? '365F' : tx.company === 'EverAfter' ? 'EA' : 'PD'
                   const color = tx.company === 'XSRS IT' ? '#3b82f6' : tx.company === '365 Frames' ? '#f97316' : tx.company === 'EverAfter' ? '#ef4444' : '#10b981'
                   return (

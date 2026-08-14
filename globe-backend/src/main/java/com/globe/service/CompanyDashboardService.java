@@ -3,6 +3,8 @@ package com.globe.service;
 import com.globe.model.DashboardMetricsDTO;
 import com.globe.model.GlobalEntry;
 import com.globe.repository.GlobalEntryRepository;
+import com.globe.model.Company;
+import com.globe.repository.CompanyRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -16,14 +18,20 @@ import java.util.stream.Collectors;
 public class CompanyDashboardService {
 
     private final GlobalEntryRepository globalEntryRepository;
+    private final CompanyRepository companyRepository;
 
-    public CompanyDashboardService(GlobalEntryRepository globalEntryRepository) {
+    public CompanyDashboardService(GlobalEntryRepository globalEntryRepository, CompanyRepository companyRepository) {
         this.globalEntryRepository = globalEntryRepository;
+        this.companyRepository = companyRepository;
     }
 
     public DashboardMetricsDTO getDashboardMetrics(String companyCode, Integer months) {
+        String companyName = companyRepository.findByCode(companyCode)
+                .map(Company::getName)
+                .orElse(companyCode);
+        
         // Fetch all entries for this company
-        List<GlobalEntry> allEntries = globalEntryRepository.findByCompany(companyCode);
+        List<GlobalEntry> allEntries = globalEntryRepository.findByCompany(companyName);
         
         LocalDate cutoffDate = null;
         if (months != null && months > 0) {

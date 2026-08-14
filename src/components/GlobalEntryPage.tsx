@@ -1,4 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
+import TopHeader from './shared/TopHeader'
+import { useAuth } from '../context/AuthContext'
 import '../styles/GlobalEntryPage.css'
 
 interface GlobalEntry {
@@ -13,6 +15,7 @@ interface GlobalEntry {
 }
 
 export default function GlobalEntryPage() {
+  const { logout } = useAuth()
   const [entries, setEntries] = useState<GlobalEntry[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -33,22 +36,29 @@ export default function GlobalEntryPage() {
   })
   const [formError, setFormError] = useState('')
 
-  useEffect(() => {
-    fetchEntries()
-  }, [])
-
-  const fetchEntries = async () => {
+  const fetchEntries = useCallback(async () => {
     try {
       const res = await fetch('/api/global-entries', { credentials: 'include' })
+      if (res.status === 401) {
+        logout()
+        return
+      }
       if (!res.ok) throw new Error('Failed to fetch entries')
       const data = await res.json()
       setEntries(data)
-    } catch (err) {
+    } catch {
       setError('Could not load global entries.')
     } finally {
       setLoading(false)
     }
-  }
+  }, [logout])
+
+  useEffect(() => {
+    const init = async () => {
+      await fetchEntries()
+    }
+    init()
+  }, [fetchEntries])
 
   const handleSave = async () => {
     setFormError('')
@@ -77,7 +87,7 @@ export default function GlobalEntryPage() {
         company: 'XSRS IT',
         entryDate: new Date().toISOString().split('T')[0]
       })
-    } catch (err) {
+    } catch {
       setFormError('Failed to save the entry. Please try again.')
     }
   }
@@ -92,7 +102,7 @@ export default function GlobalEntryPage() {
       })
       if (!res.ok) throw new Error('Failed to delete')
       setEntries(entries.filter(e => e.id !== id))
-    } catch (err) {
+    } catch {
       alert('Could not delete entry.')
     }
   }
@@ -107,9 +117,12 @@ export default function GlobalEntryPage() {
 
   return (
     <div className="global-entry-page">
-      <header className="ge-header">
-        <div className="ge-header-title">Global Entry Hub</div>
-        <div className="ge-header-actions">
+      <TopHeader
+        className="ge-header"
+        leftContent={
+          <span className="ge-header-title">Global Entry Hub</span>
+        }
+        rightContent={
           <button className="ge-add-btn" onClick={() => setIsModalOpen(true)}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <line x1="12" y1="5" x2="12" y2="19" />
@@ -117,8 +130,8 @@ export default function GlobalEntryPage() {
             </svg>
             Add Entry
           </button>
-        </div>
-      </header>
+        }
+      />
 
       <div className="ge-body">
         <div className="ge-title-row">

@@ -46,7 +46,7 @@
 .ep-company-dropdown svg {
   width: 13px;
   height: 13px;
-  color: #5c6270;
+  color: #d1d5db;
 }
 
 .ep-header-actions {
@@ -90,7 +90,7 @@
   border: 1px solid #2a2d3e;
   border-radius: 8px;
   background: #1a1c25;
-  color: #8b909c;
+  color: #d1d5db;
   cursor: pointer;
   transition: all 0.15s;
   position: relative;
@@ -142,7 +142,7 @@
 .ep-header-user svg {
   width: 12px;
   height: 12px;
-  color: #5c6270;
+  color: #d1d5db;
 }
 
 /* ── Main Content ───────────────────────────────────────────────────────── */
@@ -184,7 +184,7 @@
 
 .ep-title-text p {
   font-size: 14px;
-  color: #6b7280;
+  color: #d1d5db;
   margin: 0;
 }
 
@@ -220,7 +220,7 @@
 .ep-filter-btn svg {
   width: 13px;
   height: 13px;
-  color: #5c6270;
+  color: #d1d5db;
 }
 
 /* Filter dropdown */
@@ -383,7 +383,7 @@
 
 .ep-summary-active {
   font-size: 12px;
-  color: #6b7280;
+  color: #d1d5db;
 }
 
 /* ── Company Employee Section ───────────────────────────────────────────── */
@@ -416,14 +416,14 @@
 
 .ep-company-desc {
   font-size: 13px;
-  color: #5c6270;
+  color: #d1d5db;
   margin-left: 4px;
 }
 
 .ep-company-count {
   margin-left: auto;
   font-size: 12px;
-  color: #6b7280;
+  color: #d1d5db;
   background: #1a1c28;
   padding: 4px 12px;
   border-radius: 20px;
@@ -504,7 +504,7 @@
 
 .ep-status-badge.status-inactive {
   background: rgba(107, 114, 128, 0.15);
-  color: #6b7280;
+  color: #d1d5db;
 }
 
 .ep-employee-meta {
@@ -512,7 +512,7 @@
   align-items: center;
   gap: 6px;
   font-size: 12.5px;
-  color: #5c6270;
+  color: #d1d5db;
 }
 
 .ep-employee-meta svg {
@@ -542,7 +542,7 @@
 
 .ep-since-label {
   font-size: 10px;
-  color: #5c6270;
+  color: #d1d5db;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -568,7 +568,7 @@
   border: none;
   border-radius: 7px;
   background: transparent;
-  color: #5c6270;
+  color: #d1d5db;
   cursor: pointer;
   transition: all 0.15s;
 }
@@ -592,7 +592,7 @@
 .ep-empty {
   text-align: center;
   padding: 40px 20px;
-  color: #5c6270;
+  color: #d1d5db;
 }
 
 .ep-empty svg {
@@ -621,7 +621,7 @@
   align-items: center;
   justify-content: center;
   padding: 80px 20px;
-  color: #5c6270;
+  color: #d1d5db;
   gap: 10px;
   font-size: 14px;
 }
@@ -749,7 +749,7 @@
   border: none;
   border-radius: 8px;
   background: transparent;
-  color: #5c6270;
+  color: #d1d5db;
   cursor: pointer;
   transition: all 0.15s;
 }
@@ -780,7 +780,7 @@
 .ep-form-group label {
   font-size: 13px;
   font-weight: 600;
-  color: #9ca3af;
+  color: #d1d5db;
   letter-spacing: 0.02em;
 }
 
@@ -858,7 +858,7 @@
   border: 1px solid #2a2d3e;
   border-radius: 8px;
   background: transparent;
-  color: #9ca3af;
+  color: #d1d5db;
   font-size: 13px;
   font-weight: 500;
   font-family: inherit;

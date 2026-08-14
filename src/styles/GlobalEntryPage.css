@@ -23,7 +23,7 @@
 }
 
 .ge-header-title {
-  color: #8b909c;
+  color: #d1d5db;
   font-size: 13px;
   font-weight: 500;
   text-transform: uppercase;
@@ -100,7 +100,7 @@
 
 .ge-title-text p {
   font-size: 14px;
-  color: #6b7280;
+  color: #d1d5db;
   margin: 0;
 }
 
@@ -161,7 +161,7 @@
   align-items: center;
   padding: 12px 16px;
   border-bottom: 1px solid #1e2030;
-  color: #5c6270;
+  color: #d1d5db;
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.05em;
@@ -200,7 +200,7 @@
 /* ── Cell Styles ────────────────────────────────────────────────────────── */
 .ge-date-text {
   font-size: 13px;
-  color: #8b909c;
+  color: #d1d5db;
 }
 
 .ge-title-main {
@@ -212,7 +212,7 @@
 
 .ge-desc-text {
   font-size: 12px;
-  color: #5c6270;
+  color: #d1d5db;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -230,7 +230,7 @@
 
 .ge-company-text {
   font-size: 13px;
-  color: #8b909c;
+  color: #d1d5db;
 }
 
 .ge-amount-text {
@@ -249,7 +249,7 @@
   border: none;
   border-radius: 6px;
   background: transparent;
-  color: #5c6270;
+  color: #d1d5db;
   cursor: pointer;
   transition: all 0.15s;
 }
@@ -321,7 +321,7 @@
   border: none;
   border-radius: 8px;
   background: transparent;
-  color: #5c6270;
+  color: #d1d5db;
   cursor: pointer;
   transition: all 0.15s;
 }
@@ -347,7 +347,7 @@
 .ge-form-group label {
   font-size: 13px;
   font-weight: 600;
-  color: #9ca3af;
+  color: #d1d5db;
   letter-spacing: 0.02em;
 }
 
@@ -420,7 +420,7 @@
 .ge-empty {
   text-align: center;
   padding: 60px 20px;
-  color: #5c6270;
+  color: #d1d5db;
 }
 
 .ge-empty svg {

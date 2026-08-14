@@ -3,8 +3,8 @@ import { useAuth } from '../context/AuthContext'
 import '../styles/LoginPage.css'
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('ashraf@globe.com')
+  const [password, setPassword] = useState('admin123')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const { login } = useAuth()
@@ -26,17 +26,15 @@ export default function LoginPage() {
         const data = await res.json()
         login(data)
       } else {
-        let err;
-        try {
-          err = await res.json();
-        } catch (e) {
-          setError('Server returned an unexpected response. Is the backend running?');
-          setLoading(false);
-          return;
+        const contentType = res.headers.get('content-type')
+        if (contentType && contentType.includes('application/json')) {
+          const err = await res.json()
+          setError(err.error || 'Login failed')
+        } else {
+          setError('Backend server is unreachable. It may still be starting up.')
         }
-        setError(err.error || 'Login failed');
       }
-    } catch (err) {
+    } catch {
       setError('Network error. Please try again later.')
     } finally {
       setLoading(false)

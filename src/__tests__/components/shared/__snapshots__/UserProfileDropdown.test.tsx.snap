@@ -1,0 +1,16 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`UserProfileDropdown Component > matches the snapshot 1`] = `
+<div>
+  <div
+    class="dash-dropdown-container"
+  >
+    <div
+      class="user-avatar-mini"
+      style="cursor: pointer; background: linear-gradient(135deg, var(--sb-primary), #818cf8);"
+    >
+      T
+    </div>
+  </div>
+</div>
+`;

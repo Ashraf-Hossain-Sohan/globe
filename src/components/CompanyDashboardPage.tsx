@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import {
   LineChart, Line, BarChart, Bar, PieChart, Pie, Cell,
   XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer
 } from 'recharts'
-import { useAuth } from '../context/AuthContext'
+import TopHeader from './shared/TopHeader'
 import '../styles/CompanyDashboardPage.css'
 import '../styles/GlobalEntryPage.css' // Reuse modal styles
 
@@ -20,6 +20,26 @@ interface PieChartData {
   fill: string
 }
 
+interface Transaction {
+  id: number
+  title: string
+  amount: number
+  category: string
+  entryDate: string
+  recordedBy?: string
+}
+
+interface GlobalEntry {
+  id: number
+  title: string
+  description?: string
+  amount: number
+  category: string
+  company: string
+  entryDate: string
+  recordedBy?: string
+}
+
 interface DashboardMetrics {
   revenue: number
   netProfit: number
@@ -33,21 +53,16 @@ interface DashboardMetrics {
   profitTrend: ChartDataPoint[]
   revenueBySource: PieChartData[]
   costBreakdown: PieChartData[]
-  recentTransactions: any[]
+  recentTransactions: Transaction[]
 }
 
+
 export default function CompanyDashboardPage({ companyCode, companyName, companyDesc }: { companyCode: string, companyName: string, companyDesc: string }) {
-  const { user, logout } = useAuth()
   const [metrics, setMetrics] = useState<DashboardMetrics | null>(null)
+  const [allEntries, setAllEntries] = useState<GlobalEntry[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [timeFilter, setTimeFilter] = useState(6) // Default 6 months
-
-  // Notifications & Profile Dropdowns
-  const [notifications, setNotifications] = useState<any[]>([])
-  const [showNotifMenu, setShowNotifMenu] = useState(false)
-  const [showProfileMenu, setShowProfileMenu] = useState(false)
-  const unreadCount = notifications.filter(n => !n.read).length
 
   // Modal State
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -61,31 +76,7 @@ export default function CompanyDashboardPage({ companyCode, companyName, company
   })
   const [formError, setFormError] = useState('')
 
-  useEffect(() => {
-    fetchMetrics()
-  }, [companyCode, timeFilter])
-
-  useEffect(() => {
-    fetchNotifications()
-  }, [])
-
-  const fetchNotifications = async () => {
-    try {
-      const res = await fetch('/api/notifications', { credentials: 'include' })
-      if (res.ok) {
-        setNotifications(await res.json())
-      }
-    } catch (e) { console.error(e) }
-  }
-
-  const handleMarkAsRead = async (id: number) => {
-    try {
-      await fetch(`/api/notifications/${id}/read`, { method: 'POST', credentials: 'include' })
-      setNotifications(notifications.map(n => n.id === id ? { ...n, read: true } : n))
-    } catch (e) { console.error(e) }
-  }
-
-  const fetchMetrics = async () => {
+  const fetchMetrics = useCallback(async () => {
     setLoading(true)
     setError('')
     try {
@@ -96,12 +87,35 @@ export default function CompanyDashboardPage({ companyCode, companyName, company
       if (!res.ok) throw new Error('Failed to fetch dashboard data')
       const data = await res.json()
       setMetrics(data)
-    } catch (err) {
+    } catch {
       setError('Could not load dashboard metrics.')
     } finally {
       setLoading(false)
     }
-  }
+  }, [timeFilter, companyCode])
+
+  const fetchAllEntries = useCallback(async () => {
+    try {
+      const res = await fetch('/api/global-entries', { credentials: 'include' })
+      if (res.ok) {
+        const data: GlobalEntry[] = await res.json()
+        const companyData = data.filter((d: GlobalEntry) => d.company === companyName)
+        setAllEntries(companyData.sort((a,b) => new Date(b.entryDate).getTime() - new Date(a.entryDate).getTime()))
+      }
+    } catch (e) {
+      console.error(e)
+    }
+  }, [companyName])
+
+  useEffect(() => {
+    const init = async () => {
+      await fetchMetrics()
+      await fetchAllEntries()
+    }
+    init()
+  }, [fetchMetrics, fetchAllEntries])
+
+
 
   const handleSaveEntry = async () => {
     setFormError('')
@@ -119,13 +133,14 @@ export default function CompanyDashboardPage({ companyCode, companyName, company
       if (!res.ok) throw new Error('Failed to save entry')
       
       await fetchMetrics() // Instant refresh
+      await fetchAllEntries()
       setIsModalOpen(false)
       setFormData({
         title: '', description: '', amount: '',
         category: 'Expense', company: companyName,
         entryDate: new Date().toISOString().split('T')[0]
       })
-    } catch (err) {
+    } catch {
       setFormError('Failed to save the entry.')
     }
   }
@@ -145,67 +160,20 @@ export default function CompanyDashboardPage({ companyCode, companyName, company
 
   return (
     <div className="dash-page">
-      <header className="dash-header">
-        <div className="dash-header-left">
+      <TopHeader
+        leftContent={
           <div className="dash-company-select">
             <span>All Companies</span>
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9l6 6 6-6"/></svg>
           </div>
-        </div>
-        <div className="dash-header-right">
+        }
+        rightContent={
           <button className="dash-add-btn" onClick={() => setIsModalOpen(true)}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
             Add Entry
           </button>
-          <div className="dash-header-icons">
-            <div className="dash-dropdown-container">
-              <button className="icon-btn bell-icon-wrapper" onClick={() => setShowNotifMenu(!showNotifMenu)}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-                {unreadCount > 0 && <div className="red-dot"></div>}
-              </button>
-              {showNotifMenu && (
-                <div className="dash-dropdown-menu">
-                  <div className="dash-dropdown-header">
-                    <span>Notifications</span>
-                    {unreadCount > 0 && <span style={{fontSize:'10px', background:'#3b82f6', padding:'2px 6px', borderRadius:'10px'}}>{unreadCount} New</span>}
-                  </div>
-                  <div style={{maxHeight: '300px', overflowY: 'auto'}}>
-                    {notifications.length === 0 ? (
-                      <div className="dash-dropdown-item" style={{justifyContent: 'center', color: '#5c6270'}}>No notifications</div>
-                    ) : (
-                      notifications.map(n => (
-                        <div key={n.id} className={`dash-dropdown-item notif-item ${!n.read ? 'notif-unread' : ''}`} onClick={() => { handleMarkAsRead(n.id); setShowNotifMenu(false); }}>
-                          <span className="notif-text">{n.message}</span>
-                          <span className="notif-time">{new Date(n.createdAt).toLocaleString()}</span>
-                        </div>
-                      ))
-                    )}
-                  </div>
-                </div>
-              )}
-            </div>
-            
-            <button className="icon-btn" onClick={() => alert("Settings coming soon")}><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></button>
-            
-            <div className="dash-dropdown-container">
-              <div className="user-avatar-mini" onClick={() => setShowProfileMenu(!showProfileMenu)} style={{cursor: 'pointer'}}>
-                {user?.name?.charAt(0) || 'A'}
-              </div>
-              {showProfileMenu && (
-                <div className="dash-dropdown-menu" style={{minWidth: '180px'}}>
-                  <div className="dash-dropdown-header" style={{flexDirection: 'column', alignItems: 'flex-start', gap: '4px'}}>
-                    <span style={{color: '#fff'}}>{user?.name || 'Admin'}</span>
-                    <span style={{fontSize: '11px', color: '#5c6270', fontWeight: 'normal'}}>{user?.email || 'admin@globe.com'}</span>
-                  </div>
-                  <div className="dash-dropdown-item" onClick={() => setShowProfileMenu(false)}>Profile</div>
-                  <div className="dash-dropdown-item" onClick={() => setShowProfileMenu(false)}>Settings</div>
-                  <div className="dash-dropdown-item danger" onClick={() => { setShowProfileMenu(false); logout(); }}>Logout</div>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </header>
+        }
+      />
 
       <div className="dash-body">
         <div className="dash-title-section">
@@ -348,7 +316,7 @@ export default function CompanyDashboardPage({ companyCode, companyName, company
               <div className="dash-panel">
                 <h3 className="panel-title">Monthly Performance - Last {timeFilter > 0 ? timeFilter : 'All'} months</h3>
                 <div className="chart-wrapper">
-                  <ResponsiveContainer width="100%" height="100%">
+                  <ResponsiveContainer width="100%" height={200}>
                     <BarChart data={metrics.monthlyPerformance} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                       <CartesianGrid strokeDasharray="3 3" stroke="#2a2d3e" vertical={false} />
                       <XAxis dataKey="month" stroke="#5c6270" fontSize={11} tickLine={false} axisLine={{stroke: '#2a2d3e'}} />
@@ -392,7 +360,7 @@ export default function CompanyDashboardPage({ companyCode, companyName, company
             <div className="dash-panel wide">
               <h3 className="panel-title">Profit Trend - Last {timeFilter > 0 ? timeFilter : 'All'} months</h3>
               <div className="chart-wrapper">
-                <ResponsiveContainer width="100%" height="100%">
+                <ResponsiveContainer width="100%" height={200}>
                   <LineChart data={metrics.profitTrend} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#2a2d3e" vertical={false} />
                     <XAxis dataKey="month" stroke="#5c6270" fontSize={11} tickLine={false} axisLine={{stroke: '#2a2d3e'}} />
@@ -439,7 +407,7 @@ export default function CompanyDashboardPage({ companyCode, companyName, company
                 <div className="dash-panel flex-auto">
                   <h3 className="panel-title">Recent Transactions</h3>
                   <div className="transaction-list">
-                    {metrics.recentTransactions.map((tx: any) => (
+                    {metrics.recentTransactions.map((tx) => (
                       <div key={tx.id} className="tx-item">
                         <div className="tx-left">
                           <div className={`tx-icon ${tx.category === 'Revenue' ? 'pos' : 'neg'}`}>
@@ -475,7 +443,41 @@ export default function CompanyDashboardPage({ companyCode, companyName, company
                   </div>
                 </div>
               </div>
+            </div>
 
+            {/* All Entries Table */}
+            <div className="dash-panel wide mt-16">
+              <h3 className="panel-title">All Global Entries</h3>
+              <div className="ge-table-container" style={{ marginTop: '16px', background: 'transparent', padding: 0 }}>
+                <div className="ge-table-header">
+                  <div className="ge-col date">Date</div>
+                  <div className="ge-col title">Title & Details</div>
+                  <div className="ge-col category">Category</div>
+                  <div className="ge-col amount">Amount</div>
+                </div>
+                
+                {allEntries.length === 0 ? (
+                  <div className="ge-empty">
+                    <p style={{ color: '#5c6270' }}>No entries found for {companyName}.</p>
+                  </div>
+                ) : (
+                  allEntries.map(entry => (
+                    <div key={entry.id} className="ge-table-row">
+                      <div className="ge-col date ge-date-text">{entry.entryDate}</div>
+                      <div className="ge-col title">
+                        <div className="ge-title-main">{entry.title}</div>
+                        {entry.description && <div className="ge-desc-text">{entry.description}</div>}
+                      </div>
+                      <div className="ge-col category">
+                        <span className="ge-category-tag">{entry.category}</span>
+                      </div>
+                      <div className="ge-col amount ge-amount-text">
+                        {entry.amount != null ? `BDT ${entry.amount.toFixed(2)}` : '-'}
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
             </div>
 
             {/* Investments Row */}

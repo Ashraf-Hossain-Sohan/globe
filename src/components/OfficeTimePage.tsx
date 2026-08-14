@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
+import TopHeader from './shared/TopHeader'
 import type { FormEvent } from 'react'
 import '../styles/OfficeTimePage.css'
 
@@ -145,9 +146,9 @@ function isWorkDay(d: Date, config: OfficeConfig | null): boolean {
    ═══════════════════════════════════════════════════════ */
 export default function OfficeTimePage() {
   /* ── State ─────────────────────────────────────── */
-  const now = new Date()
-  const [year, setYear] = useState(now.getFullYear())
-  const [month, setMonth] = useState(now.getMonth()) // 0-indexed
+  const initDate = new Date()
+  const [year, setYear] = useState(initDate.getFullYear())
+  const [month, setMonth] = useState(initDate.getMonth()) // 0-indexed
   const [company, setCompany] = useState('XSRS')
   const [companyOpen, setCompanyOpen] = useState(false)
   const [companies, setCompanies] = useState<CompanyStat[]>([])
@@ -174,11 +175,11 @@ export default function OfficeTimePage() {
       setError(null)
 
       const [compRes, configRes, attRes, reportRes, empRes] = await Promise.all([
-        fetch(`${API}/employees/stats`),
-        fetch(`${API}/office-config?company=${company}`),
-        fetch(`${API}/attendance?company=${company}&year=${year}&month=${month + 1}`),
-        fetch(`${API}/attendance/report?company=${company}&year=${year}&month=${month + 1}`),
-        fetch(`${API}/employees?company=${company}`),
+        fetch(`${API}/employees/stats`, { credentials: 'include' }),
+        fetch(`${API}/office-config?company=${company}`, { credentials: 'include' }),
+        fetch(`${API}/attendance?company=${company}&year=${year}&month=${month + 1}`, { credentials: 'include' }),
+        fetch(`${API}/attendance/report?company=${company}&year=${year}&month=${month + 1}`, { credentials: 'include' }),
+        fetch(`${API}/employees?company=${company}`, { credentials: 'include' }),
       ])
 
       if (!compRes.ok) throw new Error('Failed to fetch companies')
@@ -196,9 +197,10 @@ export default function OfficeTimePage() {
       if (empRes.ok) setEmployees(await empRes.json())
 
       // Find today's record for current user (first employee in company for now)
-      const todayStr = dateKey(new Date())
+      const now = new Date()
+      const todayStr = dateKey(now)
       // We need to re-fetch to get latest records
-      const freshAtt = await fetch(`${API}/attendance?company=${company}&year=${now.getFullYear()}&month=${now.getMonth() + 1}`)
+      const freshAtt = await fetch(`${API}/attendance?company=${company}&year=${now.getFullYear()}&month=${now.getMonth() + 1}`, { credentials: 'include' })
       if (freshAtt.ok) {
         const freshData: AttendanceRecord[] = await freshAtt.json()
         setRecords(freshData)
@@ -212,7 +214,12 @@ export default function OfficeTimePage() {
     }
   }, [company, year, month])
 
-  useEffect(() => { fetchAll() }, [fetchAll])
+  useEffect(() => {
+    const init = async () => {
+      await fetchAll()
+    }
+    init()
+  }, [fetchAll])
 
   /* ── Calendar data ─────────────────────────────── */
   const calDays = getCalendarDays(year, month)
@@ -231,7 +238,7 @@ export default function OfficeTimePage() {
     if (month === 11) { setMonth(0); setYear(y => y + 1) }
     else setMonth(m => m + 1)
   }
-  const goToday = () => { setYear(now.getFullYear()); setMonth(now.getMonth()) }
+  const goToday = () => { const d = new Date(); setYear(d.getFullYear()); setMonth(d.getMonth()) }
 
   /* ── Clock In/Out ──────────────────────────────── */
   const handleClockIn = async () => {
@@ -244,6 +251,7 @@ export default function OfficeTimePage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ employeeId: employees[0].id, company }),
+        credentials: 'include'
       })
       if (!res.ok) {
         const data = await res.json()
@@ -251,7 +259,7 @@ export default function OfficeTimePage() {
         return
       }
       await fetchAll()
-    } catch (err) {
+    } catch {
       setError('Clock in failed')
     }
   }
@@ -259,14 +267,14 @@ export default function OfficeTimePage() {
   const handleClockOut = async () => {
     if (!todayRecord) return
     try {
-      const res = await fetch(`${API}/attendance/clock-out/${todayRecord.id}`, { method: 'PUT' })
+      const res = await fetch(`${API}/attendance/clock-out/${todayRecord.id}`, { method: 'PUT', credentials: 'include' })
       if (!res.ok) {
         const data = await res.json()
         setError(data.error || 'Clock out failed')
         return
       }
       await fetchAll()
-    } catch (err) {
+    } catch {
       setError('Clock out failed')
     }
   }
@@ -319,6 +327,7 @@ export default function OfficeTimePage() {
         method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
+        credentials: 'include'
       })
       if (!res.ok) throw new Error('Save failed')
       closeModal()
@@ -333,10 +342,10 @@ export default function OfficeTimePage() {
   const handleDelete = async (id: number) => {
     if (!confirm('Delete this attendance record?')) return
     try {
-      const res = await fetch(`${API}/attendance/${id}`, { method: 'DELETE' })
+      const res = await fetch(`${API}/attendance/${id}`, { method: 'DELETE', credentials: 'include' })
       if (!res.ok) throw new Error('Delete failed')
       await fetchAll()
-    } catch (err) {
+    } catch {
       setError('Delete failed')
     }
   }
@@ -366,44 +375,30 @@ export default function OfficeTimePage() {
   return (
     <div className="officetime-page" id="officetime-page">
       {/* ── Top Header Bar ─────────────────────────── */}
-      <header className="ot-header">
-        <button
-          className="mobile-sidebar-toggle"
-          type="button"
-          onClick={() => window.dispatchEvent(new CustomEvent('toggle-sidebar'))}
-          aria-label="Toggle sidebar"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="3" y1="12" x2="21" y2="12" />
-            <line x1="3" y1="6" x2="21" y2="6" />
-            <line x1="3" y1="18" x2="21" y2="18" />
-          </svg>
-        </button>
-        <button
-          className="ot-company-dropdown"
-          type="button"
-        >
-          {company === 'all' ? 'All Companies' : companyName}
-          <Ico size={13}><path d="M6 9l6 6 6-6" /></Ico>
-        </button>
-        <div className="ot-header-actions">
-          <button className="ot-add-entry-btn" type="button" onClick={() => openAddModal()}>
-            <Ico size={14}><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></Ico>
-            Add Entry
+      {/* ── Top Header Bar ─────────────────────────── */}
+      <TopHeader
+        className="ot-header"
+        leftContent={
+          <button
+            className="ot-company-dropdown"
+            type="button"
+          >
+            {company === 'all' ? 'All Companies' : companyName}
+            <Ico size={13}><path d="M6 9l6 6 6-6" /></Ico>
           </button>
-          <button className="ot-icon-btn" type="button" title="Toggle theme">
-            <Ico size={16}><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" /></Ico>
-          </button>
-          <button className="ot-icon-btn" type="button" title="Notifications">
-            <Ico size={16}><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" /><path d="M13.73 21a2 2 0 0 1-3.46 0" /></Ico>
-            <span className="ot-notification-dot" />
-          </button>
-          <div className="ot-header-user">
-            <button className="ot-user-avatar-small" type="button" title="Profile">A</button>
-            <Ico size={12}><path d="M6 9l6 6 6-6" /></Ico>
-          </div>
-        </div>
-      </header>
+        }
+        rightContent={
+          <>
+            <button className="ot-add-entry-btn" type="button" onClick={() => openAddModal()}>
+              <Ico size={14}><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></Ico>
+              Add Entry
+            </button>
+            <button className="ot-icon-btn" type="button" title="Toggle theme">
+              <Ico size={16}><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" /></Ico>
+            </button>
+          </>
+        }
+      />
 
       {/* ── Body ────────────────────────────────────── */}
       <div className="ot-body">

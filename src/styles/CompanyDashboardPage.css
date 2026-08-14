@@ -81,7 +81,7 @@
 .icon-btn {
   background: transparent;
   border: none;
-  color: #5c6270;
+  color: #d1d5db;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -156,7 +156,7 @@
 
 .dash-title-left p {
   font-size: 13px;
-  color: #6b7280;
+  color: #d1d5db;
   margin: 0;
 }
 
@@ -175,7 +175,7 @@
   padding: 6px 12px;
   font-size: 11px;
   font-weight: 500;
-  color: #6b7280;
+  color: #d1d5db;
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.2s;
@@ -219,7 +219,7 @@
 .metric-label {
   font-size: 10px;
   font-weight: 600;
-  color: #6b7280;
+  color: #d1d5db;
   letter-spacing: 0.05em;
 }
 
@@ -245,7 +245,7 @@
 
 .metric-sub {
   font-size: 11px;
-  color: #5c6270;
+  color: #d1d5db;
   margin-bottom: 16px;
 }
 
@@ -259,7 +259,7 @@
   align-items: center;
   font-size: 11px;
 }
-.trend.neutral { color: #5c6270; }
+.trend.neutral { color: #d1d5db; }
 .trend.pos { color: #10b981; }
 .trend.neg { color: #ef4444; }
 
@@ -283,7 +283,7 @@
 .sec-metric .label {
   font-size: 10px;
   font-weight: 600;
-  color: #6b7280;
+  color: #d1d5db;
   letter-spacing: 0.05em;
 }
 .sec-metric .val {
@@ -308,7 +308,7 @@
   padding: 6px 12px;
   border-radius: 16px;
   font-size: 11px;
-  color: #8b909c;
+  color: #d1d5db;
 }
 .dash-tag strong {
   color: #e8eaf0;
@@ -381,7 +381,7 @@
 
 .chart-wrapper {
   flex: 1;
-  min-height: 200px;
+  height: 200px;
 }
 .chart-wrapper.flex-center {
   display: flex;
@@ -395,7 +395,7 @@
   gap: 16px;
   margin-top: 16px;
   font-size: 11px;
-  color: #8b909c;
+  color: #d1d5db;
 }
 .chart-legend.center {
   justify-content: center;
@@ -455,7 +455,7 @@
 }
 .tx-info p {
   font-size: 11px;
-  color: #5c6270;
+  color: #d1d5db;
   margin: 0;
 }
 
@@ -465,7 +465,7 @@
 }
 .tx-amount.pos { color: #10b981; }
 .tx-amount.neg { color: #ef4444; }
-.tx-empty { font-size: 12px; color: #5c6270; }
+.tx-empty { font-size: 12px; color: #d1d5db; }
 
 /* --- Upcoming Bills --- */
 .bill-item {
@@ -485,7 +485,7 @@
 }
 .bill-info p {
   font-size: 11px;
-  color: #5c6270;
+  color: #d1d5db;
   margin: 0;
 }
 .bill-right {
@@ -518,7 +518,7 @@
   margin-bottom: 24px;
 }
 .inv-header h3 { margin: 0; }
-.inv-count { color: #5c6270; font-weight: 400; }
+.inv-count { color: #d1d5db; font-weight: 400; }
 .dash-tag-btn {
   display: flex;
   align-items: center;
@@ -546,7 +546,7 @@
 .inv-stat .label {
   font-size: 10px;
   font-weight: 600;
-  color: #6b7280;
+  color: #d1d5db;
   letter-spacing: 0.05em;
 }
 .inv-stat .val {
@@ -557,7 +557,7 @@
 
 .inv-empty {
   font-size: 13px;
-  color: #5c6270;
+  color: #d1d5db;
   text-align: center;
   padding: 20px 0;
 }

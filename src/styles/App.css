@@ -1,9 +1,9 @@
 .sidebar {
   --sb-bg: #0e0f14;
   --sb-border: #20222b;
-  --sb-text: #8b909c;
+  --sb-text: #d1d5db;
   --sb-text-strong: #e8eaf0;
-  --sb-muted: #5c6270;
+  --sb-muted: #d1d5db;
   --sb-active-bg: rgba(59, 130, 246, 0.12);
   --sb-active-text: #60a5fa;
   --sb-hover-bg: rgba(255, 255, 255, 0.04);
@@ -164,6 +164,7 @@
 .user-meta {
   display: flex;
   flex-direction: column;
+  gap: 2px;
   min-width: 0;
 }
 
@@ -190,7 +191,7 @@
   align-items: center;
   justify-content: center;
   background: #12131a;
-  color: #5c6270;
+  color: #d1d5db;
 }
 
 .placeholder-inner {
@@ -213,7 +214,7 @@
 
 .placeholder-inner p {
   font-size: 14px;
-  color: #5c6270;
+  color: #d1d5db;
 }
 
 /* ── Mobile Responsive Sidebar & Toggle ── */
@@ -227,7 +228,7 @@
   background: #1a1c25;
   border: 1px solid #2a2d3e;
   border-radius: 8px;
-  color: #8b909c;
+  color: #d1d5db;
   cursor: pointer;
   transition: all 0.15s;
   flex-shrink: 0;

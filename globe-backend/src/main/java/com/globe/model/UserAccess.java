@@ -4,9 +4,11 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
+import java.io.Serializable;
+
 @Entity
 @Table(name = "user_access")
-public class UserAccess {
+public class UserAccess implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +31,9 @@ public class UserAccess {
 
     @Column(length = 1000)
     private String companyAccess; // Comma-separated list of company codes, e.g. "XSRS,365F,EA,PD"
+
+    @Column(length = 20)
+    private String theme = "light";
 
     /* ── Constructors ──────────────────────────────── */
     public UserAccess() {}
@@ -59,4 +64,7 @@ public class UserAccess {
 
     public String getCompanyAccess() { return companyAccess; }
     public void setCompanyAccess(String companyAccess) { this.companyAccess = companyAccess; }
+
+    public String getTheme() { return theme; }
+    public void setTheme(String theme) { this.theme = theme; }
 }

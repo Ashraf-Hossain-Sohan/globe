@@ -1,0 +1,1200 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ReportsPage Component > matches the snapshot 1`] = `
+<div>
+  <main
+    class="reports-page"
+  >
+    <header
+      class="rp-header"
+    >
+      <div
+        class="global-header-left"
+      >
+        <button
+          aria-label="Toggle sidebar"
+          class="mobile-sidebar-toggle"
+          type="button"
+        >
+          <svg
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+          >
+            <line
+              x1="3"
+              x2="21"
+              y1="12"
+              y2="12"
+            />
+            <line
+              x1="3"
+              x2="21"
+              y1="6"
+              y2="6"
+            />
+            <line
+              x1="3"
+              x2="21"
+              y1="18"
+              y2="18"
+            />
+          </svg>
+        </button>
+        <span
+          class="rp-header-title"
+        >
+          Reports
+        </span>
+      </div>
+      <div
+        class="global-header-right"
+      >
+        <button
+          class="rp-icon-btn"
+          id="rp-grid-btn"
+          title="View"
+          type="button"
+        >
+          <svg
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="1.8"
+            viewBox="0 0 24 24"
+          >
+            <rect
+              height="7"
+              rx="1"
+              width="7"
+              x="3"
+              y="3"
+            />
+            <rect
+              height="7"
+              rx="1"
+              width="7"
+              x="14"
+              y="3"
+            />
+            <rect
+              height="7"
+              rx="1"
+              width="7"
+              x="14"
+              y="14"
+            />
+            <rect
+              height="7"
+              rx="1"
+              width="7"
+              x="3"
+              y="14"
+            />
+          </svg>
+        </button>
+        <div
+          class="global-header-icons"
+        >
+          <div
+            class="dash-dropdown-container"
+          >
+            <button
+              class="icon-btn bell-icon-wrapper"
+            >
+              <svg
+                fill="none"
+                height="18"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="18"
+              >
+                <path
+                  d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"
+                />
+                <path
+                  d="M13.73 21a2 2 0 0 1-3.46 0"
+                />
+              </svg>
+            </button>
+          </div>
+          <div
+            class="dash-dropdown-container"
+          >
+            <div
+              class="user-avatar-mini"
+              style="cursor: pointer; background: linear-gradient(135deg, var(--sb-primary), #818cf8);"
+            >
+              A
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div
+      class="rp-content"
+    >
+      <div
+        class="rp-page-title"
+      >
+        <h1>
+          Reports
+        </h1>
+        <p>
+          Generate and export financial statements
+        </p>
+      </div>
+      <div
+        class="rp-stats"
+      >
+        <div
+          class="rp-stat-card"
+        >
+          <div
+            class="rp-stat-left"
+          >
+            <span
+              class="rp-stat-label"
+            >
+              Total Revenue
+            </span>
+            <span
+              class="rp-stat-value"
+            >
+              BDT 0
+            </span>
+          </div>
+          <div
+            class="rp-stat-icon blue"
+          >
+            <svg
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="1.8"
+              viewBox="0 0 24 24"
+            >
+              <line
+                x1="12"
+                x2="12"
+                y1="1"
+                y2="23"
+              />
+              <path
+                d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"
+              />
+            </svg>
+          </div>
+        </div>
+        <div
+          class="rp-stat-card"
+        >
+          <div
+            class="rp-stat-left"
+          >
+            <span
+              class="rp-stat-label"
+            >
+              Net Profit
+            </span>
+            <span
+              class="rp-stat-value"
+            >
+              BDT 0
+            </span>
+          </div>
+          <div
+            class="rp-stat-icon green"
+          >
+            <svg
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="1.8"
+              viewBox="0 0 24 24"
+            >
+              <polyline
+                points="23 6 13.5 15.5 8.5 10.5 1 18"
+              />
+              <polyline
+                points="17 6 23 6 23 12"
+              />
+            </svg>
+          </div>
+        </div>
+        <div
+          class="rp-stat-card"
+        >
+          <div
+            class="rp-stat-left"
+          >
+            <span
+              class="rp-stat-label"
+            >
+              Companies
+            </span>
+            <span
+              class="rp-stat-value"
+            >
+              0
+            </span>
+          </div>
+          <div
+            class="rp-stat-icon purple"
+          >
+            <svg
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="1.8"
+              viewBox="0 0 24 24"
+            >
+              <rect
+                height="9"
+                rx="1"
+                width="7"
+                x="3"
+                y="3"
+              />
+              <rect
+                height="5"
+                rx="1"
+                width="7"
+                x="14"
+                y="3"
+              />
+              <rect
+                height="9"
+                rx="1"
+                width="7"
+                x="14"
+                y="12"
+              />
+              <rect
+                height="5"
+                rx="1"
+                width="7"
+                x="3"
+                y="16"
+              />
+            </svg>
+          </div>
+        </div>
+        <div
+          class="rp-stat-card"
+        >
+          <div
+            class="rp-stat-left"
+          >
+            <span
+              class="rp-stat-label"
+            >
+              Transactions
+            </span>
+            <span
+              class="rp-stat-value"
+            >
+              0
+            </span>
+          </div>
+          <div
+            class="rp-stat-icon teal"
+          >
+            <svg
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="1.8"
+              viewBox="0 0 24 24"
+            >
+              <polyline
+                points="22 12 18 12 15 21 9 3 6 12 2 12"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div
+        class="rp-table-card"
+      >
+        <div
+          class="rp-table-card-header"
+        >
+          <span
+            class="rp-table-card-title"
+          >
+            Company Performance Summary
+          </span>
+          <span
+            class="rp-table-date-label"
+          >
+            August 2026
+          </span>
+        </div>
+        <div
+          class="rp-table-wrapper"
+        >
+          <table
+            class="rp-table"
+          >
+            <thead>
+              <tr>
+                <th>
+                  Company
+                </th>
+                <th>
+                  Revenue
+                </th>
+                <th>
+                  Expenses
+                </th>
+                <th>
+                  Net Profit
+                </th>
+                <th>
+                  Margin
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class="total-row"
+              >
+                <td>
+                  <div
+                    class="rp-company-cell"
+                  >
+                    <span
+                      class="rp-company-name bold"
+                    >
+                      Group Total
+                    </span>
+                  </div>
+                </td>
+                <td>
+                  <span
+                    class="rp-amount-green"
+                  >
+                    BDT 0
+                  </span>
+                </td>
+                <td>
+                  <span
+                    class="rp-amount-red"
+                  >
+                    BDT 0
+                  </span>
+                </td>
+                <td>
+                  <span
+                    class="rp-amount-white"
+                  >
+                    BDT 0
+                  </span>
+                </td>
+                <td>
+                  <span
+                    class="rp-margin-positive"
+                  >
+                    0%
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <p
+          class="rp-section-title"
+        >
+          Available Reports
+        </p>
+        <div
+          class="rp-reports-grid"
+        >
+          <div
+            class="rp-report-card"
+          >
+            <div
+              class="rp-report-icon"
+            >
+              <svg
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.8"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"
+                />
+                <path
+                  d="M14 3v5h5M8 13h8M8 17h8"
+                />
+              </svg>
+            </div>
+            <div
+              class="rp-report-info"
+            >
+              <div
+                class="rp-report-name"
+              >
+                Monthly Financial Report
+              </div>
+              <div
+                class="rp-report-desc"
+              >
+                P&L summary for current month
+              </div>
+            </div>
+            <div
+              class="rp-report-actions"
+            >
+              <button
+                class="rp-btn-excel"
+                id="rp-excel-monthly"
+                title="Download Monthly Financial Report as Excel"
+                type="button"
+              >
+                <svg
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"
+                  />
+                  <path
+                    d="M14 3v5h5"
+                  />
+                  <path
+                    d="m9.5 14.5 5 5M14.5 14.5l-5 5"
+                  />
+                </svg>
+                Excel
+              </button>
+              <button
+                class="rp-btn-pdf"
+                id="rp-pdf-monthly"
+                title="Download Monthly Financial Report as PDF"
+                type="button"
+              >
+                <svg
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"
+                  />
+                  <polyline
+                    points="7 10 12 15 17 10"
+                  />
+                  <line
+                    x1="12"
+                    x2="12"
+                    y1="15"
+                    y2="3"
+                  />
+                </svg>
+                PDF
+              </button>
+            </div>
+          </div>
+          <div
+            class="rp-report-card"
+          >
+            <div
+              class="rp-report-icon"
+            >
+              <svg
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.8"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"
+                />
+                <path
+                  d="M14 3v5h5M8 13h8M8 17h8"
+                />
+              </svg>
+            </div>
+            <div
+              class="rp-report-info"
+            >
+              <div
+                class="rp-report-name"
+              >
+                Yearly P&L
+              </div>
+              <div
+                class="rp-report-desc"
+              >
+                Annual profit and loss statement
+              </div>
+            </div>
+            <div
+              class="rp-report-actions"
+            >
+              <button
+                class="rp-btn-excel"
+                id="rp-excel-yearly"
+                title="Download Yearly P&L as Excel"
+                type="button"
+              >
+                <svg
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"
+                  />
+                  <path
+                    d="M14 3v5h5"
+                  />
+                  <path
+                    d="m9.5 14.5 5 5M14.5 14.5l-5 5"
+                  />
+                </svg>
+                Excel
+              </button>
+              <button
+                class="rp-btn-pdf"
+                id="rp-pdf-yearly"
+                title="Download Yearly P&L as PDF"
+                type="button"
+              >
+                <svg
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"
+                  />
+                  <polyline
+                    points="7 10 12 15 17 10"
+                  />
+                  <line
+                    x1="12"
+                    x2="12"
+                    y1="15"
+                    y2="3"
+                  />
+                </svg>
+                PDF
+              </button>
+            </div>
+          </div>
+          <div
+            class="rp-report-card"
+          >
+            <div
+              class="rp-report-icon"
+            >
+              <svg
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.8"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"
+                />
+                <path
+                  d="M14 3v5h5M8 13h8M8 17h8"
+                />
+              </svg>
+            </div>
+            <div
+              class="rp-report-info"
+            >
+              <div
+                class="rp-report-name"
+              >
+                Balance Sheet
+              </div>
+              <div
+                class="rp-report-desc"
+              >
+                Assets, liabilities, and equity
+              </div>
+            </div>
+            <div
+              class="rp-report-actions"
+            >
+              <button
+                class="rp-btn-excel"
+                id="rp-excel-balance"
+                title="Download Balance Sheet as Excel"
+                type="button"
+              >
+                <svg
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"
+                  />
+                  <path
+                    d="M14 3v5h5"
+                  />
+                  <path
+                    d="m9.5 14.5 5 5M14.5 14.5l-5 5"
+                  />
+                </svg>
+                Excel
+              </button>
+              <button
+                class="rp-btn-pdf"
+                id="rp-pdf-balance"
+                title="Download Balance Sheet as PDF"
+                type="button"
+              >
+                <svg
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"
+                  />
+                  <polyline
+                    points="7 10 12 15 17 10"
+                  />
+                  <line
+                    x1="12"
+                    x2="12"
+                    y1="15"
+                    y2="3"
+                  />
+                </svg>
+                PDF
+              </button>
+            </div>
+          </div>
+          <div
+            class="rp-report-card"
+          >
+            <div
+              class="rp-report-icon"
+            >
+              <svg
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.8"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"
+                />
+                <path
+                  d="M14 3v5h5M8 13h8M8 17h8"
+                />
+              </svg>
+            </div>
+            <div
+              class="rp-report-info"
+            >
+              <div
+                class="rp-report-name"
+              >
+                Cash Flow Statement
+              </div>
+              <div
+                class="rp-report-desc"
+              >
+                Cash inflows and outflows
+              </div>
+            </div>
+            <div
+              class="rp-report-actions"
+            >
+              <button
+                class="rp-btn-excel"
+                id="rp-excel-cashflow"
+                title="Download Cash Flow Statement as Excel"
+                type="button"
+              >
+                <svg
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"
+                  />
+                  <path
+                    d="M14 3v5h5"
+                  />
+                  <path
+                    d="m9.5 14.5 5 5M14.5 14.5l-5 5"
+                  />
+                </svg>
+                Excel
+              </button>
+              <button
+                class="rp-btn-pdf"
+                id="rp-pdf-cashflow"
+                title="Download Cash Flow Statement as PDF"
+                type="button"
+              >
+                <svg
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"
+                  />
+                  <polyline
+                    points="7 10 12 15 17 10"
+                  />
+                  <line
+                    x1="12"
+                    x2="12"
+                    y1="15"
+                    y2="3"
+                  />
+                </svg>
+                PDF
+              </button>
+            </div>
+          </div>
+          <div
+            class="rp-report-card"
+          >
+            <div
+              class="rp-report-icon"
+            >
+              <svg
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.8"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"
+                />
+                <path
+                  d="M14 3v5h5M8 13h8M8 17h8"
+                />
+              </svg>
+            </div>
+            <div
+              class="rp-report-info"
+            >
+              <div
+                class="rp-report-name"
+              >
+                Expense Breakdown
+              </div>
+              <div
+                class="rp-report-desc"
+              >
+                Detailed expense categorization
+              </div>
+            </div>
+            <div
+              class="rp-report-actions"
+            >
+              <button
+                class="rp-btn-excel"
+                id="rp-excel-expense"
+                title="Download Expense Breakdown as Excel"
+                type="button"
+              >
+                <svg
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"
+                  />
+                  <path
+                    d="M14 3v5h5"
+                  />
+                  <path
+                    d="m9.5 14.5 5 5M14.5 14.5l-5 5"
+                  />
+                </svg>
+                Excel
+              </button>
+              <button
+                class="rp-btn-pdf"
+                id="rp-pdf-expense"
+                title="Download Expense Breakdown as PDF"
+                type="button"
+              >
+                <svg
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"
+                  />
+                  <polyline
+                    points="7 10 12 15 17 10"
+                  />
+                  <line
+                    x1="12"
+                    x2="12"
+                    y1="15"
+                    y2="3"
+                  />
+                </svg>
+                PDF
+              </button>
+            </div>
+          </div>
+          <div
+            class="rp-report-card"
+          >
+            <div
+              class="rp-report-icon"
+            >
+              <svg
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.8"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"
+                />
+                <path
+                  d="M14 3v5h5M8 13h8M8 17h8"
+                />
+              </svg>
+            </div>
+            <div
+              class="rp-report-info"
+            >
+              <div
+                class="rp-report-name"
+              >
+                Revenue Report
+              </div>
+              <div
+                class="rp-report-desc"
+              >
+                Revenue by source and company
+              </div>
+            </div>
+            <div
+              class="rp-report-actions"
+            >
+              <button
+                class="rp-btn-excel"
+                id="rp-excel-revenue"
+                title="Download Revenue Report as Excel"
+                type="button"
+              >
+                <svg
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"
+                  />
+                  <path
+                    d="M14 3v5h5"
+                  />
+                  <path
+                    d="m9.5 14.5 5 5M14.5 14.5l-5 5"
+                  />
+                </svg>
+                Excel
+              </button>
+              <button
+                class="rp-btn-pdf"
+                id="rp-pdf-revenue"
+                title="Download Revenue Report as PDF"
+                type="button"
+              >
+                <svg
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"
+                  />
+                  <polyline
+                    points="7 10 12 15 17 10"
+                  />
+                  <line
+                    x1="12"
+                    x2="12"
+                    y1="15"
+                    y2="3"
+                  />
+                </svg>
+                PDF
+              </button>
+            </div>
+          </div>
+          <div
+            class="rp-report-card"
+          >
+            <div
+              class="rp-report-icon"
+            >
+              <svg
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.8"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"
+                />
+                <path
+                  d="M14 3v5h5M8 13h8M8 17h8"
+                />
+              </svg>
+            </div>
+            <div
+              class="rp-report-info"
+            >
+              <div
+                class="rp-report-name"
+              >
+                Inventory Valuation
+              </div>
+              <div
+                class="rp-report-desc"
+              >
+                Current stock and asset values
+              </div>
+            </div>
+            <div
+              class="rp-report-actions"
+            >
+              <button
+                class="rp-btn-excel"
+                id="rp-excel-inventory"
+                title="Download Inventory Valuation as Excel"
+                type="button"
+              >
+                <svg
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"
+                  />
+                  <path
+                    d="M14 3v5h5"
+                  />
+                  <path
+                    d="m9.5 14.5 5 5M14.5 14.5l-5 5"
+                  />
+                </svg>
+                Excel
+              </button>
+              <button
+                class="rp-btn-pdf"
+                id="rp-pdf-inventory"
+                title="Download Inventory Valuation as PDF"
+                type="button"
+              >
+                <svg
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"
+                  />
+                  <polyline
+                    points="7 10 12 15 17 10"
+                  />
+                  <line
+                    x1="12"
+                    x2="12"
+                    y1="15"
+                    y2="3"
+                  />
+                </svg>
+                PDF
+              </button>
+            </div>
+          </div>
+          <div
+            class="rp-report-card"
+          >
+            <div
+              class="rp-report-icon"
+            >
+              <svg
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.8"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"
+                />
+                <path
+                  d="M14 3v5h5M8 13h8M8 17h8"
+                />
+              </svg>
+            </div>
+            <div
+              class="rp-report-info"
+            >
+              <div
+                class="rp-report-name"
+              >
+                Tax Estimation
+              </div>
+              <div
+                class="rp-report-desc"
+              >
+                Estimated tax obligations
+              </div>
+            </div>
+            <div
+              class="rp-report-actions"
+            >
+              <button
+                class="rp-btn-excel"
+                id="rp-excel-tax"
+                title="Download Tax Estimation as Excel"
+                type="button"
+              >
+                <svg
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"
+                  />
+                  <path
+                    d="M14 3v5h5"
+                  />
+                  <path
+                    d="m9.5 14.5 5 5M14.5 14.5l-5 5"
+                  />
+                </svg>
+                Excel
+              </button>
+              <button
+                class="rp-btn-pdf"
+                id="rp-pdf-tax"
+                title="Download Tax Estimation as PDF"
+                type="button"
+              >
+                <svg
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"
+                  />
+                  <polyline
+                    points="7 10 12 15 17 10"
+                  />
+                  <line
+                    x1="12"
+                    x2="12"
+                    y1="15"
+                    y2="3"
+                  />
+                </svg>
+                PDF
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+`;

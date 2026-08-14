@@ -47,6 +47,9 @@ public class AuthController {
             session.setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());
 
             UserAccess user = userAccessRepo.findByEmail(request.email()).orElse(null);
+            if (user != null) {
+                session.setAttribute("user", user);
+            }
             String userName = user != null ? user.getName() : request.email();
 
             // Log login event
@@ -102,6 +105,29 @@ public class AuthController {
         return ResponseEntity.ok(buildUserMap(user));
     }
 
+    /* ── Update Theme ──────────────────────────────── */
+    @PutMapping("/me/theme")
+    public ResponseEntity<?> updateTheme(@RequestBody Map<String, String> body) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || !auth.isAuthenticated() || "anonymousUser".equals(auth.getPrincipal())) {
+            return ResponseEntity.status(401).body(Map.of("error", "Not authenticated"));
+        }
+
+        String theme = body.get("theme");
+        if (theme == null || (!theme.equals("light") && !theme.equals("dark"))) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Invalid theme"));
+        }
+
+        UserAccess user = userAccessRepo.findByEmail(auth.getName()).orElse(null);
+        if (user == null) {
+            return ResponseEntity.status(401).body(Map.of("error", "User not found"));
+        }
+
+        user.setTheme(theme);
+        userAccessRepo.save(user);
+        return ResponseEntity.ok(Map.of("message", "Theme updated", "theme", theme));
+    }
+
     /* ── Helpers ────────────────────────────────────── */
     private Map<String, Object> buildUserMap(UserAccess user) {
         Map<String, Object> map = new LinkedHashMap<>();
@@ -111,6 +137,7 @@ public class AuthController {
             map.put("email", user.getEmail());
             map.put("role", user.getRole());
             map.put("companyAccess", user.getCompanyAccess());
+            map.put("theme", user.getTheme());
         }
         return map;
     }

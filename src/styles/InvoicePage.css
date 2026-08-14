@@ -37,7 +37,7 @@
 
 .inv-title-sub {
   font-size: 13px;
-  color: #8b909c;
+  color: #d1d5db;
   margin: 0;
 }
 
@@ -106,7 +106,7 @@
 .inv-status-label {
   font-size: 12px;
   font-weight: 500;
-  color: #8b909c;
+  color: #d1d5db;
 }
 
 .inv-status-amount {
@@ -119,7 +119,7 @@
 
 .inv-status-count {
   font-size: 12px;
-  color: #5c6270;
+  color: #d1d5db;
 }
 
 /* ── Filter Bar ─────────────────────────────────────────────────────────── */
@@ -139,7 +139,7 @@
 .inv-search-icon {
   position: absolute;
   left: 12px;
-  color: #5c6270;
+  color: #d1d5db;
 }
 
 .inv-search-input {
@@ -161,7 +161,7 @@
 }
 
 .inv-search-input::placeholder {
-  color: #5c6270;
+  color: #d1d5db;
 }
 
 .inv-filter-dropdown {
@@ -187,11 +187,11 @@
 }
 
 .inv-filter-icon {
-  color: #5c6270;
+  color: #d1d5db;
 }
 
 .inv-chevron-icon {
-  color: #5c6270;
+  color: #d1d5db;
   margin-left: 4px;
 }
 
@@ -226,7 +226,7 @@ table.inv-table {
   text-align: left;
   font-size: 12px;
   font-weight: 500;
-  color: #8b909c;
+  color: #d1d5db;
   white-space: nowrap;
 }
 
@@ -240,7 +240,7 @@ table.inv-table {
 
 .inv-empty-desc {
   font-size: 13px;
-  color: #5c6270;
+  color: #d1d5db;
   text-align: center;
   margin: 0;
 }

@@ -1,0 +1,400 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`InventoryPage Component > matches the snapshot 1`] = `
+<div>
+  <main
+    class="inventory-page"
+  >
+    <header
+      class="ip-header"
+    >
+      <div
+        class="global-header-left"
+      >
+        <button
+          aria-label="Toggle sidebar"
+          class="mobile-sidebar-toggle"
+          type="button"
+        >
+          <svg
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+          >
+            <line
+              x1="3"
+              x2="21"
+              y1="12"
+              y2="12"
+            />
+            <line
+              x1="3"
+              x2="21"
+              y1="6"
+              y2="6"
+            />
+            <line
+              x1="3"
+              x2="21"
+              y1="18"
+              y2="18"
+            />
+          </svg>
+        </button>
+        <div>
+          <h1
+            style="margin: 0px; font-size: 1.25rem;"
+          >
+            Inventory & Assets
+          </h1>
+          <p
+            style="margin: 0px; font-size: 0.875rem; color: var(--sb-muted);"
+          >
+            Track stock levels, equipment, and future purchases
+          </p>
+        </div>
+      </div>
+      <div
+        class="global-header-right"
+      >
+        <div
+          class="global-header-icons"
+        >
+          <div
+            class="dash-dropdown-container"
+          >
+            <button
+              class="icon-btn bell-icon-wrapper"
+            >
+              <svg
+                fill="none"
+                height="18"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="18"
+              >
+                <path
+                  d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"
+                />
+                <path
+                  d="M13.73 21a2 2 0 0 1-3.46 0"
+                />
+              </svg>
+            </button>
+          </div>
+          <div
+            class="dash-dropdown-container"
+          >
+            <div
+              class="user-avatar-mini"
+              style="cursor: pointer; background: linear-gradient(135deg, var(--sb-primary), #818cf8);"
+            >
+              A
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div
+      class="ip-tabs"
+    >
+      <button
+        class="ip-tab is-active"
+        type="button"
+      >
+        Inventory
+      </button>
+      <button
+        class="ip-tab"
+        type="button"
+      >
+        Wish List
+      </button>
+    </div>
+    <div
+      class="ip-toolbar"
+    >
+      <div
+        class="ip-search"
+      >
+        <svg
+          aria-hidden="true"
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1.8"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            cx="11"
+            cy="11"
+            r="7"
+          />
+          <path
+            d="m21 21-4.35-4.35"
+          />
+        </svg>
+        <input
+          placeholder="Search items..."
+          type="text"
+          value=""
+        />
+      </div>
+      <button
+        class="ip-filter"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1.8"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"
+          />
+        </svg>
+        All…
+        <svg
+          aria-hidden="true"
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1.8"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="m6 9 6 6 6-6"
+          />
+        </svg>
+      </button>
+      <div
+        class="ip-toolbar-right"
+      >
+        <button
+          class="ip-btn ip-btn-ghost"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="1.8"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M6 9V2h12v7"
+            />
+            <path
+              d="M6 18H4a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-2"
+            />
+            <rect
+              height="8"
+              rx="1"
+              width="12"
+              x="6"
+              y="14"
+            />
+          </svg>
+          Print Labels
+        </button>
+        <button
+          class="ip-btn ip-btn-primary"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="1.8"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M12 5v14"
+            />
+            <path
+              d="M5 12h14"
+            />
+          </svg>
+          Add Item
+        </button>
+      </div>
+    </div>
+    <div
+      class="ip-table-wrap"
+    >
+      <table
+        class="ip-table"
+      >
+        <thead>
+          <tr>
+            <th>
+              Item
+              <span
+                class="sort-arrows"
+              >
+                <svg
+                  aria-hidden="true"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.8"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="m18 15-6-6-6 6"
+                  />
+                </svg>
+                <svg
+                  aria-hidden="true"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.8"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="m6 9 6 6 6-6"
+                  />
+                </svg>
+              </span>
+            </th>
+            <th>
+              Unit ID
+            </th>
+            <th>
+              Company
+            </th>
+            <th>
+              Type
+            </th>
+            <th>
+              Condition
+              <span
+                class="sort-arrows"
+              >
+                <svg
+                  aria-hidden="true"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.8"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="m18 15-6-6-6 6"
+                  />
+                </svg>
+                <svg
+                  aria-hidden="true"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.8"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="m6 9 6 6 6-6"
+                  />
+                </svg>
+              </span>
+            </th>
+            <th>
+              Qty
+              <span
+                class="sort-arrows"
+              >
+                <svg
+                  aria-hidden="true"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.8"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="m18 15-6-6-6 6"
+                  />
+                </svg>
+                <svg
+                  aria-hidden="true"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.8"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="m6 9 6 6 6-6"
+                  />
+                </svg>
+              </span>
+            </th>
+            <th>
+              Cost
+              <span
+                class="sort-arrows"
+              >
+                <svg
+                  aria-hidden="true"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.8"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="m18 15-6-6-6 6"
+                  />
+                </svg>
+                <svg
+                  aria-hidden="true"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.8"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="m6 9 6 6 6-6"
+                  />
+                </svg>
+              </span>
+            </th>
+            <th>
+              Total Value
+            </th>
+            <th>
+              Actions
+            </th>
+          </tr>
+        </thead>
+        <tbody />
+      </table>
+    </div>
+  </main>
+</div>
+`;

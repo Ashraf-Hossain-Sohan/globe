@@ -46,7 +46,7 @@
 .ua-company-dropdown svg {
   width: 13px;
   height: 13px;
-  color: #5c6270;
+  color: #d1d5db;
 }
 
 .ua-header-actions {
@@ -90,7 +90,7 @@
   border: 1px solid #2a2d3e;
   border-radius: 8px;
   background: #1a1c25;
-  color: #8b909c;
+  color: #d1d5db;
   cursor: pointer;
   transition: all 0.15s;
   position: relative;
@@ -142,7 +142,7 @@
 .ua-header-user svg {
   width: 12px;
   height: 12px;
-  color: #5c6270;
+  color: #d1d5db;
 }
 
 /* ── Main Content ───────────────────────────────────────────────────────── */
@@ -184,7 +184,7 @@
 
 .ua-title-text p {
   font-size: 14px;
-  color: #6b7280;
+  color: #d1d5db;
   margin: 0;
 }
 
@@ -251,7 +251,7 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #5c6270;
+  color: #d1d5db;
   background: rgba(255, 255, 255, 0.01);
   border-bottom: 1px solid #1e2030;
 }
@@ -321,7 +321,7 @@
 
 .ua-role-badge.role-viewer {
   background: rgba(107, 114, 128, 0.15);
-  color: #9ca3af;
+  color: #d1d5db;
 }
 
 /* Checkmarks */
@@ -353,7 +353,7 @@
   border: none;
   border-radius: 7px;
   background: transparent;
-  color: #5c6270;
+  color: #d1d5db;
   cursor: pointer;
   transition: all 0.15s;
 }
@@ -379,7 +379,7 @@
   align-items: center;
   justify-content: center;
   padding: 80px 20px;
-  color: #5c6270;
+  color: #d1d5db;
   gap: 10px;
   font-size: 14px;
 }
@@ -436,7 +436,7 @@
 .ua-empty {
   text-align: center;
   padding: 60px 20px;
-  color: #5c6270;
+  color: #d1d5db;
 }
 
 .ua-empty svg {
@@ -510,7 +510,7 @@
   border: none;
   border-radius: 8px;
   background: transparent;
-  color: #5c6270;
+  color: #d1d5db;
   cursor: pointer;
   transition: all 0.15s;
 }
@@ -541,7 +541,7 @@
 .ua-form-group label {
   font-size: 13px;
   font-weight: 600;
-  color: #9ca3af;
+  color: #d1d5db;
 }
 
 .ua-form-group label .ua-required {
@@ -606,7 +606,7 @@
   font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
-  color: #5c6270;
+  color: #d1d5db;
   background: rgba(255, 255, 255, 0.015);
   border-bottom: 1px solid #20222b;
 }
@@ -638,7 +638,7 @@
 
 .ua-matrix-code {
   font-size: 11px;
-  color: #5c6270;
+  color: #d1d5db;
 }
 
 /* Custom Checkbox Toggle Switch style or clean standard input */
@@ -698,7 +698,7 @@
   border: 1px solid #2a2d3e;
   border-radius: 8px;
   background: transparent;
-  color: #9ca3af;
+  color: #d1d5db;
   font-size: 13px;
   font-weight: 500;
   font-family: inherit;

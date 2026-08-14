@@ -44,7 +44,7 @@
   border: none;
   border-radius: 8px;
   background: #1a1c25;
-  color: #8b909c;
+  color: #d1d5db;
   cursor: pointer;
   transition: background 0.15s, color 0.15s;
 }
@@ -99,7 +99,7 @@
 
 .rp-page-title p {
   font-size: 13px;
-  color: #5c6270;
+  color: #d1d5db;
   margin: 0;
 }
 
@@ -137,7 +137,7 @@
   font-weight: 600;
   letter-spacing: 0.07em;
   text-transform: uppercase;
-  color: #6b7280;
+  color: #d1d5db;
 }
 
 .rp-stat-value {
@@ -211,7 +211,7 @@
 
 .rp-table-date-label {
   font-size: 12.5px;
-  color: #5c6270;
+  color: #d1d5db;
 }
 
 .rp-table-wrapper {
@@ -235,7 +235,7 @@ table.rp-table {
   font-weight: 600;
   letter-spacing: 0.07em;
   text-transform: uppercase;
-  color: #5c6270;
+  color: #d1d5db;
   white-space: nowrap;
 }
 
@@ -398,7 +398,7 @@ table.rp-table {
 
 .rp-report-desc {
   font-size: 11.5px;
-  color: #5c6270;
+  color: #d1d5db;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

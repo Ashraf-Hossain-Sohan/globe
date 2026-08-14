@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import TopHeader from './shared/TopHeader'
 import type { JSX } from 'react'
 import '../styles/InventoryPage.css'
 
@@ -8,9 +9,9 @@ type InventoryItem = {
   name: string
   subtitle: string
   unitId: string
-  company: '365F' | 'XSRS' | 'EverAfter' | 'PrintDesk'
+  companyCode: string
   type: string
-  condition: 'Excellent' | 'Good' | 'Fair' | 'Poor'
+  condition: string
   qty: number
   cost: number
   threshold: number
@@ -20,13 +21,13 @@ type WishlistItem = {
   id: number
   name: string
   subtitle: string
-  priority: 'High' | 'Medium' | 'Low'
+  priority: string
   estimatedCost: number
   notes: string
   link?: string
-  status: 'Planned' | 'Approved' | 'Purchased' | 'Pending'
+  status: string
   requestedBy: string
-  company: '365F' | 'XSRS' | 'EverAfter' | 'PrintDesk'
+  companyCode: string
 }
 
 /* ─── Helpers ────────────────────────────────── */
@@ -46,37 +47,6 @@ const svgIcon = (paths: JSX.Element) => (
 
 const fmt = (n: number) => `BDT ${n.toLocaleString()}`
 
-/* ─── Sample Data ────────────────────────────── */
-const inventoryData: InventoryItem[] = [
-  { id: 1, name: 'Sidande', subtitle: 'Background light', unitId: '365F-BAC-THI-SID', company: '365F', type: 'Equipment', condition: 'Good', qty: 1, cost: 0, threshold: 2 },
-  { id: 2, name: 'Lazy Suzan', subtitle: 'Accessories', unitId: '365F-ACC-THI-LAZ', company: '365F', type: 'Equipment', condition: 'Excellent', qty: 1, cost: 0, threshold: 1 },
-  { id: 3, name: 'Smoke Go', subtitle: 'Smoke Machine', unitId: '365F-SMO-THI-SMO', company: '365F', type: 'Equipment', condition: 'Excellent', qty: 1, cost: 0, threshold: 1 },
-  { id: 4, name: 'Flash Trigger', subtitle: 'Flash Trigger', unitId: '365F-FLA-GOD-FLA', company: '365F', type: 'Equipment', condition: 'Excellent', qty: 1, cost: 0, threshold: 3 },
-  { id: 5, name: 'Godox X3 Pro', subtitle: 'Flash Trigger', unitId: '365F-FLA-GOD-GOD', company: '365F', type: 'Equipment', condition: 'Excellent', qty: 1, cost: 0, threshold: 1 },
-  { id: 6, name: 'DJI RS-4 Mini with Combo', subtitle: 'Gimbal Stabilizer', unitId: '365F-GIM-DJI-RS4', company: '365F', type: 'Equipment', condition: 'Excellent', qty: 1, cost: 0, threshold: 1 },
-  { id: 7, name: 'DJI RS-4 mini', subtitle: 'Gimbal Stabilizer', unitId: '365F-GIM-DJI-RS4', company: '365F', type: 'Equipment', condition: 'Good', qty: 1, cost: 0, threshold: 1 },
-  { id: 8, name: 'DC-L1 Photographic Monitor', subtitle: 'Monitor', unitId: '365F-MON-DCL-DCL', company: '365F', type: 'Equipment', condition: 'Excellent', qty: 1, cost: 0, threshold: 2 },
-  { id: 9, name: 'Simpex Stand', subtitle: 'Light Stand', unitId: '365F-STD-SIM-SIM', company: '365F', type: 'Equipment', condition: 'Good', qty: 2, cost: 0, threshold: 4 },
-  { id: 10, name: 'Monitor Wall Mount', subtitle: 'Mounting Bracket', unitId: '365F-MNT-WAL-MNT', company: '365F', type: 'Accessories', condition: 'Excellent', qty: 3, cost: 0, threshold: 3 },
-  { id: 11, name: 'Spot Light Clamp', subtitle: 'Clamp Mount', unitId: '365F-CLM-SPT-CLM', company: '365F', type: 'Accessories', condition: 'Good', qty: 4, cost: 0, threshold: 6 },
-  { id: 12, name: 'Spot Light', subtitle: 'LED Light', unitId: '365F-LED-SPT-LED', company: '365F', type: 'Equipment', condition: 'Excellent', qty: 5, cost: 0, threshold: 10 },
-  { id: 13, name: 'Mic Stand', subtitle: 'Audio Accessories', unitId: '365F-AUD-MIC-STD', company: '365F', type: 'Accessories', condition: 'Good', qty: 2, cost: 0, threshold: 3 },
-  { id: 14, name: 'Simplex Backdrop', subtitle: 'Studio Backdrop', unitId: '365F-BKD-SIM-BKD', company: '365F', type: 'Accessories', condition: 'Fair', qty: 1, cost: 0, threshold: 1 },
-  { id: 15, name: 'Simplex Umbrella', subtitle: 'Light Modifier', unitId: '365F-MOD-SIM-UMB', company: '365F', type: 'Accessories', condition: 'Excellent', qty: 2, cost: 0, threshold: 2 },
-  { id: 16, name: 'Sony FE 50mm f/1.8', subtitle: 'Camera Lens', unitId: '365F-LNS-SNY-50M', company: '365F', type: 'Equipment', condition: 'Excellent', qty: 1, cost: 0, threshold: 3 },
-  { id: 17, name: 'XLR Cable 10m', subtitle: 'Audio Cable', unitId: '365F-CBL-XLR-10M', company: '365F', type: 'Accessories', condition: 'Good', qty: 2, cost: 0, threshold: 2 },
-]
-
-const wishlistData: WishlistItem[] = [
-  { id: 1, name: 'Sony A7 IV', subtitle: 'Full-frame Camera Body', priority: 'High', estimatedCost: 248999, notes: 'Upgrade from current A6400 for wedding coverage', link: 'https://sony.com', status: 'Approved', requestedBy: 'Ashraf', company: '365F' },
-  { id: 2, name: 'DJI Mavic 3 Pro', subtitle: 'Drone', priority: 'High', estimatedCost: 189000, notes: 'Aerial shots for outdoor weddings and events', status: 'Planned', requestedBy: 'Ashraf', company: '365F' },
-  { id: 3, name: 'Aputure 600D Pro', subtitle: 'LED Light', priority: 'Medium', estimatedCost: 165000, notes: 'Key light for large studio setups', link: 'https://aputure.com', status: 'Pending', requestedBy: 'Rafi', company: '365F' },
-  { id: 4, name: 'Rode Wireless PRO', subtitle: 'Wireless Mic System', priority: 'Medium', estimatedCost: 32000, notes: 'Dual channel wireless for interviews', status: 'Approved', requestedBy: 'Ashraf', company: '365F' },
-  { id: 5, name: 'Peak Design Travel Tripod', subtitle: 'Carbon Fiber Tripod', priority: 'Low', estimatedCost: 45000, notes: 'Compact travel tripod for on-location shoots', status: 'Planned', requestedBy: 'Sakib', company: '365F' },
-  { id: 6, name: 'Atomos Ninja V+', subtitle: 'External Recorder', priority: 'Low', estimatedCost: 72000, notes: 'ProRes recording for cinema projects', status: 'Planned', requestedBy: 'Rafi', company: 'EverAfter' },
-  { id: 7, name: 'Dell U2723QE', subtitle: '4K Monitor', priority: 'Medium', estimatedCost: 55000, notes: 'Color-accurate editing monitor', status: 'Purchased', requestedBy: 'Ashraf', company: 'XSRS' },
-]
-
 /* ─── Low-stock items ────────────────────────── */
 function getLowStockItems(items: InventoryItem[]) {
   return items.filter(i => i.qty < i.threshold)
@@ -89,6 +59,21 @@ export default function InventoryPage() {
   const [tab, setTab] = useState<'inventory' | 'wishlist'>('inventory')
   const [alertOpen, setAlertOpen] = useState(true)
   const [search, setSearch] = useState('')
+  
+  const [inventoryData, setInventoryData] = useState<InventoryItem[]>([])
+  const [wishlistData, setWishlistData] = useState<WishlistItem[]>([])
+
+  useEffect(() => {
+    Promise.all([
+      fetch('/api/inventory', { credentials: 'include' }).then(res => res.json()),
+      fetch('/api/inventory/wishlist', { credentials: 'include' }).then(res => res.json())
+    ]).then(([invData, wishData]) => {
+      setInventoryData(invData)
+      setWishlistData(wishData)
+    }).catch(err => {
+      console.error(err)
+    })
+  }, [])
 
   const lowStock = getLowStockItems(inventoryData)
 
@@ -97,37 +82,28 @@ export default function InventoryPage() {
     i =>
       i.name.toLowerCase().includes(search.toLowerCase()) ||
       i.subtitle.toLowerCase().includes(search.toLowerCase()) ||
-      i.unitId.toLowerCase().includes(search.toLowerCase()),
+      (i.unitId || '').toLowerCase().includes(search.toLowerCase()),
   )
 
   /* Filtered wishlist */
   const filteredWishlist = wishlistData.filter(
-    i =>
-      i.name.toLowerCase().includes(search.toLowerCase()) ||
-      i.subtitle.toLowerCase().includes(search.toLowerCase()),
+    w =>
+      w.name.toLowerCase().includes(search.toLowerCase()) ||
+      w.subtitle.toLowerCase().includes(search.toLowerCase()),
   )
 
   return (
     <main className="inventory-page">
       {/* Header */}
-      <div className="ip-header" style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 20 }}>
-        <button
-          className="mobile-sidebar-toggle"
-          type="button"
-          onClick={() => window.dispatchEvent(new CustomEvent('toggle-sidebar'))}
-          aria-label="Toggle sidebar"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="3" y1="12" x2="21" y2="12" />
-            <line x1="3" y1="6" x2="21" y2="6" />
-            <line x1="3" y1="18" x2="21" y2="18" />
-          </svg>
-        </button>
-        <div>
-          <h1 style={{ margin: 0 }}>Inventory &amp; Assets</h1>
-          <p style={{ margin: 0 }}>Track stock levels, equipment, and future purchases</p>
-        </div>
-      </div>
+      <TopHeader
+        className="ip-header"
+        leftContent={
+          <div>
+            <h1 style={{ margin: 0, fontSize: '1.25rem' }}>Inventory &amp; Assets</h1>
+            <p style={{ margin: 0, fontSize: '0.875rem', color: 'var(--sb-muted)' }}>Track stock levels, equipment, and future purchases</p>
+          </div>
+        }
+      />
 
       {/* Tabs */}
       <div className="ip-tabs">
@@ -306,8 +282,8 @@ function InventoryTab({
                 </td>
                 <td><span className="ip-unit-id">{item.unitId}</span></td>
                 <td>
-                  <span className={`ip-company-badge badge-${item.company.toLowerCase().replace(/\s/g, '')}`}>
-                    {item.company}
+                  <span className={`ip-company-badge badge-${(item.companyCode || '').toLowerCase().replace(/\s/g, '')}`}>
+                    {item.companyCode}
                   </span>
                 </td>
                 <td>{item.type}</td>
@@ -392,10 +368,10 @@ function WishlistTab({
 
       {/* Wish List Summary Cards */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px', marginBottom: '20px' }}>
-        <SummaryCard label="Total Items" value={wishlistData.length.toString()} color="#60a5fa" icon={<><path d="M21 8 12 3 3 8v8l9 5 9-5V8Z" /><path d="M3 8l9 5 9-5M12 13v8" /></>} />
-        <SummaryCard label="Approved" value={wishlistData.filter(i => i.status === 'Approved').length.toString()} color="#22c55e" icon={<><path d="M20 6 9 17l-5-5" /></>} />
-        <SummaryCard label="Est. Total" value={`৳${(wishlistData.reduce((s, i) => s + i.estimatedCost, 0) / 1000).toFixed(0)}K`} color="#f59e0b" icon={<><circle cx="12" cy="12" r="10" /><path d="M12 6v12M15 9.5a3 3 0 0 0-3-2.5c-1.7 0-3 1-3 2.5s1.3 2.5 3 2.5 3 1 3 2.5-1.3 2.5-3 2.5" /></>} />
-        <SummaryCard label="High Priority" value={wishlistData.filter(i => i.priority === 'High').length.toString()} color="#ef4444" icon={<><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z" /><line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" /></>} />
+        <SummaryCard label="Total Items" value={items.length.toString()} color="#60a5fa" icon={<><path d="M21 8 12 3 3 8v8l9 5 9-5V8Z" /><path d="M3 8l9 5 9-5M12 13v8" /></>} />
+        <SummaryCard label="Approved" value={items.filter((i: { status: string }) => i.status === 'Approved').length.toString()} color="#22c55e" icon={<><path d="M20 6 9 17l-5-5" /></>} />
+        <SummaryCard label="Est. Total" value={`৳${(items.reduce((s: number, i: { estimatedCost: number }) => s + i.estimatedCost, 0) / 1000).toFixed(0)}K`} color="#f59e0b" icon={<><circle cx="12" cy="12" r="10" /><path d="M12 6v12M15 9.5a3 3 0 0 0-3-2.5c-1.7 0-3 1-3 2.5s1.3 2.5 3 2.5 3 1 3 2.5-1.3 2.5-3 2.5" /></>} />
+        <SummaryCard label="High Priority" value={items.filter((i: { priority: string }) => i.priority === 'High').length.toString()} color="#ef4444" icon={<><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z" /><line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" /></>} />
       </div>
 
       {/* Table */}
@@ -423,8 +399,8 @@ function WishlistTab({
                   </div>
                 </td>
                 <td>
-                  <span className={`ip-company-badge badge-${item.company.toLowerCase().replace(/\s/g, '')}`}>
-                    {item.company}
+                  <span className={`ip-company-badge badge-${(item.companyCode || '').toLowerCase().replace(/\s/g, '')}`}>
+                    {item.companyCode}
                   </span>
                 </td>
                 <td>

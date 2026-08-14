@@ -1,0 +1,1038 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`CompanyDashboardPage Component > matches the snapshot 1`] = `
+<div>
+  <div
+    class="dash-page"
+  >
+    <header
+      class="global-header"
+    >
+      <div
+        class="global-header-left"
+      >
+        <button
+          aria-label="Toggle sidebar"
+          class="mobile-sidebar-toggle"
+          type="button"
+        >
+          <svg
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+          >
+            <line
+              x1="3"
+              x2="21"
+              y1="12"
+              y2="12"
+            />
+            <line
+              x1="3"
+              x2="21"
+              y1="6"
+              y2="6"
+            />
+            <line
+              x1="3"
+              x2="21"
+              y1="18"
+              y2="18"
+            />
+          </svg>
+        </button>
+        <div
+          class="dash-company-select"
+        >
+          <span>
+            All Companies
+          </span>
+          <svg
+            fill="none"
+            height="12"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="12"
+          >
+            <path
+              d="M6 9l6 6 6-6"
+            />
+          </svg>
+        </div>
+      </div>
+      <div
+        class="global-header-right"
+      >
+        <button
+          class="dash-add-btn"
+        >
+          <svg
+            fill="none"
+            height="14"
+            stroke="currentColor"
+            stroke-width="2.5"
+            viewBox="0 0 24 24"
+            width="14"
+          >
+            <line
+              x1="12"
+              x2="12"
+              y1="5"
+              y2="19"
+            />
+            <line
+              x1="5"
+              x2="19"
+              y1="12"
+              y2="12"
+            />
+          </svg>
+          Add Entry
+        </button>
+        <div
+          class="global-header-icons"
+        >
+          <div
+            class="dash-dropdown-container"
+          >
+            <button
+              class="icon-btn bell-icon-wrapper"
+            >
+              <svg
+                fill="none"
+                height="18"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="18"
+              >
+                <path
+                  d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"
+                />
+                <path
+                  d="M13.73 21a2 2 0 0 1-3.46 0"
+                />
+              </svg>
+            </button>
+          </div>
+          <div
+            class="dash-dropdown-container"
+          >
+            <div
+              class="user-avatar-mini"
+              style="cursor: pointer; background: linear-gradient(135deg, var(--sb-primary), #818cf8);"
+            >
+              A
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div
+      class="dash-body"
+    >
+      <div
+        class="dash-title-section"
+      >
+        <div
+          class="dash-title-left"
+        >
+          <div
+            class="dash-dot"
+          />
+          <div>
+            <h1>
+              Test Co
+            </h1>
+            <p>
+              Test Description
+            </p>
+          </div>
+        </div>
+        <div
+          class="dash-time-filters"
+        >
+          <button
+            class=""
+          >
+            Last 3 months
+          </button>
+          <button
+            class="active"
+          >
+            Last 6 months
+          </button>
+          <button
+            class=""
+          >
+            Last 12 months
+          </button>
+          <button
+            class=""
+          >
+            All time
+          </button>
+        </div>
+      </div>
+      <div
+        class="dash-metrics-grid"
+      >
+        <div
+          class="metric-card"
+        >
+          <div
+            class="metric-header"
+          >
+            <span
+              class="metric-label"
+            >
+              REVENUE
+            </span>
+            <div
+              class="metric-icon"
+            >
+              <svg
+                fill="none"
+                height="14"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="14"
+              >
+                <line
+                  x1="12"
+                  x2="12"
+                  y1="1"
+                  y2="23"
+                />
+                <path
+                  d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"
+                />
+              </svg>
+            </div>
+          </div>
+          <div
+            class="metric-value"
+          >
+            BDT 0
+          </div>
+          <div
+            class="metric-sub"
+          >
+            Last 
+            6
+             months
+          </div>
+          <div
+            class="metric-sparkline"
+          >
+            <div
+              class="recharts-responsive-container"
+              style="width: 100%; height: 40px; min-width: 0px;"
+            >
+              <div
+                style="width: 0px; overflow-x: visible;"
+              />
+            </div>
+          </div>
+          <div
+            class="metric-footer"
+          >
+            <span
+              class="trend neutral"
+            >
+              — 0% vs last month
+            </span>
+          </div>
+        </div>
+        <div
+          class="metric-card"
+        >
+          <div
+            class="metric-header"
+          >
+            <span
+              class="metric-label"
+            >
+              NET PROFIT
+            </span>
+            <div
+              class="metric-icon"
+            >
+              <svg
+                fill="none"
+                height="14"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="14"
+              >
+                <polyline
+                  points="22 7 13.5 15.5 8.5 10.5 2 17"
+                />
+                <polyline
+                  points="16 7 22 7 22 13"
+                />
+              </svg>
+            </div>
+          </div>
+          <div
+            class="metric-value"
+          >
+            BDT 0
+          </div>
+          <div
+            class="metric-sub"
+          >
+            EBITDA: 
+            BDT 1.4K
+          </div>
+          <div
+            class="metric-sparkline"
+          >
+            <div
+              class="recharts-responsive-container"
+              style="width: 100%; height: 40px; min-width: 0px;"
+            >
+              <div
+                style="width: 0px; overflow-x: visible;"
+              />
+            </div>
+          </div>
+          <div
+            class="metric-footer"
+          >
+            <span
+              class="trend neutral"
+            >
+              — 0% vs last month
+            </span>
+          </div>
+        </div>
+        <div
+          class="metric-card"
+        >
+          <div
+            class="metric-header"
+          >
+            <span
+              class="metric-label"
+            >
+              BURN RATE
+            </span>
+            <div
+              class="metric-icon"
+            >
+              <svg
+                fill="none"
+                height="14"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="14"
+              >
+                <polyline
+                  points="22 17 13.5 8.5 8.5 13.5 2 7"
+                />
+                <polyline
+                  points="16 17 22 17 22 11"
+                />
+              </svg>
+            </div>
+          </div>
+          <div
+            class="metric-value"
+          >
+            BDT 0
+          </div>
+          <div
+            class="metric-sub"
+          >
+            Monthly avg expenses
+          </div>
+          <div
+            class="metric-sparkline"
+          >
+            <div
+              class="recharts-responsive-container"
+              style="width: 100%; height: 40px; min-width: 0px;"
+            >
+              <div
+                style="width: 0px; overflow-x: visible;"
+              />
+            </div>
+          </div>
+          <div
+            class="metric-footer"
+          >
+            <span
+              class="trend neutral"
+            >
+              — 0% vs last month
+            </span>
+          </div>
+        </div>
+        <div
+          class="metric-card"
+        >
+          <div
+            class="metric-header"
+          >
+            <span
+              class="metric-label"
+            >
+              PROFIT MARGIN
+            </span>
+            <div
+              class="metric-icon"
+            >
+              %
+            </div>
+          </div>
+          <div
+            class="metric-value"
+          >
+            0%
+          </div>
+          <div
+            class="metric-sub"
+          >
+            ROI: 
+            0%
+          </div>
+          <div
+            class="metric-sparkline"
+          >
+            <div
+              class="recharts-responsive-container"
+              style="width: 100%; height: 40px; min-width: 0px;"
+            >
+              <div
+                style="width: 0px; overflow-x: visible;"
+              />
+            </div>
+          </div>
+          <div
+            class="metric-footer"
+          >
+            <span
+              class="trend neutral"
+            >
+              — 0% vs last month
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="dash-secondary-metrics"
+      >
+        <div
+          class="sec-metric"
+        >
+          <span
+            class="label"
+          >
+            GROSS PROFIT
+          </span>
+          <span
+            class="val"
+          >
+            BDT 0
+          </span>
+        </div>
+        <div
+          class="sec-metric"
+        >
+          <span
+            class="label"
+          >
+            OPEX
+          </span>
+          <span
+            class="val"
+          >
+            BDT 0
+          </span>
+        </div>
+        <div
+          class="sec-metric"
+        >
+          <span
+            class="label"
+          >
+            COGS
+          </span>
+          <span
+            class="val"
+          >
+            BDT 0
+          </span>
+        </div>
+        <div
+          class="sec-metric"
+        >
+          <span
+            class="label"
+          >
+            ROI
+          </span>
+          <span
+            class="val"
+          >
+            0%
+          </span>
+        </div>
+      </div>
+      <div
+        class="dash-sub-tags"
+      >
+        <span
+          class="dash-tag"
+        >
+          <svg
+            fill="none"
+            height="12"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="12"
+          >
+            <rect
+              height="18"
+              rx="2"
+              ry="2"
+              width="18"
+              x="3"
+              y="3"
+            />
+            <line
+              x1="3"
+              x2="21"
+              y1="9"
+              y2="9"
+            />
+            <line
+              x1="9"
+              x2="9"
+              y1="21"
+              y2="9"
+            />
+          </svg>
+           MRR: 
+          <strong>
+            BDT 0
+          </strong>
+        </span>
+        <span
+          class="dash-tag"
+        >
+          <svg
+            fill="none"
+            height="12"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="12"
+          >
+            <rect
+              height="18"
+              rx="2"
+              ry="2"
+              width="18"
+              x="3"
+              y="3"
+            />
+            <line
+              x1="3"
+              x2="21"
+              y1="9"
+              y2="9"
+            />
+            <line
+              x1="9"
+              x2="9"
+              y1="21"
+              y2="9"
+            />
+          </svg>
+           Profit Margin per Project: 
+          <strong>
+            0%
+          </strong>
+        </span>
+        <span
+          class="dash-tag"
+        >
+          <svg
+            fill="none"
+            height="12"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="12"
+          >
+            <rect
+              height="18"
+              rx="2"
+              ry="2"
+              width="18"
+              x="3"
+              y="3"
+            />
+            <line
+              x1="3"
+              x2="21"
+              y1="9"
+              y2="9"
+            />
+            <line
+              x1="9"
+              x2="9"
+              y1="21"
+              y2="9"
+            />
+          </svg>
+           Client Acquisition Cost: 
+          <strong>
+            BDT 200
+          </strong>
+        </span>
+        <span
+          class="dash-tag"
+        >
+          <svg
+            fill="none"
+            height="12"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="12"
+          >
+            <rect
+              height="18"
+              rx="2"
+              ry="2"
+              width="18"
+              x="3"
+              y="3"
+            />
+            <line
+              x1="3"
+              x2="21"
+              y1="9"
+              y2="9"
+            />
+            <line
+              x1="9"
+              x2="9"
+              y1="21"
+              y2="9"
+            />
+          </svg>
+           Churn Rate: 
+          <strong>
+            83.3%
+          </strong>
+        </span>
+      </div>
+      <div
+        class="dash-customize-btn-wrap"
+      >
+        <button
+          class="dash-customize-btn"
+        >
+          <svg
+            fill="none"
+            height="12"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="12"
+          >
+            <path
+              d="M12 20h9"
+            />
+            <path
+              d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"
+            />
+          </svg>
+          Customize
+        </button>
+      </div>
+      <div
+        class="dash-grid-row-2"
+      >
+        <div
+          class="dash-panel"
+        >
+          <h3
+            class="panel-title"
+          >
+            Monthly Performance - Last 
+            6
+             months
+          </h3>
+          <div
+            class="chart-wrapper"
+          >
+            <div
+              class="recharts-responsive-container"
+              style="width: 100%; height: 200px; min-width: 0px;"
+            >
+              <div
+                style="width: 0px; overflow-x: visible;"
+              />
+            </div>
+          </div>
+          <div
+            class="chart-legend"
+          >
+            <div
+              class="legend-item"
+            >
+              <span
+                class="legend-dot"
+                style="background: rgb(59, 130, 246);"
+              />
+              Revenue
+            </div>
+            <div
+              class="legend-item"
+            >
+              <span
+                class="legend-dot"
+                style="background: rgb(239, 68, 68);"
+              />
+              Expenses
+            </div>
+          </div>
+        </div>
+        <div
+          class="dash-panel"
+        >
+          <h3
+            class="panel-title"
+          >
+            Revenue by Source
+          </h3>
+          <div
+            class="chart-wrapper flex-center"
+          >
+            <div
+              class="recharts-responsive-container"
+              style="width: 100%; height: 100%; min-width: 0px;"
+            >
+              <div
+                style="width: 0px; height: 0px; overflow: visible;"
+              />
+            </div>
+          </div>
+          <div
+            class="chart-legend center"
+          />
+        </div>
+      </div>
+      <div
+        class="dash-panel wide"
+      >
+        <h3
+          class="panel-title"
+        >
+          Profit Trend - Last 
+          6
+           months
+        </h3>
+        <div
+          class="chart-wrapper"
+        >
+          <div
+            class="recharts-responsive-container"
+            style="width: 100%; height: 200px; min-width: 0px;"
+          >
+            <div
+              style="width: 0px; overflow-x: visible;"
+            />
+          </div>
+        </div>
+        <div
+          class="chart-legend center"
+        >
+          <div
+            class="legend-item"
+          >
+            <span
+              class="legend-dot"
+              style="background: rgb(59, 130, 246);"
+            />
+            Revenue
+          </div>
+          <div
+            class="legend-item"
+          >
+            <span
+              class="legend-dot"
+              style="background: rgb(239, 68, 68);"
+            />
+            Expenses
+          </div>
+          <div
+            class="legend-item"
+          >
+            <span
+              class="legend-dot"
+              style="background: rgb(16, 185, 129);"
+            />
+            Net Profit
+          </div>
+        </div>
+      </div>
+      <div
+        class="dash-grid-row-3"
+      >
+        <div
+          class="dash-panel"
+        >
+          <h3
+            class="panel-title"
+          >
+            Cost Breakdown
+          </h3>
+          <div
+            class="chart-wrapper flex-center"
+          >
+            <div
+              class="recharts-responsive-container"
+              style="width: 100%; height: 100%; min-width: 0px;"
+            >
+              <div
+                style="width: 0px; height: 0px; overflow: visible;"
+              />
+            </div>
+          </div>
+          <div
+            class="chart-legend center"
+          />
+        </div>
+        <div
+          class="dash-panel-col"
+        >
+          <div
+            class="dash-panel flex-auto"
+          >
+            <h3
+              class="panel-title"
+            >
+              Recent Transactions
+            </h3>
+            <div
+              class="transaction-list"
+            >
+              <p
+                class="tx-empty"
+              >
+                No recent transactions.
+              </p>
+            </div>
+          </div>
+          <div
+            class="dash-panel flex-auto mt-16"
+          >
+            <h3
+              class="panel-title"
+            >
+              Upcoming Bills
+            </h3>
+            <div
+              class="bill-item"
+            >
+              <div
+                class="bill-info"
+              >
+                <h4>
+                  Internet
+                </h4>
+                <p>
+                  Due: 2026-06-23
+                </p>
+              </div>
+              <div
+                class="bill-right"
+              >
+                <span
+                  class="bill-status pending"
+                >
+                  pending
+                </span>
+                <span
+                  class="bill-amount"
+                >
+                  BDT 1.0K
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="dash-panel wide mt-16"
+      >
+        <h3
+          class="panel-title"
+        >
+          All Global Entries
+        </h3>
+        <div
+          class="ge-table-container"
+          style="margin-top: 16px; background: transparent; padding: 0px;"
+        >
+          <div
+            class="ge-table-header"
+          >
+            <div
+              class="ge-col date"
+            >
+              Date
+            </div>
+            <div
+              class="ge-col title"
+            >
+              Title & Details
+            </div>
+            <div
+              class="ge-col category"
+            >
+              Category
+            </div>
+            <div
+              class="ge-col amount"
+            >
+              Amount
+            </div>
+          </div>
+          <div
+            class="ge-empty"
+          >
+            <p
+              style="color: rgb(92, 98, 112);"
+            >
+              No entries found for 
+              Test Co
+              .
+            </p>
+          </div>
+        </div>
+      </div>
+      <div
+        class="dash-panel wide mt-16 investments-panel"
+      >
+        <div
+          class="inv-header"
+        >
+          <h3
+            class="panel-title"
+          >
+            <svg
+              fill="none"
+              height="14"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="14"
+            >
+              <path
+                d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"
+              />
+              <circle
+                cx="9"
+                cy="7"
+                r="4"
+              />
+              <path
+                d="M23 21v-2a4 4 0 0 0-3-3.87"
+              />
+              <path
+                d="M16 3.13a4 4 0 0 1 0 7.75"
+              />
+            </svg>
+             Investments 
+            <span
+              class="inv-count"
+            >
+              - 0 investors
+            </span>
+          </h3>
+          <button
+            class="dash-tag-btn"
+          >
+            <svg
+              fill="none"
+              height="12"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="12"
+            >
+              <line
+                x1="12"
+                x2="12"
+                y1="5"
+                y2="19"
+              />
+              <line
+                x1="5"
+                x2="19"
+                y1="12"
+                y2="12"
+              />
+            </svg>
+             Add
+          </button>
+        </div>
+        <div
+          class="inv-stats"
+        >
+          <div
+            class="inv-stat"
+          >
+            <span
+              class="label"
+            >
+              TOTAL RAISED
+            </span>
+            <span
+              class="val"
+            >
+              BDT 0
+            </span>
+          </div>
+          <div
+            class="inv-stat"
+          >
+            <span
+              class="label"
+            >
+              EQUITY ALLOCATED
+            </span>
+            <span
+              class="val"
+            >
+              0.00%
+            </span>
+          </div>
+        </div>
+        <div
+          class="inv-empty"
+        >
+          No investments recorded yet
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

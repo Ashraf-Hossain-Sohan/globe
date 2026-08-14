@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import TopHeader from './shared/TopHeader'
 import '../styles/BillsPage.css'
 
 /* ── SVG icon helper ─────────────────────────────────────────── */
@@ -37,22 +38,61 @@ interface CompanySummary {
   label: string
 }
 
-const COMPANIES: CompanySummary[] = [
-  { code: 'XSRS', color: '#60a5fa', amount: 0, label: 'unpaid' },
-  { code: '365F', color: '#fb923c', amount: 0, label: 'unpaid' },
-  { code: 'EA', color: '#f87171', amount: 0, label: 'unpaid' },
-  { code: 'PD', color: '#4ade80', amount: 0, label: 'unpaid' },
-]
+interface Bill {
+  id: number
+  companyCode: string
+  vendor: string
+  amount: number
+  status: string
+  dueDate: string
+  dateCreated: string
+  description: string
+}
 
-const SUMMARY = {
-  pending: { amount: 0, count: 0 },
-  overdue: { amount: 0, count: 0 },
-  paid: { amount: 0, count: 0 },
+interface Company {
+  id: number
+  name: string
+  code: string
+  color: string
+  description: string
 }
 
 /* ── Main Component ──────────────────────────────────────────── */
 export default function BillsPage() {
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all')
+  const [bills, setBills] = useState<Bill[]>([])
+  const [loading, setLoading] = useState(true)
+
+  const [companies, setCompanies] = useState<Company[]>([])
+
+  useEffect(() => {
+    Promise.all([
+      fetch('/api/bills', { credentials: 'include' }).then(r => r.json()),
+      fetch('/api/companies', { credentials: 'include' }).then(r => r.json())
+    ])
+      .then(([billsData, companiesData]) => {
+        setBills(billsData)
+        setCompanies(companiesData)
+        setLoading(false)
+      })
+      .catch(err => {
+        console.error(err)
+        setLoading(false)
+      })
+  }, [])
+
+  const SUMMARY = {
+    pending: { amount: bills.filter(b => b.status === 'pending').reduce((s, b) => s + b.amount, 0), count: bills.filter(b => b.status === 'pending').length },
+    overdue: { amount: bills.filter(b => b.status === 'overdue').reduce((s, b) => s + b.amount, 0), count: bills.filter(b => b.status === 'overdue').length },
+    paid: { amount: bills.filter(b => b.status === 'paid').reduce((s, b) => s + b.amount, 0), count: bills.filter(b => b.status === 'paid').length },
+  }
+
+  const COMPANIES: CompanySummary[] = companies.map(c => ({
+    code: c.code,
+    color: c.color || '#60a5fa',
+    label: 'unpaid',
+    amount: bills.filter(b => b.companyCode === c.code && b.status !== 'paid').reduce((s, b) => s + b.amount, 0)
+  }))
 
   const totalUnpaid = COMPANIES.reduce((s, c) => s + c.amount, 0)
   const companyCount = COMPANIES.length
@@ -67,60 +107,42 @@ export default function BillsPage() {
   return (
     <div className="bills-page">
       {/* ── Top Header ── */}
-      <header className="bp-header">
-        <button
-          className="mobile-sidebar-toggle"
-          type="button"
-          onClick={() => window.dispatchEvent(new CustomEvent('toggle-sidebar'))}
-          aria-label="Toggle sidebar"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="3" y1="12" x2="21" y2="12" />
-            <line x1="3" y1="6" x2="21" y2="6" />
-            <line x1="3" y1="18" x2="21" y2="18" />
-          </svg>
-        </button>
-        <button id="bp-company-select" className="bp-company-dropdown" type="button">
-          All Companies
-          <Ico size={13}>
-            <polyline points="6 9 12 15 18 9" />
-          </Ico>
-        </button>
-
-        <div className="bp-header-actions">
-          <button id="bp-add-entry" className="bp-add-entry-btn" type="button">
-            <Ico size={14}>
-              <line x1="12" y1="5" x2="12" y2="19" />
-              <line x1="5" y1="12" x2="19" y2="12" />
-            </Ico>
-            Add Entry
-          </button>
-
-          <button id="bp-theme-btn" className="bp-icon-btn" aria-label="Toggle theme" type="button">
-            <Ico>
-              <circle cx="12" cy="12" r="5" />
-              <line x1="12" y1="1" x2="12" y2="3" />
-              <line x1="12" y1="21" x2="12" y2="23" />
-              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-              <line x1="1" y1="12" x2="3" y2="12" />
-              <line x1="21" y1="12" x2="23" y2="12" />
-              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+      <TopHeader
+        className="bp-header"
+        leftContent={
+          <button id="bp-company-select" className="bp-company-dropdown" type="button">
+            All Companies
+            <Ico size={13}>
+              <polyline points="6 9 12 15 18 9" />
             </Ico>
           </button>
+        }
+        rightContent={
+          <>
+            <button id="bp-add-entry" className="bp-add-entry-btn" type="button">
+              <Ico size={14}>
+                <line x1="12" y1="5" x2="12" y2="19" />
+                <line x1="5" y1="12" x2="19" y2="12" />
+              </Ico>
+              Add Entry
+            </button>
 
-          <button id="bp-notif-btn" className="bp-icon-btn has-badge" aria-label="Notifications" type="button">
-            <Ico>
-              <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9" />
-              <path d="M13.73 21a2 2 0 0 1-3.46 0" />
-            </Ico>
-            <span className="bp-notif-dot" />
-          </button>
-
-          <div className="bp-avatar" role="img" aria-label="User avatar">A</div>
-        </div>
-      </header>
+            <button id="bp-theme-btn" className="bp-icon-btn" aria-label="Toggle theme" type="button">
+              <Ico>
+                <circle cx="12" cy="12" r="5" />
+                <line x1="12" y1="1" x2="12" y2="3" />
+                <line x1="12" y1="21" x2="12" y2="23" />
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                <line x1="1" y1="12" x2="3" y2="12" />
+                <line x1="21" y1="12" x2="23" y2="12" />
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+              </Ico>
+            </button>
+          </>
+        }
+      />
 
       {/* ── Main Content ── */}
       <main className="bp-content">
@@ -239,24 +261,53 @@ export default function BillsPage() {
 
         {/* Bills Table / Empty State */}
         <section className="bp-table-card" aria-label="Bills list">
-          <div className="bp-empty-state">
-            <div className="bp-empty-icon">
-              <Ico size={28}>
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                <polyline points="14 2 14 8 20 8" />
-                <line x1="16" y1="13" x2="8" y2="13" />
-                <line x1="16" y1="17" x2="8" y2="17" />
-                <polyline points="10 9 9 9 8 9" />
-              </Ico>
+          {bills.length === 0 && !loading ? (
+            <div className="bp-empty-state">
+              <div className="bp-empty-icon">
+                <Ico size={28}>
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                  <polyline points="14 2 14 8 20 8" />
+                  <line x1="16" y1="13" x2="8" y2="13" />
+                  <line x1="16" y1="17" x2="8" y2="17" />
+                  <polyline points="10 9 9 9 8 9" />
+                </Ico>
+              </div>
+              <h3 className="bp-empty-title">No bills found</h3>
+              <p className="bp-empty-desc">
+                Adjust your filters or add a new bill to start tracking your company's expenses.
+              </p>
+              <button id="bp-add-bill-empty" className="bp-empty-add-btn" type="button">
+                Add Bill
+              </button>
             </div>
-            <h3 className="bp-empty-title">No bills found</h3>
-            <p className="bp-empty-desc">
-              Adjust your filters or add a new bill to start tracking your company's expenses.
-            </p>
-            <button id="bp-add-bill-empty" className="bp-empty-add-btn" type="button">
-              Add Bill
-            </button>
-          </div>
+          ) : (
+            <div className="bp-table-wrapper" style={{ padding: '1rem' }}>
+              {loading ? (
+                <div style={{ textAlign: 'center', padding: '2rem' }}>Loading bills...</div>
+              ) : (
+                <table style={{ width: '100%', textAlign: 'left', borderCollapse: 'collapse' }}>
+                  <thead>
+                    <tr style={{ borderBottom: '1px solid var(--border-color)', color: 'var(--text-secondary)' }}>
+                      <th style={{ padding: '0.5rem' }}>Company</th>
+                      <th style={{ padding: '0.5rem' }}>Vendor</th>
+                      <th style={{ padding: '0.5rem' }}>Amount</th>
+                      <th style={{ padding: '0.5rem' }}>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {bills.filter(b => statusFilter === 'all' || b.status === statusFilter).map(b => (
+                      <tr key={b.id} style={{ borderBottom: '1px solid var(--border-color)' }}>
+                        <td style={{ padding: '0.5rem' }}>{b.companyCode}</td>
+                        <td style={{ padding: '0.5rem' }}>{b.vendor}</td>
+                        <td style={{ padding: '0.5rem' }}>BDT {b.amount}</td>
+                        <td style={{ padding: '0.5rem', textTransform: 'capitalize' }}>{b.status}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+            </div>
+          )}
         </section>
       </main>
     </div>

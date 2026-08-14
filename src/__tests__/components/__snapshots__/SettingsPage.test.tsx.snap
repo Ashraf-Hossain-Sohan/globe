@@ -1,0 +1,365 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SettingsPage Component > matches the snapshot 1`] = `
+<div>
+  <div
+    class="settings-page"
+    id="settings-page"
+  >
+    <header
+      class="sp-header"
+    >
+      <div
+        class="global-header-left"
+      >
+        <button
+          aria-label="Toggle sidebar"
+          class="mobile-sidebar-toggle"
+          type="button"
+        >
+          <svg
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+          >
+            <line
+              x1="3"
+              x2="21"
+              y1="12"
+              y2="12"
+            />
+            <line
+              x1="3"
+              x2="21"
+              y1="6"
+              y2="6"
+            />
+            <line
+              x1="3"
+              x2="21"
+              y1="18"
+              y2="18"
+            />
+          </svg>
+        </button>
+        <button
+          class="sp-company-dropdown"
+          id="sp-company-filter"
+          type="button"
+        >
+          All Companies
+          <svg
+            aria-hidden="true"
+            fill="none"
+            height="13"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="1.8"
+            viewBox="0 0 24 24"
+            width="13"
+          >
+            <path
+              d="M6 9l6 6 6-6"
+            />
+          </svg>
+        </button>
+      </div>
+      <div
+        class="global-header-right"
+      >
+        <button
+          class="sp-add-entry-btn"
+          id="sp-add-entry"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            fill="none"
+            height="14"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="1.8"
+            viewBox="0 0 24 24"
+            width="14"
+          >
+            <line
+              x1="12"
+              x2="12"
+              y1="5"
+              y2="19"
+            />
+            <line
+              x1="5"
+              x2="19"
+              y1="12"
+              y2="12"
+            />
+          </svg>
+          Add Entry
+        </button>
+        <button
+          class="sp-icon-btn"
+          id="sp-theme-toggle-header"
+          title="Toggle theme"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            fill="none"
+            height="16"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="1.8"
+            viewBox="0 0 24 24"
+            width="16"
+          >
+            <circle
+              cx="12"
+              cy="12"
+              r="4"
+            />
+            <path
+              d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+            />
+          </svg>
+        </button>
+        <div
+          class="global-header-icons"
+        >
+          <div
+            class="dash-dropdown-container"
+          >
+            <button
+              class="icon-btn bell-icon-wrapper"
+            >
+              <svg
+                fill="none"
+                height="18"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="18"
+              >
+                <path
+                  d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"
+                />
+                <path
+                  d="M13.73 21a2 2 0 0 1-3.46 0"
+                />
+              </svg>
+            </button>
+          </div>
+          <div
+            class="dash-dropdown-container"
+          >
+            <div
+              class="user-avatar-mini"
+              style="cursor: pointer; background: linear-gradient(135deg, var(--sb-primary), #818cf8);"
+            >
+              A
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div
+      class="sp-body"
+    >
+      <h1
+        class="sp-title"
+      >
+        Settings
+      </h1>
+      <p
+        class="sp-subtitle"
+      >
+        Manage your dashboard preferences
+      </p>
+      <div
+        class="sp-card"
+        id="settings-appearance-card"
+      >
+        <div
+          class="sp-appearance-row"
+        >
+          <div
+            class="sp-section-icon"
+          >
+            <svg
+              aria-hidden="true"
+              fill="none"
+              height="18"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="1.8"
+              viewBox="0 0 24 24"
+              width="18"
+            >
+              <path
+                d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"
+              />
+            </svg>
+          </div>
+          <div
+            class="sp-section-label"
+          >
+            <h3>
+              Appearance
+            </h3>
+            <p>
+              Switch between dark and light mode
+            </p>
+          </div>
+          <button
+            class="sp-theme-btn"
+            id="settings-theme-toggle"
+            type="button"
+          >
+            Light Mode
+          </button>
+        </div>
+      </div>
+      <div
+        class="sp-card"
+        id="settings-companies-card"
+      >
+        <div
+          class="sp-companies-header"
+        >
+          <div
+            class="sp-section-icon"
+          >
+            <svg
+              aria-hidden="true"
+              fill="none"
+              height="18"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="1.8"
+              viewBox="0 0 24 24"
+              width="18"
+            >
+              <rect
+                height="14"
+                rx="2"
+                width="20"
+                x="2"
+                y="7"
+              />
+              <path
+                d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"
+              />
+            </svg>
+          </div>
+          <div
+            class="sp-section-label"
+          >
+            <h3>
+              Companies
+            </h3>
+            <p>
+              Manage business units in your group
+            </p>
+          </div>
+          <button
+            class="sp-add-company-btn"
+            id="settings-add-company"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              fill="none"
+              height="14"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="1.8"
+              viewBox="0 0 24 24"
+              width="14"
+            >
+              <line
+                x1="12"
+                x2="12"
+                y1="5"
+                y2="19"
+              />
+              <line
+                x1="5"
+                x2="19"
+                y1="12"
+                y2="12"
+              />
+            </svg>
+            Add Company
+          </button>
+        </div>
+        <div
+          class="sp-company-list"
+        >
+          <div
+            class="sp-company-item"
+            id="company-1"
+          >
+            <div
+              class="sp-company-info"
+            >
+              <div
+                class="sp-company-name"
+                style="color: var(--sb-text-strong);"
+              >
+                Test Co
+                <span
+                  class="sp-company-code"
+                >
+                  (
+                  TST
+                  )
+                </span>
+              </div>
+              <div
+                class="sp-company-meta"
+              >
+                ID: 
+                1
+                 · 
+              </div>
+            </div>
+            <button
+              class="sp-delete-btn"
+              id="delete-company-1"
+              title="Delete Test Co"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                fill="none"
+                height="16"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.8"
+                viewBox="0 0 24 24"
+                width="16"
+              >
+                <path
+                  d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

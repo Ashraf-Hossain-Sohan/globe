@@ -20,4 +20,14 @@ public class CompanyController {
     public List<Company> getAll() {
         return companyRepo.findAll();
     }
+
+    @PostMapping
+    public Company createCompany(@RequestBody Company company) {
+        return companyRepo.save(company);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteCompany(@PathVariable Long id) {
+        companyRepo.deleteById(id);
+    }
 }

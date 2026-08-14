@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import type { FormEvent } from 'react'
+import TopHeader from './shared/TopHeader'
 import '../styles/EmployeesPage.css'
 
 /* ─── API Base ───────────────────────────────────────── */
@@ -132,7 +133,12 @@ export default function EmployeesPage() {
     }
   }, [filter])
 
-  useEffect(() => { fetchAll() }, [fetchAll])
+  useEffect(() => {
+    const init = async () => {
+      await fetchAll()
+    }
+    init()
+  }, [fetchAll])
 
   /* ── Totals ────────────────────────────────────── */
   const totalEmployees = stats.reduce((s, c) => s + c.total, 0)
@@ -226,62 +232,39 @@ export default function EmployeesPage() {
   return (
     <div className="employees-page" id="employees-page">
       {/* ── Top Header Bar ─────────────────────────── */}
-      <header className="ep-header">
-        <button
-          className="mobile-sidebar-toggle"
-          type="button"
-          onClick={() => window.dispatchEvent(new CustomEvent('toggle-sidebar'))}
-          aria-label="Toggle sidebar"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="3" y1="12" x2="21" y2="12" />
-            <line x1="3" y1="6" x2="21" y2="6" />
-            <line x1="3" y1="18" x2="21" y2="18" />
-          </svg>
-        </button>
-        <button
-          className="ep-company-dropdown"
-          type="button"
-          onClick={() => setFilterOpen(!filterOpen)}
-        >
-          All Companies
-          <Ico size={13}>
-            <path d="M6 9l6 6 6-6" />
-          </Ico>
-        </button>
-
-        <div className="ep-header-actions">
-          <button className="ep-add-entry-btn" type="button" onClick={openAddModal}>
-            <Ico size={14}>
-              <line x1="12" y1="5" x2="12" y2="19" />
-              <line x1="5" y1="12" x2="19" y2="12" />
-            </Ico>
-            Add Entry
-          </button>
-
-          <button className="ep-icon-btn" type="button" title="Toggle theme">
-            <Ico size={16}>
-              <circle cx="12" cy="12" r="4" />
-              <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
-            </Ico>
-          </button>
-
-          <button className="ep-icon-btn" type="button" title="Notifications">
-            <Ico size={16}>
-              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
-              <path d="M13.73 21a2 2 0 0 1-3.46 0" />
-            </Ico>
-            <span className="ep-notification-dot" />
-          </button>
-
-          <div className="ep-header-user">
-            <button className="ep-user-avatar-small" type="button" title="Profile">A</button>
-            <Ico size={12}>
+      <TopHeader
+        className="ep-header"
+        leftContent={
+          <button
+            className="ep-company-dropdown"
+            type="button"
+            onClick={() => setFilterOpen(!filterOpen)}
+          >
+            All Companies
+            <Ico size={13}>
               <path d="M6 9l6 6 6-6" />
             </Ico>
-          </div>
-        </div>
-      </header>
+          </button>
+        }
+        rightContent={
+          <>
+            <button className="ep-add-entry-btn" type="button" onClick={openAddModal}>
+              <Ico size={14}>
+                <line x1="12" y1="5" x2="12" y2="19" />
+                <line x1="5" y1="12" x2="19" y2="12" />
+              </Ico>
+              Add Entry
+            </button>
+
+            <button className="ep-icon-btn" type="button" title="Toggle theme">
+              <Ico size={16}>
+                <circle cx="12" cy="12" r="4" />
+                <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+              </Ico>
+            </button>
+          </>
+        }
+      />
 
       {/* ── Body ───────────────────────────────────── */}
       <div className="ep-body">
