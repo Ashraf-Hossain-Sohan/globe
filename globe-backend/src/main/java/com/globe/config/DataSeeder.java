@@ -7,7 +7,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import org.springframework.core.annotation.Order;
+
 @Component
+@Order(2)
 public class DataSeeder implements CommandLineRunner {
 
     private final UserAccessRepository userAccessRepo;

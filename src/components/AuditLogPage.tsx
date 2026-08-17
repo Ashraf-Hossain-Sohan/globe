@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import TopHeader from './shared/TopHeader'
 import '../styles/AuditLogPage.css'
 
@@ -48,7 +48,7 @@ export default function AuditLogPage() {
 
   const [loading, setLoading] = useState(true)
 
-  const fetchLogs = () => {
+  const fetchLogs = useCallback(async () => {
     setLoading(true)
     const params = new URLSearchParams({
       page: page.toString(),
@@ -61,14 +61,17 @@ export default function AuditLogPage() {
       ...(search && { search })
     })
 
-    fetch(`${API}?${params}`, { credentials: 'include' })
-      .then(res => res.json())
-      .then(data => {
+    try {
+      const res = await fetch(`${API}?${params}`, { credentials: 'include' })
+      const data = await res.json()
+      if (data.content) {
         setLogs(data.content)
-        setTotalPages(data.totalPages)
-      })
-      .finally(() => setLoading(false))
-  }
+        setTotalPages(data.totalPages || 0)
+      }
+    } finally {
+      setLoading(false)
+    }
+  }, [page, size, action, entityType, userEmail, dateFrom, dateTo, search])
 
   const fetchStats = () => {
     fetch(`${API}/stats`, { credentials: 'include' })
@@ -88,10 +91,11 @@ export default function AuditLogPage() {
   }, [])
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    fetchLogs()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, action, entityType, userEmail, dateFrom, dateTo, search])
+    const initFetch = async () => {
+      await fetchLogs()
+    }
+    initFetch()
+  }, [fetchLogs])
 
   const formatDate = (dateString: string) => {
     const d = new Date(dateString)

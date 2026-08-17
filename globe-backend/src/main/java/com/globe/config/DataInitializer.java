@@ -13,7 +13,10 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalTime;
 
+import org.springframework.core.annotation.Order;
+
 @Component
+@Order(1)
 public class DataInitializer implements CommandLineRunner {
 
     private final CompanyRepository companyRepo;

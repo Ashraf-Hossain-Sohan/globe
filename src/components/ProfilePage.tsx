@@ -161,12 +161,7 @@ export default function ProfilePage() {
                   {displayName.charAt(0) || 'A'}
                 </div>
               )}
-              <span className="pf-camera-badge" aria-label="Change photo">
-                <Ico size={11}>
-                  <path d="M14.5 4h-5L8 6H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-4l-1.5-2Z" />
-                  <circle cx="12" cy="13" r="3" />
-                </Ico>
-              </span>
+
               <input
                 type="file"
                 id="avatar-file-input"
@@ -224,19 +219,7 @@ export default function ProfilePage() {
                 </div>
               </div>
 
-              <div className="pf-form-group">
-                <label className="pf-label" htmlFor="pf-avatar-url">Avatar URL</label>
-                <input
-                  id="pf-avatar-url"
-                  type="text"
-                  className="pf-input"
-                  value={avatarUrl}
-                  onChange={(e) => {
-                    setAvatarUrl(e.target.value)
-                    setAvatarError(false)
-                  }}
-                />
-              </div>
+
 
               <div className="pf-form-actions">
                 <button className="pf-btn-primary" type="submit" id="pf-save-personal-btn">

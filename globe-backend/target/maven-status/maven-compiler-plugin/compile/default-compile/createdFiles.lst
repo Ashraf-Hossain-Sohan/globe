@@ -47,6 +47,7 @@ com/globe/GlobeBackendApplication.class
 com/globe/controller/AuditLogController.class
 com/globe/controller/OverviewDashboardController.class
 com/globe/model/OfficeConfig.class
+com/globe/config/YearlyDataSeeder.class
 com/globe/controller/CompanyDashboardController.class
 com/globe/repository/ExpenseRepository.class
 com/globe/repository/UserAccessRepository.class

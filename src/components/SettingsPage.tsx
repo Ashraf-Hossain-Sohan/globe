@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import TopHeader from './shared/TopHeader'
 import '../styles/SettingsPage.css'
+import '../styles/GlobalEntryPage.css' // Reuse modal styles
 
 /* ── SVG icon helper ─────────────────────────────────────────── */
 const Ico = ({
@@ -207,34 +208,34 @@ export default function SettingsPage() {
 
       {/* Add Company Modal */}
       {isAddModalOpen && (
-        <div className="dash-modal-backdrop" onClick={() => setIsAddModalOpen(false)}>
-          <div className="dash-modal" onClick={(e) => e.stopPropagation()}>
-            <div className="dash-modal-header">
-              <h3>Add New Company</h3>
-              <button type="button" className="dash-modal-close" onClick={() => setIsAddModalOpen(false)}>
+        <div className="ge-modal-overlay" onClick={() => setIsAddModalOpen(false)}>
+          <div className="ge-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="ge-modal-header">
+              <h2>Add New Company</h2>
+              <button type="button" className="ge-modal-close" onClick={() => setIsAddModalOpen(false)}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
               </button>
             </div>
-            <form className="dash-modal-body" onSubmit={handleAddCompany}>
-              <div className="dash-form-group">
+            <form className="ge-modal-body" onSubmit={handleAddCompany}>
+              <div className="ge-form-group">
                 <label>Company Name</label>
-                <input required type="text" value={newCompany.name} onChange={e => setNewCompany({...newCompany, name: e.target.value})} placeholder="e.g. Acme Corp" />
+                <input className="ge-form-input" required type="text" value={newCompany.name} onChange={e => setNewCompany({...newCompany, name: e.target.value})} placeholder="e.g. Acme Corp" />
               </div>
-              <div className="dash-form-group">
+              <div className="ge-form-group">
                 <label>Short Code</label>
-                <input required type="text" value={newCompany.code} onChange={e => setNewCompany({...newCompany, code: e.target.value})} placeholder="e.g. ACME" />
+                <input className="ge-form-input" required type="text" value={newCompany.code} onChange={e => setNewCompany({...newCompany, code: e.target.value})} placeholder="e.g. ACME" />
               </div>
-              <div className="dash-form-group">
+              <div className="ge-form-group">
                 <label>Brand Color</label>
-                <input type="color" value={newCompany.color} onChange={e => setNewCompany({...newCompany, color: e.target.value})} />
+                <input className="ge-form-input" type="color" value={newCompany.color} onChange={e => setNewCompany({...newCompany, color: e.target.value})} />
               </div>
-              <div className="dash-form-group">
+              <div className="ge-form-group">
                 <label>Description</label>
-                <input type="text" value={newCompany.description} onChange={e => setNewCompany({...newCompany, description: e.target.value})} placeholder="e.g. Software Services" />
+                <input className="ge-form-input" type="text" value={newCompany.description} onChange={e => setNewCompany({...newCompany, description: e.target.value})} placeholder="e.g. Software Services" />
               </div>
-              <div className="dash-modal-footer">
-                <button type="button" className="dash-btn outline" onClick={() => setIsAddModalOpen(false)}>Cancel</button>
-                <button type="submit" className="dash-btn primary">Save Company</button>
+              <div className="ge-modal-footer">
+                <button type="button" className="ge-btn-cancel" onClick={() => setIsAddModalOpen(false)}>Cancel</button>
+                <button type="submit" className="ge-btn-save">Save Company</button>
               </div>
             </form>
           </div>

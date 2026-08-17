@@ -58,7 +58,7 @@ const formatCurrency = (val: number) => {
   return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(val)
 }
 
-const PAGE_SIZE = 6
+const PAGE_SIZE = 10
 
 /* ── Sub-components ──────────────────────────────────────────── */
 
@@ -143,6 +143,10 @@ function StatusBadge({ status }: { status: Status }) {
 export default function ExpensesPage() {
   const [currentPage, setCurrentPage] = useState(1)
   const [searchQuery, setSearchQuery] = useState('')
+  const [companyFilter, setCompanyFilter] = useState('All')
+  const [categoryFilter, setCategoryFilter] = useState('All')
+  const [startDate, setStartDate] = useState('')
+  const [endDate, setEndDate] = useState('')
   const [expenses, setExpenses] = useState<Expense[]>([])
 
   useEffect(() => {
@@ -157,12 +161,57 @@ export default function ExpensesPage() {
   }, [])
 
   const filtered = expenses.filter(
-    (e) =>
-      (e.companyCode && e.companyCode.toLowerCase().includes(searchQuery.toLowerCase())) ||
-      (e.category && e.category.toLowerCase().includes(searchQuery.toLowerCase())),
+    (e) => {
+      const matchSearch = (e.companyCode && e.companyCode.toLowerCase().includes(searchQuery.toLowerCase())) ||
+                          (e.category && e.category.toLowerCase().includes(searchQuery.toLowerCase()));
+      const matchCompany = companyFilter === 'All' || e.companyCode === companyFilter;
+      const matchCategory = categoryFilter === 'All' || e.category === categoryFilter;
+      
+      let matchStartDate = true;
+      let matchEndDate = true;
+      if (startDate && e.date) {
+        matchStartDate = new Date(e.date) >= new Date(startDate);
+      }
+      if (endDate && e.date) {
+        matchEndDate = new Date(e.date) <= new Date(endDate);
+      }
+      
+      return matchSearch && matchCompany && matchCategory && matchStartDate && matchEndDate;
+    }
   )
 
+  const exportCSV = () => {
+    const headers = ['Company', 'Category', 'Amount', 'Date', 'Description', 'Status']
+    const rows = filtered.map(e => [
+      `"${e.companyCode || ''}"`,
+      `"${e.category || ''}"`,
+      e.amount || 0,
+      `"${e.date || ''}"`,
+      `"${(e.description || '').replace(/"/g, '""')}"`,
+      `"paid"` // Assuming all are paid for now as per dashboard data
+    ])
+    const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n')
+    const blob = new Blob([csv], { type: 'text/csv' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `expenses-export.csv`
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
   const totalExpenses = expenses.reduce((sum, e) => sum + (e.amount || 0), 0)
+  
+  // Calculate dynamic date range for the chip
+  let dateRangeText = "All Time"
+  if (filtered.length > 0) {
+    const dates = filtered.map(e => e.date).filter(Boolean).sort()
+    if (dates.length > 0) {
+      const minDate = new Date(dates[0]).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' })
+      const maxDate = new Date(dates[dates.length - 1]).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' })
+      dateRangeText = minDate === maxDate ? minDate : `${minDate} - ${maxDate}`
+    }
+  }
   const pendingBills = 0 // Placeholder as status isn't available
   const pendingBillsCount = 0
   const activeCompaniesCount = new Set(expenses.map(e => e.companyCode)).size
@@ -201,24 +250,7 @@ export default function ExpensesPage() {
             </div>
           </>
         }
-        rightContent={
-          <>
-            <button id="add-entry-btn" className="ep-add-btn" type="button">
-              <Ico size={15}>
-                <line x1="12" y1="5" x2="12" y2="19" />
-                <line x1="5" y1="12" x2="19" y2="12" />
-              </Ico>
-              Add Entry
-            </button>
-            <button id="help-btn" className="ep-icon-btn" aria-label="Help" type="button">
-              <Ico>
-                <circle cx="12" cy="12" r="10" />
-                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
-                <line x1="12" y1="17" x2="12.01" y2="17" />
-              </Ico>
-            </button>
-          </>
-        }
+        rightContent={<></>}
       />
 
       {/* ── Main Content ── */}
@@ -390,31 +422,65 @@ export default function ExpensesPage() {
 
           <div className="ep-filter-divider" />
 
-          <button id="filter-companies" className="ep-filter-chip" type="button">
-            All Companies
-            <Ico size={13}>
-              <polyline points="6 9 12 15 18 9" />
-            </Ico>
-          </button>
+          <select 
+            id="filter-companies" 
+            className="ep-filter-chip" 
+            value={companyFilter}
+            onChange={(e) => { setCompanyFilter(e.target.value); setCurrentPage(1); }}
+          >
+            <option value="All">All Companies</option>
+            {Array.from(new Set(expenses.map(e => e.companyCode).filter(Boolean))).map(c => (
+              <option key={c} value={c}>{c}</option>
+            ))}
+          </select>
 
-          <button id="filter-categories" className="ep-filter-chip" type="button">
-            All Categories
-            <Ico size={13}>
-              <polyline points="6 9 12 15 18 9" />
-            </Ico>
-          </button>
+          <select 
+            id="filter-categories" 
+            className="ep-filter-chip"
+            value={categoryFilter}
+            onChange={(e) => { setCategoryFilter(e.target.value); setCurrentPage(1); }}
+          >
+            <option value="All">All Categories</option>
+            {Array.from(new Set(expenses.map(e => e.category).filter(Boolean))).map(c => (
+              <option key={c} value={c}>{c}</option>
+            ))}
+          </select>
 
-          <div className="ep-date-chip">
+          <div className="ep-date-chip" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <Ico size={13}>
               <rect x="3" y="4" width="18" height="18" rx="2" />
               <line x1="16" y1="2" x2="16" y2="6" />
               <line x1="8" y1="2" x2="8" y2="6" />
               <line x1="3" y1="10" x2="21" y2="10" />
             </Ico>
-            Oct 01 – Oct 31, 2023
+            <input 
+              type="date" 
+              value={startDate} 
+              onChange={e => { setStartDate(e.target.value); setCurrentPage(1); }}
+              style={{ background: 'transparent', border: 'none', color: 'inherit', fontSize: 'inherit', fontFamily: 'inherit', outline: 'none' }}
+              aria-label="Start date"
+            />
+            <span>-</span>
+            <input 
+              type="date" 
+              value={endDate} 
+              onChange={e => { setEndDate(e.target.value); setCurrentPage(1); }}
+              style={{ background: 'transparent', border: 'none', color: 'inherit', fontSize: 'inherit', fontFamily: 'inherit', outline: 'none' }}
+              aria-label="End date"
+            />
+            {(startDate || endDate) && (
+              <button 
+                type="button" 
+                onClick={() => { setStartDate(''); setEndDate(''); setCurrentPage(1); }}
+                style={{ background: 'transparent', border: 'none', color: '#ef4444', cursor: 'pointer', marginLeft: '4px', padding: 0 }}
+                title="Clear date filter"
+              >
+                <Ico size={12}><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></Ico>
+              </button>
+            )}
           </div>
 
-          <button id="export-btn" className="ep-export-btn" type="button">
+          <button id="export-btn" className="ep-export-btn" type="button" onClick={exportCSV}>
             <Ico size={13}>
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
               <polyline points="7 10 12 15 17 10" />

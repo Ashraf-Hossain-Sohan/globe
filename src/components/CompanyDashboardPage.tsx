@@ -47,6 +47,9 @@ interface DashboardMetrics {
   grossProfit: number
   opex: number
   cogs: number
+  ebitda?: number
+  clientAcquisitionCost?: number
+  churnRate?: string
   profitMargin: string
   roi: string
   monthlyPerformance: ChartDataPoint[]
@@ -54,6 +57,10 @@ interface DashboardMetrics {
   revenueBySource: PieChartData[]
   costBreakdown: PieChartData[]
   recentTransactions: Transaction[]
+  revenueTrend?: number
+  expenseTrend?: number
+  netProfitTrend?: number
+  profitMarginTrend?: number
 }
 
 
@@ -212,7 +219,9 @@ export default function CompanyDashboardPage({ companyCode, companyName, company
                   </ResponsiveContainer>
                 </div>
                 <div className="metric-footer">
-                  <span className="trend neutral">— 0% vs last month</span>
+                  <span className={`trend ${metrics.revenueTrend && metrics.revenueTrend > 0 ? 'pos' : (metrics.revenueTrend && metrics.revenueTrend < 0 ? 'neg' : 'neutral')}`}>
+                    {metrics.revenueTrend && metrics.revenueTrend > 0 ? '↗' : (metrics.revenueTrend && metrics.revenueTrend < 0 ? '↘' : '—')} {metrics.revenueTrend ? Math.abs(metrics.revenueTrend).toFixed(1) : '0.0'}% vs last month
+                  </span>
                 </div>
               </div>
 
@@ -222,7 +231,7 @@ export default function CompanyDashboardPage({ companyCode, companyName, company
                   <div className="metric-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>
                 </div>
                 <div className="metric-value">{formatCurrency(metrics.netProfit)}</div>
-                <div className="metric-sub">EBITDA: {formatCurrency(metrics.netProfit + 1400)}</div>
+                <div className="metric-sub">EBITDA: {metrics.ebitda ? formatCurrency(metrics.ebitda) : formatCurrency(metrics.netProfit + 1400)}</div>
                 <div className="metric-sparkline">
                   <ResponsiveContainer width="100%" height={40}>
                     <LineChart data={metrics.monthlyPerformance}>
@@ -231,7 +240,9 @@ export default function CompanyDashboardPage({ companyCode, companyName, company
                   </ResponsiveContainer>
                 </div>
                 <div className="metric-footer">
-                  <span className="trend neutral">— 0% vs last month</span>
+                  <span className={`trend ${metrics.netProfitTrend && metrics.netProfitTrend > 0 ? 'pos' : (metrics.netProfitTrend && metrics.netProfitTrend < 0 ? 'neg' : 'neutral')}`}>
+                    {metrics.netProfitTrend && metrics.netProfitTrend > 0 ? '↗' : (metrics.netProfitTrend && metrics.netProfitTrend < 0 ? '↘' : '—')} {metrics.netProfitTrend ? Math.abs(metrics.netProfitTrend).toFixed(1) : '0.0'}% vs last month
+                  </span>
                 </div>
               </div>
 
@@ -250,7 +261,10 @@ export default function CompanyDashboardPage({ companyCode, companyName, company
                   </ResponsiveContainer>
                 </div>
                 <div className="metric-footer">
-                  <span className="trend neutral">— 0% vs last month</span>
+                  {/* For burn rate / expenses, lower is better. So trend > 0 is negative (red) */}
+                  <span className={`trend ${metrics.expenseTrend && metrics.expenseTrend < 0 ? 'pos' : (metrics.expenseTrend && metrics.expenseTrend > 0 ? 'neg' : 'neutral')}`}>
+                    {metrics.expenseTrend && metrics.expenseTrend > 0 ? '↗' : (metrics.expenseTrend && metrics.expenseTrend < 0 ? '↘' : '—')} {metrics.expenseTrend ? Math.abs(metrics.expenseTrend).toFixed(1) : '0.0'}% vs last month
+                  </span>
                 </div>
               </div>
 
@@ -269,7 +283,9 @@ export default function CompanyDashboardPage({ companyCode, companyName, company
                   </ResponsiveContainer>
                 </div>
                 <div className="metric-footer">
-                  <span className="trend neutral">— 0% vs last month</span>
+                  <span className={`trend ${metrics.profitMarginTrend && metrics.profitMarginTrend > 0 ? 'pos' : (metrics.profitMarginTrend && metrics.profitMarginTrend < 0 ? 'neg' : 'neutral')}`}>
+                    {metrics.profitMarginTrend && metrics.profitMarginTrend > 0 ? '↗' : (metrics.profitMarginTrend && metrics.profitMarginTrend < 0 ? '↘' : '—')} {metrics.profitMarginTrend ? Math.abs(metrics.profitMarginTrend).toFixed(1) : '0.0'}% vs last month
+                  </span>
                 </div>
               </div>
 
@@ -299,8 +315,8 @@ export default function CompanyDashboardPage({ companyCode, companyName, company
             <div className="dash-sub-tags">
               <span className="dash-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg> MRR: <strong>{formatCurrency(metrics.revenue)}</strong></span>
               <span className="dash-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg> Profit Margin per Project: <strong>{metrics.profitMargin}</strong></span>
-              <span className="dash-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg> Client Acquisition Cost: <strong>BDT 200</strong></span>
-              <span className="dash-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg> Churn Rate: <strong>83.3%</strong></span>
+              <span className="dash-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg> Client Acquisition Cost: <strong>BDT {metrics.clientAcquisitionCost ? metrics.clientAcquisitionCost.toLocaleString() : '200'}</strong></span>
+              <span className="dash-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg> Churn Rate: <strong>{metrics.churnRate || '83.3%'}</strong></span>
             </div>
 
             <div className="dash-customize-btn-wrap">
@@ -317,10 +333,10 @@ export default function CompanyDashboardPage({ companyCode, companyName, company
                 <h3 className="panel-title">Monthly Performance - Last {timeFilter > 0 ? timeFilter : 'All'} months</h3>
                 <div className="chart-wrapper">
                   <ResponsiveContainer width="100%" height={200}>
-                    <BarChart data={metrics.monthlyPerformance} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                    <BarChart data={metrics.monthlyPerformance} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
                       <CartesianGrid strokeDasharray="3 3" stroke="#2a2d3e" vertical={false} />
-                      <XAxis dataKey="month" stroke="#5c6270" fontSize={11} tickLine={false} axisLine={{stroke: '#2a2d3e'}} />
-                      <YAxis stroke="#5c6270" fontSize={11} tickLine={false} axisLine={false} tickFormatter={(val) => `BDT ${(val/1000).toFixed(1)}K`} />
+                      <XAxis dataKey="month" stroke="#5c6270" fontSize={11} tickLine={false} axisLine={false} />
+                      <YAxis stroke="#5c6270" fontSize={11} tickLine={false} axisLine={false} width={75} tickFormatter={(val) => `BDT ${(val/1000).toFixed(1)}K`} />
                       <RechartsTooltip cursor={{fill: '#1a1c25'}} contentStyle={{backgroundColor: '#161821', borderColor: '#2a2d3e', color: '#e8eaf0'}} />
                       <Bar dataKey="revenue" fill="#3b82f6" radius={[4,4,0,0]} barSize={24} name="Revenue" />
                       <Bar dataKey="expenses" fill="#ef4444" radius={[4,4,0,0]} barSize={24} name="Expenses" />
@@ -336,7 +352,7 @@ export default function CompanyDashboardPage({ companyCode, companyName, company
               <div className="dash-panel">
                 <h3 className="panel-title">Revenue by Source</h3>
                 <div className="chart-wrapper flex-center">
-                  <ResponsiveContainer width="100%" height="100%">
+                  <ResponsiveContainer width="100%" height={240}>
                     <PieChart>
                       <Pie data={metrics.revenueBySource.length ? metrics.revenueBySource : [{name: 'No Data', value: 1, fill: '#2a2d3e'}]} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={60} outerRadius={80} paddingAngle={2}>
                         {metrics.revenueBySource.map((entry, index) => (
@@ -361,10 +377,10 @@ export default function CompanyDashboardPage({ companyCode, companyName, company
               <h3 className="panel-title">Profit Trend - Last {timeFilter > 0 ? timeFilter : 'All'} months</h3>
               <div className="chart-wrapper">
                 <ResponsiveContainer width="100%" height={200}>
-                  <LineChart data={metrics.profitTrend} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                  <LineChart data={metrics.profitTrend} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#2a2d3e" vertical={false} />
-                    <XAxis dataKey="month" stroke="#5c6270" fontSize={11} tickLine={false} axisLine={{stroke: '#2a2d3e'}} />
-                    <YAxis stroke="#5c6270" fontSize={11} tickLine={false} axisLine={false} tickFormatter={(val) => `BDT ${(val/1000).toFixed(1)}K`} />
+                    <XAxis dataKey="month" stroke="#5c6270" fontSize={11} tickLine={false} axisLine={false} />
+                    <YAxis stroke="#5c6270" fontSize={11} tickLine={false} axisLine={false} width={75} tickFormatter={(val) => `BDT ${(val/1000).toFixed(1)}K`} />
                     <RechartsTooltip contentStyle={{backgroundColor: '#161821', borderColor: '#2a2d3e', color: '#e8eaf0'}} />
                     <Line type="monotone" dataKey="revenue" stroke="#3b82f6" strokeWidth={2} dot={false} name="Revenue" />
                     <Line type="monotone" dataKey="expenses" stroke="#ef4444" strokeWidth={2} dot={false} name="Expenses" />
@@ -385,7 +401,7 @@ export default function CompanyDashboardPage({ companyCode, companyName, company
               <div className="dash-panel">
                 <h3 className="panel-title">Cost Breakdown</h3>
                 <div className="chart-wrapper flex-center">
-                  <ResponsiveContainer width="100%" height="100%">
+                  <ResponsiveContainer width="100%" height={240}>
                     <PieChart>
                       <Pie data={metrics.costBreakdown.length ? metrics.costBreakdown : [{name: 'No Data', value: 1, fill: '#2a2d3e'}]} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={80}>
                         {metrics.costBreakdown.map((entry, index) => (

@@ -1,5 +1,5 @@
 import { render, act } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeAll, afterAll } from 'vitest';
 import OfficeTimePage from '../../components/OfficeTimePage';
 
 // Mock matchMedia for components like Recharts that might need it
@@ -25,6 +25,14 @@ globalThis.ResizeObserver = class ResizeObserver {
 };
 
 describe('OfficeTimePage Component', () => {
+  beforeAll(() => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2026-08-17T12:00:00Z'));
+  });
+
+  afterAll(() => {
+    vi.useRealTimers();
+  });
   
   it('renders without crashing', async () => {
     let container;

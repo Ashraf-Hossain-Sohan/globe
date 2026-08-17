@@ -198,6 +198,7 @@
 .bp-add-bill-btn svg {
   width: 14px;
   height: 14px;
+  transform: translateY(-1px);
 }
 
 /* ── Status Summary Cards ───────────────────────────────────────────────── */
@@ -208,21 +209,24 @@
 }
 
 .bp-status-card {
-  background: #181a24;
-  border: 1px solid #22253a;
-  border-radius: 14px;
-  padding: 20px 22px;
+  flex: 1;
+  min-width: 200px;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: var(--glass-border);
+  box-shadow: var(--shadow);
+  border-radius: 12px;
+  padding: 20px;
   display: flex;
   align-items: center;
   gap: 16px;
-  position: relative;
-  overflow: hidden;
-  transition: border-color 0.2s, transform 0.2s;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
 }
 
 .bp-status-card:hover {
-  border-color: #2e3354;
-  transform: translateY(-2px);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
 }
 
 .bp-status-card::before {

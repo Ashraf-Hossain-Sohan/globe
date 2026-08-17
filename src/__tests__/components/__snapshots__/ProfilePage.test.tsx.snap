@@ -204,31 +204,6 @@ exports[`ProfilePage Component > matches the snapshot 1`] = `
               class="pf-avatar-img"
               src="https://example.com/avatar.jpg"
             />
-            <span
-              aria-label="Change photo"
-              class="pf-camera-badge"
-            >
-              <svg
-                aria-hidden="true"
-                fill="none"
-                height="11"
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="1.8"
-                viewBox="0 0 24 24"
-                width="11"
-              >
-                <path
-                  d="M14.5 4h-5L8 6H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-4l-1.5-2Z"
-                />
-                <circle
-                  cx="12"
-                  cy="13"
-                  r="3"
-                />
-              </svg>
-            </span>
             <input
               accept="image/*"
               id="avatar-file-input"
@@ -347,22 +322,6 @@ exports[`ProfilePage Component > matches the snapshot 1`] = `
                   value="+880 1XXX-XXXXXX"
                 />
               </div>
-            </div>
-            <div
-              class="pf-form-group"
-            >
-              <label
-                class="pf-label"
-                for="pf-avatar-url"
-              >
-                Avatar URL
-              </label>
-              <input
-                class="pf-input"
-                id="pf-avatar-url"
-                type="text"
-                value="https://example.com/avatar.jpg"
-              />
             </div>
             <div
               class="pf-form-actions"

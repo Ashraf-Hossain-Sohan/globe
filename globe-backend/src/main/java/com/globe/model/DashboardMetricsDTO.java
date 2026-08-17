@@ -12,14 +12,22 @@ public class DashboardMetricsDTO {
     private BigDecimal grossProfit;
     private BigDecimal opex;
     private BigDecimal cogs;
+    private BigDecimal ebitda;
+    private BigDecimal clientAcquisitionCost;
     
     private String profitMargin;
     private String roi;
+    private String churnRate;
     
     private List<ChartDataPoint> monthlyPerformance;
     private List<ChartDataPoint> profitTrend;
     private List<PieChartData> revenueBySource;
     private List<PieChartData> costBreakdown;
+    
+    private Double revenueTrend;
+    private Double expenseTrend;
+    private Double netProfitTrend;
+    private Double profitMarginTrend;
     
     private List<GlobalEntry> recentTransactions;
 
@@ -50,6 +58,15 @@ public class DashboardMetricsDTO {
     public String getRoi() { return roi; }
     public void setRoi(String roi) { this.roi = roi; }
 
+    public BigDecimal getEbitda() { return ebitda; }
+    public void setEbitda(BigDecimal ebitda) { this.ebitda = ebitda; }
+
+    public BigDecimal getClientAcquisitionCost() { return clientAcquisitionCost; }
+    public void setClientAcquisitionCost(BigDecimal clientAcquisitionCost) { this.clientAcquisitionCost = clientAcquisitionCost; }
+
+    public String getChurnRate() { return churnRate; }
+    public void setChurnRate(String churnRate) { this.churnRate = churnRate; }
+
     public List<ChartDataPoint> getMonthlyPerformance() { return monthlyPerformance; }
     public void setMonthlyPerformance(List<ChartDataPoint> monthlyPerformance) { this.monthlyPerformance = monthlyPerformance; }
 
@@ -61,6 +78,18 @@ public class DashboardMetricsDTO {
 
     public List<PieChartData> getCostBreakdown() { return costBreakdown; }
     public void setCostBreakdown(List<PieChartData> costBreakdown) { this.costBreakdown = costBreakdown; }
+
+    public Double getRevenueTrend() { return revenueTrend; }
+    public void setRevenueTrend(Double revenueTrend) { this.revenueTrend = revenueTrend; }
+
+    public Double getExpenseTrend() { return expenseTrend; }
+    public void setExpenseTrend(Double expenseTrend) { this.expenseTrend = expenseTrend; }
+
+    public Double getNetProfitTrend() { return netProfitTrend; }
+    public void setNetProfitTrend(Double netProfitTrend) { this.netProfitTrend = netProfitTrend; }
+
+    public Double getProfitMarginTrend() { return profitMarginTrend; }
+    public void setProfitMarginTrend(Double profitMarginTrend) { this.profitMarginTrend = profitMarginTrend; }
 
     public List<GlobalEntry> getRecentTransactions() { return recentTransactions; }
     public void setRecentTransactions(List<GlobalEntry> recentTransactions) { this.recentTransactions = recentTransactions; }

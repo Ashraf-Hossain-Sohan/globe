@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import TopHeader from './shared/TopHeader'
 import '../styles/BillsPage.css'
+import '../styles/GlobalEntryPage.css'
 
 /* ── SVG icon helper ─────────────────────────────────────────── */
 const Ico = ({
@@ -59,10 +60,10 @@ interface Company {
 
 /* ── Main Component ──────────────────────────────────────────── */
 export default function BillsPage() {
-  const [statusFilter, setStatusFilter] = useState<StatusFilter>('all')
   const [bills, setBills] = useState<Bill[]>([])
   const [loading, setLoading] = useState(true)
-
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>('all')
+  const [companyFilter, setCompanyFilter] = useState('All')
   const [companies, setCompanies] = useState<Company[]>([])
 
   useEffect(() => {
@@ -81,18 +82,69 @@ export default function BillsPage() {
       })
   }, [])
 
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [formData, setFormData] = useState({
+    companyCode: 'XSRS IT',
+    vendor: '',
+    amount: '',
+    status: 'pending',
+    dueDate: new Date().toISOString().split('T')[0],
+    description: ''
+  })
+  const [formError, setFormError] = useState('')
+
+  const handleSaveBill = async () => {
+    setFormError('')
+    try {
+      const payload = {
+        ...formData,
+        amount: formData.amount ? parseFloat(formData.amount) : 0,
+        dateCreated: new Date().toISOString().split('T')[0]
+      }
+      const res = await fetch('/api/bills', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        credentials: 'include'
+      })
+      if (!res.ok) throw new Error('Failed to save bill')
+      
+      // Refetch to ensure everything is synchronized
+      const billsRes = await fetch('/api/bills', { credentials: 'include' })
+      if (billsRes.ok) {
+        const billsData = await billsRes.json()
+        setBills(billsData)
+      }
+
+      setIsModalOpen(false)
+      setFormData({
+        companyCode: companies.length > 0 ? companies[0].code : 'XSRS IT', 
+        vendor: '', amount: '',
+        status: 'pending', dueDate: new Date().toISOString().split('T')[0], description: ''
+      })
+    } catch (err) {
+      setFormError('An error occurred while saving the bill.')
+    }
+  }
+
   const SUMMARY = {
-    pending: { amount: bills.filter(b => b.status === 'pending').reduce((s, b) => s + b.amount, 0), count: bills.filter(b => b.status === 'pending').length },
-    overdue: { amount: bills.filter(b => b.status === 'overdue').reduce((s, b) => s + b.amount, 0), count: bills.filter(b => b.status === 'overdue').length },
-    paid: { amount: bills.filter(b => b.status === 'paid').reduce((s, b) => s + b.amount, 0), count: bills.filter(b => b.status === 'paid').length },
+    pending: { amount: bills.filter(b => b.status?.toLowerCase() === 'pending').reduce((s, b) => s + b.amount, 0), count: bills.filter(b => b.status?.toLowerCase() === 'pending').length },
+    overdue: { amount: bills.filter(b => b.status?.toLowerCase() === 'overdue').reduce((s, b) => s + b.amount, 0), count: bills.filter(b => b.status?.toLowerCase() === 'overdue').length },
+    paid: { amount: bills.filter(b => b.status?.toLowerCase() === 'paid').reduce((s, b) => s + b.amount, 0), count: bills.filter(b => b.status?.toLowerCase() === 'paid').length },
   }
 
   const COMPANIES: CompanySummary[] = companies.map(c => ({
     code: c.code,
     color: c.color || '#60a5fa',
     label: 'unpaid',
-    amount: bills.filter(b => b.companyCode === c.code && b.status !== 'paid').reduce((s, b) => s + b.amount, 0)
+    amount: bills.filter(b => b.companyCode === c.code && b.status?.toLowerCase() !== 'paid').reduce((s, b) => s + b.amount, 0)
   }))
+
+  const filteredBills = bills.filter(b => {
+    const matchStatus = statusFilter === 'all' || b.status?.toLowerCase() === statusFilter.toLowerCase();
+    const matchCompany = companyFilter === 'All' || b.companyCode === companyFilter;
+    return matchStatus && matchCompany;
+  }).sort((a, b) => b.id - a.id); // Sort by ID descending so newest is at the top
 
   const totalUnpaid = COMPANIES.reduce((s, c) => s + c.amount, 0)
   const companyCount = COMPANIES.length
@@ -110,38 +162,19 @@ export default function BillsPage() {
       <TopHeader
         className="bp-header"
         leftContent={
-          <button id="bp-company-select" className="bp-company-dropdown" type="button">
-            All Companies
-            <Ico size={13}>
-              <polyline points="6 9 12 15 18 9" />
-            </Ico>
-          </button>
+          <select 
+            id="bp-company-select" 
+            className="bp-company-dropdown"
+            value={companyFilter}
+            onChange={(e) => setCompanyFilter(e.target.value)}
+          >
+            <option value="All">All Companies</option>
+            {COMPANIES.map(c => (
+              <option key={c.code} value={c.code}>{c.code}</option>
+            ))}
+          </select>
         }
-        rightContent={
-          <>
-            <button id="bp-add-entry" className="bp-add-entry-btn" type="button">
-              <Ico size={14}>
-                <line x1="12" y1="5" x2="12" y2="19" />
-                <line x1="5" y1="12" x2="19" y2="12" />
-              </Ico>
-              Add Entry
-            </button>
-
-            <button id="bp-theme-btn" className="bp-icon-btn" aria-label="Toggle theme" type="button">
-              <Ico>
-                <circle cx="12" cy="12" r="5" />
-                <line x1="12" y1="1" x2="12" y2="3" />
-                <line x1="12" y1="21" x2="12" y2="23" />
-                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-                <line x1="1" y1="12" x2="3" y2="12" />
-                <line x1="21" y1="12" x2="23" y2="12" />
-                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-              </Ico>
-            </button>
-          </>
-        }
+        rightContent={<></>}
       />
 
       {/* ── Main Content ── */}
@@ -151,10 +184,10 @@ export default function BillsPage() {
           <div className="bp-title-block">
             <h1>Bills</h1>
             <p className="bp-title-sub">
-              {totalUnpaid} unpaid across {companyCount} companies
+              {totalUnpaid.toFixed(2)} unpaid across {companyCount} companies
             </p>
           </div>
-          <button id="bp-add-bill-top" className="bp-add-bill-btn" type="button">
+          <button id="bp-add-bill-top" className="bp-add-bill-btn" type="button" onClick={() => setIsModalOpen(true)}>
             <Ico size={14}>
               <line x1="12" y1="5" x2="12" y2="19" />
               <line x1="5" y1="12" x2="19" y2="12" />
@@ -176,7 +209,7 @@ export default function BillsPage() {
             </div>
             <div className="bp-status-info">
               <span className="bp-status-label">Pending</span>
-              <span className="bp-status-amount">BDT {SUMMARY.pending.amount}</span>
+              <span className="bp-status-amount">BDT {SUMMARY.pending.amount.toFixed(2)}</span>
               <span className="bp-status-count">{SUMMARY.pending.count} bills</span>
             </div>
           </div>
@@ -192,7 +225,7 @@ export default function BillsPage() {
             </div>
             <div className="bp-status-info">
               <span className="bp-status-label">Overdue</span>
-              <span className="bp-status-amount">BDT {SUMMARY.overdue.amount}</span>
+              <span className="bp-status-amount">BDT {SUMMARY.overdue.amount.toFixed(2)}</span>
               <span className="bp-status-count">{SUMMARY.overdue.count} bills</span>
             </div>
           </div>
@@ -207,7 +240,7 @@ export default function BillsPage() {
             </div>
             <div className="bp-status-info">
               <span className="bp-status-label">Paid</span>
-              <span className="bp-status-amount">BDT {SUMMARY.paid.amount}</span>
+              <span className="bp-status-amount">BDT {SUMMARY.paid.amount.toFixed(2)}</span>
               <span className="bp-status-count">{SUMMARY.paid.count} bills</span>
             </div>
           </div>
@@ -221,7 +254,7 @@ export default function BillsPage() {
                 <span className="bp-company-dot" style={{ background: company.color }} />
                 <span className="bp-company-code">{company.code}</span>
               </div>
-              <span className="bp-company-amount">BDT {company.amount}</span>
+              <span className="bp-company-amount">BDT {company.amount.toFixed(2)}</span>
               <span className="bp-company-label">{company.label}</span>
             </div>
           ))}
@@ -235,12 +268,17 @@ export default function BillsPage() {
             </Ico>
           </button>
 
-          <button id="bp-filter-company" className="bp-filter-dropdown" type="button">
-            All Companies
-            <Ico size={13}>
-              <polyline points="6 9 12 15 18 9" />
-            </Ico>
-          </button>
+          <select 
+            id="bp-filter-company" 
+            className="bp-filter-dropdown"
+            value={companyFilter}
+            onChange={(e) => setCompanyFilter(e.target.value)}
+          >
+            <option value="All">All Companies</option>
+            {COMPANIES.map(c => (
+              <option key={c.code} value={c.code}>{c.code}</option>
+            ))}
+          </select>
 
           <div className="bp-filter-tabs">
             {tabs.map((tab) => (
@@ -256,7 +294,7 @@ export default function BillsPage() {
             ))}
           </div>
 
-          <span className="bp-results-count">0 results</span>
+          <span className="bp-results-count">{filteredBills.length} results</span>
         </section>
 
         {/* Bills Table / Empty State */}
@@ -276,7 +314,7 @@ export default function BillsPage() {
               <p className="bp-empty-desc">
                 Adjust your filters or add a new bill to start tracking your company's expenses.
               </p>
-              <button id="bp-add-bill-empty" className="bp-empty-add-btn" type="button">
+              <button id="bp-add-bill-empty" className="bp-empty-add-btn" type="button" onClick={() => setIsModalOpen(true)}>
                 Add Bill
               </button>
             </div>
@@ -295,11 +333,11 @@ export default function BillsPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {bills.filter(b => statusFilter === 'all' || b.status === statusFilter).map(b => (
+                    {filteredBills.map(b => (
                       <tr key={b.id} style={{ borderBottom: '1px solid var(--border-color)' }}>
                         <td style={{ padding: '0.5rem' }}>{b.companyCode}</td>
                         <td style={{ padding: '0.5rem' }}>{b.vendor}</td>
-                        <td style={{ padding: '0.5rem' }}>BDT {b.amount}</td>
+                        <td style={{ padding: '0.5rem' }}>BDT {Number(b.amount).toFixed(2)}</td>
                         <td style={{ padding: '0.5rem', textTransform: 'capitalize' }}>{b.status}</td>
                       </tr>
                     ))}
@@ -310,6 +348,66 @@ export default function BillsPage() {
           )}
         </section>
       </main>
+
+      {/* Add Bill Modal */}
+      {isModalOpen && (
+        <div className="ge-modal-overlay" onClick={() => setIsModalOpen(false)}>
+          <div className="ge-modal" onClick={e => e.stopPropagation()}>
+            <div className="ge-modal-header">
+              <h2>New Bill</h2>
+              <button className="ge-modal-close" onClick={() => setIsModalOpen(false)}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+              </button>
+            </div>
+            <div className="ge-modal-body">
+              {formError && <div style={{color: '#f87171', fontSize: '13px', background: 'rgba(239,68,68,0.1)', padding: '10px', borderRadius: '6px', marginBottom: '16px'}}>{formError}</div>}
+              
+              <div style={{display: 'flex', gap: '16px'}}>
+                <div className="ge-form-group" style={{flex: 1}}>
+                  <label>Company</label>
+                  <select className="ge-form-select" value={formData.companyCode} onChange={e => setFormData({...formData, companyCode: e.target.value})}>
+                    {companies.length > 0 ? companies.map(c => <option key={c.code} value={c.code}>{c.code}</option>) : <option value="XSRS IT">XSRS IT</option>}
+                  </select>
+                </div>
+                <div className="ge-form-group" style={{flex: 1}}>
+                  <label>Status</label>
+                  <select className="ge-form-select" value={formData.status} onChange={e => setFormData({...formData, status: e.target.value})}>
+                    <option value="pending">Pending</option>
+                    <option value="overdue">Overdue</option>
+                    <option value="paid">Paid</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="ge-form-group">
+                <label>Vendor</label>
+                <input type="text" className="ge-form-input" value={formData.vendor} onChange={e => setFormData({...formData, vendor: e.target.value})} placeholder="Vendor Name" />
+              </div>
+
+              <div style={{display: 'flex', gap: '16px'}}>
+                <div className="ge-form-group" style={{flex: 1}}>
+                  <label>Amount (BDT)</label>
+                  <input type="number" className="ge-form-input" value={formData.amount} onChange={e => setFormData({...formData, amount: e.target.value})} placeholder="0.00" step="0.01" />
+                </div>
+                <div className="ge-form-group" style={{flex: 1}}>
+                  <label>Due Date</label>
+                  <input type="date" className="ge-form-input" value={formData.dueDate} onChange={e => setFormData({...formData, dueDate: e.target.value})} />
+                </div>
+              </div>
+
+              <div className="ge-form-group">
+                <label>Description</label>
+                <input type="text" className="ge-form-input" value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} placeholder="Additional details..." />
+              </div>
+
+              <div className="ge-modal-footer">
+                <button className="ge-btn-cancel" onClick={() => setIsModalOpen(false)}>Cancel</button>
+                <button className="ge-btn-save" onClick={handleSaveBill}>Save Bill</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

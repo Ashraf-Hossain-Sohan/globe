@@ -132,10 +132,45 @@ public class OverviewDashboardService {
         
         dto.setMonthlyTrend(monthlyData);
         
+        // Calculate Trends (Current Month vs Previous Month)
+        if (monthlyData.size() >= 2) {
+            OverviewMetricsDTO.MonthlyTrend current = monthlyData.get(monthlyData.size() - 1);
+            OverviewMetricsDTO.MonthlyTrend previous = monthlyData.get(monthlyData.size() - 2);
+            
+            dto.setRevenueTrend(calculatePercentageChange(previous.getRevenue(), current.getRevenue()));
+            dto.setExpenseTrend(calculatePercentageChange(previous.getExpenses(), current.getExpenses()));
+            dto.setNetProfitTrend(calculatePercentageChange(previous.getProfit(), current.getProfit()));
+            
+            Double prevMargin = previous.getRevenue().compareTo(BigDecimal.ZERO) > 0 
+                ? previous.getProfit().divide(previous.getRevenue(), 4, RoundingMode.HALF_UP).doubleValue() * 100 
+                : 0.0;
+            Double currMargin = current.getRevenue().compareTo(BigDecimal.ZERO) > 0 
+                ? current.getProfit().divide(current.getRevenue(), 4, RoundingMode.HALF_UP).doubleValue() * 100 
+                : 0.0;
+            
+            dto.setProfitMarginTrend(currMargin - prevMargin);
+        } else {
+            dto.setRevenueTrend(0.0);
+            dto.setExpenseTrend(0.0);
+            dto.setNetProfitTrend(0.0);
+            dto.setProfitMarginTrend(0.0);
+        }
+        
         // Recent Activity
         allEntries.sort(Comparator.comparing(GlobalEntry::getEntryDate).reversed());
         dto.setRecentActivity(allEntries.stream().limit(15).collect(Collectors.toList()));
         
         return dto;
+    }
+    
+    private Double calculatePercentageChange(BigDecimal previous, BigDecimal current) {
+        if (previous == null || previous.compareTo(BigDecimal.ZERO) == 0) {
+            return current != null && current.compareTo(BigDecimal.ZERO) > 0 ? 100.0 : 0.0;
+        }
+        if (current == null) current = BigDecimal.ZERO;
+        
+        return current.subtract(previous)
+                .divide(previous.abs(), 4, RoundingMode.HALF_UP)
+                .doubleValue() * 100;
     }
 }

@@ -791,7 +791,7 @@ exports[`OfficeTimePage Component > matches the snapshot 1`] = `
             </span>
           </div>
           <div
-            class="ot-cal-cell is-today"
+            class="ot-cal-cell"
           >
             <span
               class="ot-cal-day"
@@ -847,7 +847,7 @@ exports[`OfficeTimePage Component > matches the snapshot 1`] = `
             />
           </div>
           <div
-            class="ot-cal-cell"
+            class="ot-cal-cell is-today"
           >
             <span
               class="ot-cal-day"

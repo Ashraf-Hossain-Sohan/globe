@@ -23,6 +23,10 @@ interface OverviewMetrics {
   totalExpenses: number
   netProfit: number
   profitMargin: string
+  revenueTrend?: number
+  expenseTrend?: number
+  netProfitTrend?: number
+  profitMarginTrend?: number
   inventoryValue: number
   accountsPayable: number
   monthlyBurnRate: number
@@ -170,7 +174,9 @@ export default function OverviewPage() {
                   <div className="om-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
                 </div>
                 <div className="om-value">{formatCurrency(metrics.totalRevenue)}</div>
-                <div className="om-trend">— 0% from last month</div>
+                <div className={`om-trend ${metrics.revenueTrend && metrics.revenueTrend > 0 ? 'pos' : (metrics.revenueTrend && metrics.revenueTrend < 0 ? 'neg' : 'neutral')}`} style={{ color: metrics.revenueTrend && metrics.revenueTrend > 0 ? '#10b981' : (metrics.revenueTrend && metrics.revenueTrend < 0 ? '#ef4444' : '#64748b') }}>
+                  {metrics.revenueTrend && metrics.revenueTrend > 0 ? '↗' : (metrics.revenueTrend && metrics.revenueTrend < 0 ? '↘' : '—')} {metrics.revenueTrend ? Math.abs(metrics.revenueTrend).toFixed(1) : '0.0'}% from last month
+                </div>
               </div>
               <div className="overview-metric">
                 <div className="om-header">
@@ -178,7 +184,9 @@ export default function OverviewPage() {
                   <div className="om-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/><polyline points="16 17 22 17 22 11"/></svg></div>
                 </div>
                 <div className="om-value">{formatCurrency(metrics.totalExpenses)}</div>
-                <div className="om-trend">— 0% from last month</div>
+                <div className={`om-trend ${metrics.expenseTrend && metrics.expenseTrend < 0 ? 'pos' : (metrics.expenseTrend && metrics.expenseTrend > 0 ? 'neg' : 'neutral')}`} style={{ color: metrics.expenseTrend && metrics.expenseTrend < 0 ? '#10b981' : (metrics.expenseTrend && metrics.expenseTrend > 0 ? '#ef4444' : '#64748b') }}>
+                  {metrics.expenseTrend && metrics.expenseTrend > 0 ? '↗' : (metrics.expenseTrend && metrics.expenseTrend < 0 ? '↘' : '—')} {metrics.expenseTrend ? Math.abs(metrics.expenseTrend).toFixed(1) : '0.0'}% from last month
+                </div>
               </div>
               <div className="overview-metric">
                 <div className="om-header">
@@ -186,7 +194,9 @@ export default function OverviewPage() {
                   <div className="om-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>
                 </div>
                 <div className="om-value">{formatCurrency(metrics.netProfit)}</div>
-                <div className="om-trend">— 0% from last month</div>
+                <div className={`om-trend ${metrics.netProfitTrend && metrics.netProfitTrend > 0 ? 'pos' : (metrics.netProfitTrend && metrics.netProfitTrend < 0 ? 'neg' : 'neutral')}`} style={{ color: metrics.netProfitTrend && metrics.netProfitTrend > 0 ? '#10b981' : (metrics.netProfitTrend && metrics.netProfitTrend < 0 ? '#ef4444' : '#64748b') }}>
+                  {metrics.netProfitTrend && metrics.netProfitTrend > 0 ? '↗' : (metrics.netProfitTrend && metrics.netProfitTrend < 0 ? '↘' : '—')} {metrics.netProfitTrend ? Math.abs(metrics.netProfitTrend).toFixed(1) : '0.0'}% from last month
+                </div>
               </div>
               <div className="overview-metric">
                 <div className="om-header">
@@ -194,7 +204,9 @@ export default function OverviewPage() {
                   <div className="om-icon">%</div>
                 </div>
                 <div className="om-value">{metrics.profitMargin}</div>
-                <div className="om-trend">— 0% from last month</div>
+                <div className={`om-trend ${metrics.profitMarginTrend && metrics.profitMarginTrend > 0 ? 'pos' : (metrics.profitMarginTrend && metrics.profitMarginTrend < 0 ? 'neg' : 'neutral')}`} style={{ color: metrics.profitMarginTrend && metrics.profitMarginTrend > 0 ? '#10b981' : (metrics.profitMarginTrend && metrics.profitMarginTrend < 0 ? '#ef4444' : '#64748b') }}>
+                  {metrics.profitMarginTrend && metrics.profitMarginTrend > 0 ? '↗' : (metrics.profitMarginTrend && metrics.profitMarginTrend < 0 ? '↘' : '—')} {metrics.profitMarginTrend ? Math.abs(metrics.profitMarginTrend).toFixed(1) : '0.0'}% from last month
+                </div>
               </div>
               <div className="overview-metric">
                 <div className="om-header">
@@ -232,10 +244,10 @@ export default function OverviewPage() {
                 <h3>Revenue by Company</h3>
                 <div className="ov-chart-wrap">
                   <ResponsiveContainer width="100%" height={220}>
-                    <BarChart data={metrics.revenueByCompany} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                    <BarChart data={metrics.revenueByCompany} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
                       <CartesianGrid strokeDasharray="3 3" stroke="#2a2d3e" vertical={false} />
-                      <XAxis dataKey="company" stroke="#5c6270" fontSize={10} tickLine={false} axisLine={{stroke: '#2a2d3e'}} />
-                      <YAxis stroke="#5c6270" fontSize={10} tickLine={false} axisLine={false} tickFormatter={(val) => `BDT ${(val/1000).toFixed(1)}K`} />
+                      <XAxis dataKey="company" stroke="#5c6270" fontSize={10} tickLine={false} axisLine={false} />
+                      <YAxis stroke="#5c6270" fontSize={10} tickLine={false} axisLine={false} width={75} tickFormatter={(val) => `BDT ${(val/1000).toFixed(1)}K`} />
                       <RechartsTooltip cursor={{fill: '#1a1c25'}} contentStyle={{backgroundColor: '#161821', borderColor: '#2a2d3e', color: '#e8eaf0'}} />
                       <Bar dataKey="revenue" fill="#3b82f6" radius={[4,4,0,0]} barSize={40} name="Revenue" />
                       <Bar dataKey="expenses" fill="#ef4444" radius={[4,4,0,0]} barSize={40} name="Expenses" />
@@ -272,10 +284,10 @@ export default function OverviewPage() {
               <h3>Monthly Trend</h3>
               <div className="ov-chart-wrap large">
                 <ResponsiveContainer width="100%" height={280}>
-                  <LineChart data={metrics.monthlyTrend} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                  <LineChart data={metrics.monthlyTrend} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#2a2d3e" vertical={false} />
                     <XAxis dataKey="month" stroke="#5c6270" fontSize={10} tickLine={false} axisLine={{stroke: '#2a2d3e'}} />
-                    <YAxis stroke="#5c6270" fontSize={10} tickLine={false} axisLine={false} tickFormatter={(val) => `BDT ${(val/1000).toFixed(1)}K`} />
+                    <YAxis stroke="#5c6270" fontSize={10} tickLine={false} axisLine={false} width={75} tickFormatter={(val) => `BDT ${(val/1000).toFixed(1)}K`} />
                     <RechartsTooltip contentStyle={{backgroundColor: '#161821', borderColor: '#2a2d3e', color: '#e8eaf0'}} />
                     <Line type="monotone" dataKey="revenue" stroke="#3b82f6" strokeWidth={2} dot={{r:4, fill:'#0b0c10', stroke:'#3b82f6', strokeWidth:2}} name="Revenue" />
                     <Line type="monotone" dataKey="expenses" stroke="#ef4444" strokeWidth={2} dot={{r:4, fill:'#0b0c10', stroke:'#ef4444', strokeWidth:2}} name="Expenses" />

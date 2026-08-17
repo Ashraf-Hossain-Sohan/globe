@@ -3,6 +3,7 @@
 /Users/ashraf/globe/globe-backend/src/main/java/com/globe/config/DataSeeder.java
 /Users/ashraf/globe/globe-backend/src/main/java/com/globe/config/SecurityConfig.java
 /Users/ashraf/globe/globe-backend/src/main/java/com/globe/config/WebConfig.java
+/Users/ashraf/globe/globe-backend/src/main/java/com/globe/config/YearlyDataSeeder.java
 /Users/ashraf/globe/globe-backend/src/main/java/com/globe/controller/AttendanceController.java
 /Users/ashraf/globe/globe-backend/src/main/java/com/globe/controller/AuditLogController.java
 /Users/ashraf/globe/globe-backend/src/main/java/com/globe/controller/AuthController.java

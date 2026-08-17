@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import TopHeader from './shared/TopHeader'
 import type { JSX } from 'react'
 import '../styles/InventoryPage.css'
+import '../styles/GlobalEntryPage.css'
 
 /* ─── Types ──────────────────────────────────── */
 type InventoryItem = {
@@ -75,6 +76,49 @@ export default function InventoryPage() {
     })
   }, [])
 
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [formData, setFormData] = useState({
+    name: '', subtitle: '', unitId: '', companyCode: 'XSRS',
+    type: 'Asset', condition: 'New', qty: 1, cost: 0, threshold: 5
+  })
+  const [formError, setFormError] = useState('')
+
+  const handleSaveItem = async () => {
+    setFormError('')
+    try {
+      const payload = {
+        ...formData,
+        qty: parseInt(formData.qty as any) || 0,
+        cost: parseFloat(formData.cost as any) || 0,
+        threshold: parseInt(formData.threshold as any) || 0
+      }
+      const res = await fetch('/api/inventory', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        credentials: 'include'
+      })
+      if (!res.ok) throw new Error('Failed to save item')
+      
+      const invRes = await fetch('/api/inventory', { credentials: 'include' })
+      if (invRes.ok) {
+        setInventoryData(await invRes.json())
+      }
+
+      setIsModalOpen(false)
+      setFormData({
+        name: '', subtitle: '', unitId: '', companyCode: 'XSRS',
+        type: 'Asset', condition: 'New', qty: 1, cost: 0, threshold: 5
+      })
+    } catch (err) {
+      setFormError('An error occurred while saving the item.')
+    }
+  }
+
+  const handlePrintLabels = () => {
+    window.print()
+  }
+
   const lowStock = getLowStockItems(inventoryData)
 
   /* Filtered inventory */
@@ -131,6 +175,8 @@ export default function InventoryPage() {
           setAlertOpen={setAlertOpen}
           search={search}
           setSearch={setSearch}
+          onPrintLabels={handlePrintLabels}
+          onAddItem={() => setIsModalOpen(true)}
         />
       ) : (
         <WishlistTab
@@ -138,6 +184,90 @@ export default function InventoryPage() {
           search={search}
           setSearch={setSearch}
         />
+      )}
+
+      {/* Add Inventory Item Modal */}
+      {isModalOpen && (
+        <div className="ge-modal-overlay" onClick={() => setIsModalOpen(false)}>
+          <div className="ge-modal" onClick={e => e.stopPropagation()}>
+            <div className="ge-modal-header">
+              <h2>New Inventory Item</h2>
+              <button className="ge-modal-close" onClick={() => setIsModalOpen(false)}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+              </button>
+            </div>
+            <div className="ge-modal-body">
+              {formError && <div style={{color: '#f87171', fontSize: '13px', background: 'rgba(239,68,68,0.1)', padding: '10px', borderRadius: '6px', marginBottom: '16px'}}>{formError}</div>}
+              
+              <div style={{display: 'flex', gap: '16px'}}>
+                <div className="ge-form-group" style={{flex: 1}}>
+                  <label>Item Name</label>
+                  <input type="text" className="ge-form-input" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} placeholder="MacBook Pro 16..." />
+                </div>
+                <div className="ge-form-group" style={{flex: 1}}>
+                  <label>Subtitle / Specs</label>
+                  <input type="text" className="ge-form-input" value={formData.subtitle} onChange={e => setFormData({...formData, subtitle: e.target.value})} placeholder="M3 Max, 36GB RAM" />
+                </div>
+              </div>
+
+              <div style={{display: 'flex', gap: '16px'}}>
+                <div className="ge-form-group" style={{flex: 1}}>
+                  <label>Unit ID / Serial</label>
+                  <input type="text" className="ge-form-input" value={formData.unitId} onChange={e => setFormData({...formData, unitId: e.target.value})} placeholder="MAC-001" />
+                </div>
+                <div className="ge-form-group" style={{flex: 1}}>
+                  <label>Company</label>
+                  <select className="ge-form-select" value={formData.companyCode} onChange={e => setFormData({...formData, companyCode: e.target.value})}>
+                    <option value="XSRS">XSRS IT</option>
+                    <option value="365F">365 Frames</option>
+                    <option value="EA">EverAfter</option>
+                    <option value="PD">PrintDesk</option>
+                  </select>
+                </div>
+              </div>
+
+              <div style={{display: 'flex', gap: '16px'}}>
+                <div className="ge-form-group" style={{flex: 1}}>
+                  <label>Type</label>
+                  <select className="ge-form-select" value={formData.type} onChange={e => setFormData({...formData, type: e.target.value})}>
+                    <option value="Asset">Asset</option>
+                    <option value="Consumable">Consumable</option>
+                    <option value="Software">Software</option>
+                  </select>
+                </div>
+                <div className="ge-form-group" style={{flex: 1}}>
+                  <label>Condition</label>
+                  <select className="ge-form-select" value={formData.condition} onChange={e => setFormData({...formData, condition: e.target.value})}>
+                    <option value="New">New</option>
+                    <option value="Good">Good</option>
+                    <option value="Fair">Fair</option>
+                    <option value="Broken">Broken</option>
+                  </select>
+                </div>
+              </div>
+
+              <div style={{display: 'flex', gap: '16px'}}>
+                <div className="ge-form-group" style={{flex: 1}}>
+                  <label>Quantity</label>
+                  <input type="number" className="ge-form-input" value={formData.qty} onChange={e => setFormData({...formData, qty: e.target.value as any})} min="0" />
+                </div>
+                <div className="ge-form-group" style={{flex: 1}}>
+                  <label>Cost (BDT)</label>
+                  <input type="number" className="ge-form-input" value={formData.cost} onChange={e => setFormData({...formData, cost: e.target.value as any})} step="0.01" min="0" />
+                </div>
+                <div className="ge-form-group" style={{flex: 1}}>
+                  <label>Threshold</label>
+                  <input type="number" className="ge-form-input" value={formData.threshold} onChange={e => setFormData({...formData, threshold: e.target.value as any})} min="0" />
+                </div>
+              </div>
+
+              <div className="ge-modal-footer">
+                <button className="ge-btn-cancel" onClick={() => setIsModalOpen(false)}>Cancel</button>
+                <button className="ge-btn-save" onClick={handleSaveItem}>Save Item</button>
+              </div>
+            </div>
+          </div>
+        </div>
       )}
     </main>
   )
@@ -153,6 +283,8 @@ function InventoryTab({
   setAlertOpen,
   search,
   setSearch,
+  onPrintLabels,
+  onAddItem,
 }: {
   items: InventoryItem[]
   lowStock: InventoryItem[]
@@ -160,6 +292,8 @@ function InventoryTab({
   setAlertOpen: (v: boolean) => void
   search: string
   setSearch: (v: string) => void
+  onPrintLabels: () => void
+  onAddItem: () => void
 }) {
   return (
     <>
@@ -182,7 +316,7 @@ function InventoryTab({
         </button>
 
         <div className="ip-toolbar-right">
-          <button type="button" className="ip-btn ip-btn-ghost">
+          <button type="button" className="ip-btn ip-btn-ghost" onClick={onPrintLabels}>
             {svgIcon(
               <>
                 <path d="M6 9V2h12v7" />
@@ -192,7 +326,7 @@ function InventoryTab({
             )}
             Print Labels
           </button>
-          <button type="button" className="ip-btn ip-btn-primary">
+          <button type="button" className="ip-btn ip-btn-primary" onClick={onAddItem}>
             {svgIcon(<><path d="M12 5v14" /><path d="M5 12h14" /></>)}
             Add Item
           </button>

@@ -352,6 +352,8 @@
 }
 
 .ge-form-input, .ge-form-select {
+  width: 100%;
+  box-sizing: border-box;
   padding: 10px 14px;
   border: 1px solid #2a2d3e;
   border-radius: 8px;

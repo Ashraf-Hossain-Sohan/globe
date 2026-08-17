@@ -45,6 +45,23 @@ public class OverviewMetricsDTO {
     public BigDecimal getWorkingCapital() { return workingCapital; }
     public void setWorkingCapital(BigDecimal workingCapital) { this.workingCapital = workingCapital; }
 
+    private Double revenueTrend;
+    private Double expenseTrend;
+    private Double netProfitTrend;
+    private Double profitMarginTrend;
+
+    public Double getRevenueTrend() { return revenueTrend; }
+    public void setRevenueTrend(Double revenueTrend) { this.revenueTrend = revenueTrend; }
+
+    public Double getExpenseTrend() { return expenseTrend; }
+    public void setExpenseTrend(Double expenseTrend) { this.expenseTrend = expenseTrend; }
+
+    public Double getNetProfitTrend() { return netProfitTrend; }
+    public void setNetProfitTrend(Double netProfitTrend) { this.netProfitTrend = netProfitTrend; }
+
+    public Double getProfitMarginTrend() { return profitMarginTrend; }
+    public void setProfitMarginTrend(Double profitMarginTrend) { this.profitMarginTrend = profitMarginTrend; }
+
     public List<RevenueByCompany> getRevenueByCompany() { return revenueByCompany; }
     public void setRevenueByCompany(List<RevenueByCompany> revenueByCompany) { this.revenueByCompany = revenueByCompany; }
 
